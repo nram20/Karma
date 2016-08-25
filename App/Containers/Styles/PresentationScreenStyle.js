@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles } from '../../Themes/'
-const black = '#000';
-const white = '#fff';
+const black = '#000'
+const white = '#fff'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -13,12 +13,12 @@ export default StyleSheet.create({
   centered: {
     alignItems: 'center'
   },
-    container: {
+  container: {
     flex: 1,
     justifyContent: 'center',
     padding: 40,
-    color: black,
-    
+    color: black
+
   },
   header: {
     marginTop: 60,
@@ -38,7 +38,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     margin: 2,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   buttonContainer: {
     backgroundColor: white,
@@ -47,18 +47,18 @@ export default StyleSheet.create({
     borderColor: black,
     borderWidth: 1,
     borderRadius: 5,
-    margin: 2,
+    margin: 2
   },
   button: {
     textAlign: 'center'
   },
   links: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   link: {
   },
   title: {
     textAlign: 'center'
-  } 
+  }
 })

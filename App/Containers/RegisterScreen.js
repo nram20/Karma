@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react'
-import { ScrollView, Text, Image, View, TextInput, TouchableOpacity } from 'react-native'
-import { Images } from '../Themes'
+import { Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import RoundedButton from '../Components/RoundedButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
@@ -11,7 +9,7 @@ import styles from './Styles/PresentationScreenStyle'
 class RegisterScreen extends React.Component {
 
   static propTypes = {
-
+    presentationScreen: PropTypes.func
   }
 
   render () {
@@ -19,37 +17,37 @@ class RegisterScreen extends React.Component {
       <View style={styles.mainContainer}>
         <Text>Karma - Register</Text>
         <View style={styles.container}>
-          <Text style={styles.feedback}></Text>
+          <Text style={styles.feedback} />
           <TextInput
-            placeholder="Email"
+            placeholder='Email'
             style={styles.input}
           />
           <TextInput
-            placeholder="Password"
+            placeholder='Password'
             style={styles.input}
-            secureTextEntry={true}
+            secureTextEntry
           />
           <TextInput
-            placeholder="Confirm Password"
+            placeholder='Confirm Password'
             style={styles.input}
-            secureTextEntry={true}
+            secureTextEntry
           />
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.buttonContainer}
           >
-          <Text style={styles.button}>Sign In</Text>
-        </TouchableOpacity>
-        <View style={styles.links}>
-          <TouchableOpacity
-            onPress={this.props.presentationScreen}
-          >
-            <Text style={styles.link}>
-              Log In
-            </Text>
+            <Text style={styles.button}>Sign In</Text>
           </TouchableOpacity>
+          <View style={styles.links}>
+            <TouchableOpacity
+              onPress={this.props.presentationScreen}
+            >
+              <Text style={styles.link}>
+                Log In
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>  
-    </View>
+      </View>
     )
   }
 }
@@ -61,7 +59,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    presentationScreen: NavigationActions.presentationScreen,
+    presentationScreen: NavigationActions.presentationScreen
   }
 }
 
