@@ -8,7 +8,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 // Styles
 import styles from './Styles/PresentationScreenStyle'
 
-class PresentationScreen extends React.Component {
+class RegisterScreen extends React.Component {
 
   static propTypes = {
 
@@ -17,7 +17,7 @@ class PresentationScreen extends React.Component {
   render () {
     return (
       <View style={styles.mainContainer}>
-        <Text>Karma - Splash Page / Login</Text>
+        <Text>Karma - Register</Text>
         <View style={styles.container}>
           <Text style={styles.feedback}></Text>
           <TextInput
@@ -29,30 +29,27 @@ class PresentationScreen extends React.Component {
             style={styles.input}
             secureTextEntry={true}
           />
+          <TextInput
+            placeholder="Confirm Password"
+            style={styles.input}
+            secureTextEntry={true}
+          />
           <TouchableOpacity 
             style={styles.buttonContainer}
           >
-            <Text style={styles.button}>
-              Sign In
+          <Text style={styles.button}>Sign In</Text>
+        </TouchableOpacity>
+        <View style={styles.links}>
+          <TouchableOpacity
+            onPress={this.props.presentationScreen}
+          >
+            <Text style={styles.link}>
+              Log In
             </Text>
           </TouchableOpacity>
-          <View style={styles.links}>
-            <TouchableOpacity>
-              <Text style={styles.link}>
-                Forgot Password
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.props.register}
-            >
-              <Text style={styles.link}>
-                Sign Up
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-        </View>  
-      </View>
+        </View>
+      </View>  
+    </View>
     )
   }
 }
@@ -64,8 +61,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    register: NavigationActions.register,
+    presentationScreen: NavigationActions.presentationScreen,
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PresentationScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen)
