@@ -20,9 +20,10 @@ class BottomNav extends React.Component {
   }
 
   render () {
+    console.log(NavigationActions)
     return (
       <View>
-        <TouchableOpacity style={styles.button} onPress={() => {NavigationActions.push('post')} }>
+        <TouchableOpacity style={styles.button} onPress={()=>{ NavigationActions.get('post')}} >
           <Text style={styles.buttonText}>Dashboard</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={this.props.post}>
@@ -36,8 +37,8 @@ class BottomNav extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-console.log('navacts',NavigationActions)
-console.log('navactslog',NavigationActions.loginScreen)
+  console.log('navacts', NavigationActions)
+  console.log('navactslog', NavigationActions.loginScreen)
   return {
     dashboard: NavigationActions.dashboard,
     post: NavigationActions.post,
