@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "apisauce": "^0.3.0",
+    "firebase": "^3.3.0",
     "format-json": "^1.0.3",
     "querystringify": "0.0.3",
     "ramda": "^0.22.0",

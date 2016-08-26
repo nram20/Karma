@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { Metrics, ApplicationStyles } from '../../Themes/'
+
 const black = '#000'
 const white = '#fff'
 
@@ -17,8 +18,6 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 40,
-    color: black
-
   },
   header: {
     marginTop: 60,
