@@ -23,7 +23,7 @@ class BottomNav extends React.Component {
     console.log(NavigationActions)
     return (
       <View>
-        <TouchableOpacity style={styles.button} onPress={()=>{ NavigationActions.get('post')}} >
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Dashboard</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={this.props.post}>
