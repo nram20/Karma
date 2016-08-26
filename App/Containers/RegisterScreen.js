@@ -92,15 +92,12 @@ class RegisterScreen extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
+console.log('navacts',NavigationActions)
+  console.log('navactsregister',NavigationActions.loginScreen)
   return {
     loginScreen: NavigationActions.loginScreen
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterScreen)
+export default connect(null, mapDispatchToProps)(RegisterScreen)

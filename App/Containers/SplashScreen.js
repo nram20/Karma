@@ -7,6 +7,6 @@ import styles from './Styles/PresentationScreenStyle'
 const SplashScreen = () =>
   <View style={styles.mainContainer}>
     <Text>This is the first screen you see when you're logged in!</Text>
-  </View>;
+  </View>
 
 export default SplashScreen
