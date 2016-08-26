@@ -13,12 +13,12 @@ class LoginScreen extends React.Component {
     register: PropTypes.func
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
-      email: "",
-      password: ""
+      email: '',
+      password: ''
     }
 
     this.changeEmail = this.changeEmail.bind(this)
@@ -26,27 +26,23 @@ class LoginScreen extends React.Component {
     this.login = this.login.bind(this)
   }
 
-  login() {
+  login () {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => {
-        console.log(firebase.auth().currentUser)
-      })
       .catch(console.log)
-    console.log('curruser', firebase.auth().currentUser)
   }
 
-  changeEmail(email) {
+  changeEmail (email) {
     this.setState({email})
   }
 
-  changePassword(password) {
+  changePassword (password) {
     this.setState({password})
   }
 
   render () {
     return (
       <View style={styles.mainContainer}>
-        <Text>Karma - Splash Page / Login</Text>
+        <Text>Login</Text>
         <View style={styles.container}>
           <Text style={styles.feedback} />
           <TextInput
@@ -96,7 +92,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    register: NavigationActions.register
+    register: NavigationActions.register,
+    splash: NavigationActions.splash
   }
 }
 

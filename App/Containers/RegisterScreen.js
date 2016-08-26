@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import { Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import firebase from 'firebase'
 
 // Styles
 import styles from './Styles/PresentationScreenStyle'
@@ -12,13 +13,13 @@ class RegisterScreen extends React.Component {
     presentationScreen: PropTypes.func
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
-      email: "",
-      password: "",
-      passwordConfirmation: ""
+      email: '',
+      password: '',
+      passwordConfirmation: ''
     }
 
     this.changeEmail = this.changeEmail.bind(this)
@@ -27,7 +28,7 @@ class RegisterScreen extends React.Component {
     this.register = this.register.bind(this)
   }
 
-  register() {
+  register () {
     if (this.state.password === this.state.passwordConfirmation) {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
     } else {
@@ -35,15 +36,15 @@ class RegisterScreen extends React.Component {
     }
   }
 
-  changeEmail(email) {
+  changeEmail (email) {
     this.setState({email})
   }
 
-  changePassword(password) {
+  changePassword (password) {
     this.setState({password})
   }
 
-  changePasswordConfirmation(passwordConfirmation) {
+  changePasswordConfirmation (passwordConfirmation) {
     this.setState({passwordConfirmation})
   }
 
