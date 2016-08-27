@@ -36,7 +36,6 @@ class PostScreen extends React.Component {
       location: '',
       cost: ''
     })
-
   }
 
   changeTitle (title) {

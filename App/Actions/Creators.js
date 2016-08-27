@@ -1,7 +1,7 @@
 import Types from './Types'
 
 const localJobsReceived = jobs =>
-  ({ type: Types.JOBS_RECEIVE, jobs})
+  ({ type: Types.JOBS_RECEIVE, jobs })
 
 const localJobsReceivedFailure = failure =>
   ({ type: Types.JOBS_RECEIVE_FAILURE, failure })
@@ -17,5 +17,5 @@ export default {
   localJobsReceived,
   localJobsReceivedFailure,
   logout,
-  startup,
+  startup
 }
