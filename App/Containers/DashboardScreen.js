@@ -10,9 +10,12 @@ class DashboardScreen extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      dataSource: new ListView.DataSource({
+      postedDataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2
-      })
+      }),
+      // appliedDataSource: new ListView.DataSource({
+      //   rowHasChanged: (row1, row2) => row1 !== row2
+      // })
     }
   }
 
@@ -20,9 +23,13 @@ class DashboardScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={this.state.postedDataSource}
           renderRow={this._renderItem.bind(this)}
         />
+        {/* <ListView */}
+        {/*   dataSource={this.state.appliedDataSource} */}
+        {/*   renderRow={this._renderItem.bind(this)} */}
+        {/* /> */}
       </View>
     )
   }
@@ -44,14 +51,17 @@ class DashboardScreen extends React.Component {
 
   componentWillMount () {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.props.jobs)
+      postedDataSource: this.state.postedDataSource.cloneWithRows(this.props.postedJobs),
+      // appliedDataSource: this.state.appliedDataSource.cloneWithRows(this.props.appliedJobs)
     })
   }
 }
 
 const mapStateToProps = (state) => {
+  console.log('statey',state)
   return {
-    jobs: state.jobs.localJobs
+    postedJobs: state.jobs.postedJobs
+    // appliedJobs: state.jobs.appliedJobs,
   }
 }
 

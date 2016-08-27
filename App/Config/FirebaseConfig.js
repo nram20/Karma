@@ -21,13 +21,35 @@ let db = firebase.database()
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     NavigationActions.splash()
-    let jobsRef = db.ref('jobs')
-    jobsRef.on('value', snapshot => {
-      dispatch({type: Types.JOBS_RECEIVE, localJobs: snapshot.val()})
-    })
+    setLocalJobsListener()
+    setPostedJobsListener(user)
+    setAppliedJobsListener(user)
   } else {
     NavigationActions.loginScreen()
   }
 })
+
+function setLocalJobsListener () {
+  let jobsRef = db.ref('jobs')
+  jobsRef.on('value', snapshot => {
+    dispatch({type: Types.JOBS_RECEIVE, localJobs: snapshot.val()})
+  })
+}
+
+function setPostedJobsListener (user) {
+  let jobsRef = db.ref(`jobsPosted/${user.uid}`)
+  jobsRef.on('value', snapshot => {
+    if (snapshot.val()) {
+      dispatch({type: Types.POSTED_JOBS_RECEIVE, postedJobs: snapshot.val()})
+    }
+  })
+}
+
+function setAppliedJobsListener (user) {
+  let jobsRef = db.ref(`jobsApplied/${user.uid}`)
+  jobsRef.on('value', snapshot => {
+    dispatch({type: Types.APPLIED_JOBS_RECEIVE, appliedJobs: snapshot.val()})
+  })
+}
 
 export default db
