@@ -37,7 +37,8 @@ export default () => {
     const enhancers = compose(
       applyMiddleware(...middleware),
       Reactotron.storeEnhancer(),
-      autoRehydrate()
+      autoRehydrate(),
+      global.reduxNativeDevTools ? global.reduxNativeDevTools(/*options*/) : nope => nope
     )
 
     store = createStore(
@@ -61,6 +62,10 @@ export default () => {
 
   // run sagas
   sagaMiddleware.run(sagas)
+
+  if (global.reduxNativeDevTools) {
+    global.reduxNativeDevTools.updateStore(store)
+  }
 
   return store
 }

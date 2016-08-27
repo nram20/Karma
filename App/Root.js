@@ -4,8 +4,8 @@ import { Provider } from 'react-redux'
 import Actions from './Actions/Creators'
 import DebugSettings from './Config/DebugSettings'
 import NavigationRouter from './Navigation/NavigationRouter'
-import FullButton from './Components/FullButton'
 import './Config/FirebaseConfig'
+import firebase from 'firebase'
 
 // Styles
 import styles from './Containers/Styles/RootStyle'

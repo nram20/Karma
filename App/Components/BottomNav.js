@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { Actions as NavigationActions, ActionConst } from 'react-native-router-flux'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 import styles from './Styles/BottomNavStyle'
 
 class BottomNav extends React.Component {

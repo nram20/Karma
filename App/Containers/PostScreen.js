@@ -12,14 +12,8 @@ class PostScreen extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      title: '',
-      description: '',
-      location: '',
-      cost: ''
-    }
+    this.state = {}
 
-    console.log(firebase.auth().currentUser)
     this.changeTitle = this.changeTitle.bind(this)
     this.changeDescription = this.changeDescription.bind(this)
     this.changeLocation = this.changeLocation.bind(this)
@@ -35,6 +29,14 @@ class PostScreen extends React.Component {
     let jobKey = jobRef.push(jobToAdd).key
     let postedRef = db.ref(`jobsPosted/${currUser}/${jobKey}`)
     postedRef.set(true)
+
+    this.setState({
+      title: '',
+      description: '',
+      location: '',
+      cost: ''
+    })
+
   }
 
   changeTitle (title) {
@@ -63,21 +65,25 @@ class PostScreen extends React.Component {
             onChangeText={this.changeTitle}
             placeholder='Title'
             style={styles.input}
+            value={this.state.title}
           />
           <TextInput
             onChangeText={this.changeDescription}
             placeholder='Description'
             style={styles.input}
+            value={this.state.description}
           />
           <TextInput
             onChangeText={this.changeLocation}
             placeholder='Location'
             style={styles.input}
+            value={this.state.location}
           />
           <TextInput
             onChangeText={this.changeCost}
             placeholder='Cost'
             style={styles.input}
+            value={this.state.cost}
           />
           <TouchableOpacity
             style={styles.buttonContainer}

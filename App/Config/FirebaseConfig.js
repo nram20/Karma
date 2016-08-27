@@ -10,7 +10,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 
-
 //  might want to move the login check to a loading screen so we don't
 //  briefly show login screen before auth state is verified
 firebase.auth().onAuthStateChanged(user => {

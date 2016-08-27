@@ -15,6 +15,4 @@ const api = DebugSettings.useFixtures ? FixtureAPI : API.create()
 // start the daemons
 export default function * root () {
   yield fork(watchStartup)
-  yield fork(watchLoginAttempt)
-  yield fork(getCityWeather(api).watcher)
 }
