@@ -1,6 +1,7 @@
 import React from 'react'
-import { ListView, View, Text } from 'react-native'
+import { ListView, View } from 'react-native'
 import { connect } from 'react-redux'
+import JobCard from '../Components/JobCard'
 
 // Styles
 import styles from './Styles/JobsScreenStyle'
@@ -29,22 +30,48 @@ class JobsScreen extends React.Component {
 
   _renderItem (item) {
     return (
-      <View>
-        <Text style={{color: 'white'}} >
-          Title: {item.title}{'\n'}
-          Description: {item.description}{'\n'}
-          Location: {item.location}{'\n'}
-          Cost: {item.cost}{'\n'}
-          Poster: {item.poster}{'\n'}
-          ---------
-        </Text>
-      </View>
+      <JobCard
+        jobId={item.jobId}
+        title={item.title}
+        description={item.description}
+        location={item.location}
+        cost={item.cost}
+        poster={item.poster}
+      />
     )
   }
+  // <View>
+  //   <Text style={{color: 'white'}} >
+  //     Title: {item.title}{'\n'}
+  //     Description: {item.description}{'\n'}
+  //     Location: {item.location}{'\n'}
+  //     Cost: {item.cost}{'\n'}
+  //     Poster: {item.poster}{'\n'}
+  //     ---------
+  //   </Text>
+  // </View>
 
+  formatJobData (jobsListObj) {
+    // make deep copy
+    let formattedObj = JSON.parse(JSON.stringify(jobsListObj))
+    // add id
+    for (let id in formattedObj) {
+      formattedObj[id].jobId = id
+    }
+    return formattedObj
+  }
+
+  // const obj = {
+  //   jobId: id,
+  //   title: jobsListObj[id].title,
+  //   description: jobsListObj[id].description,
+  //   location: jobsListObj[id].location,
+  //   cost: jobsListObj[id].cost,
+  //   poster: jobsListObj[id].poster
+  // }
   componentWillMount () {
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.props.jobs)
+      dataSource: this.state.dataSource.cloneWithRows(this.formatJobData(this.props.jobs))
     })
   }
 }
