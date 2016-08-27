@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import { Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { NavigationActions } from 'react-native-router-flux'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
 
 // Styles
@@ -93,8 +93,6 @@ class RegisterScreen extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('navacts', NavigationActions)
-  console.log('navactsregister', NavigationActions.loginScreen)
   return {
     loginScreen: NavigationActions.loginScreen
   }

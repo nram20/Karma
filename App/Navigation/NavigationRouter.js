@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Scene, Router } from 'react-native-router-flux'
+import { Scene, Router, NavBar } from 'react-native-router-flux'
 import Styles from './Styles/NavigationContainerStyle'
 import { View } from 'react-native'
+import BottomNav from '../Components/BottomNav'
+
 
 // screens identified by the router
 import RegisterScreen from '../Containers/RegisterScreen'
@@ -23,9 +25,9 @@ import DeviceInfoScreen from '../Containers/DeviceInfoScreen'
 class NavigationRouter extends Component {
   render () {
     return (
-      <View style={{flex: 1}}>
-        <Router>
-          <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
+      <Router>
+          {/* <NavBar key='navvy' > */}
+          <NavBar key='navvy' navBar={BottomNav} >
             <Scene initial key='loginScreen' component={LoginScreen} title='Login' />
             <Scene key='register' component={RegisterScreen} title='Register' />
             <Scene key='splash' component={SplashScreen} title='Splash!' />
@@ -37,9 +39,8 @@ class NavigationRouter extends Component {
             <Scene key='mapviewExample' component={MapviewExample} title='Mapview Example' />
             <Scene key='apiTesting' component={APITestingScreen} title='API Testing' />
             <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
-          </Scene>
-        </Router>
-      </View>
+          </NavBar>
+      </Router>
     )
   }
 }

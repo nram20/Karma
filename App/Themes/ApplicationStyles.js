@@ -8,8 +8,8 @@ import Colors from './Colors'
 const ApplicationStyles = {
   screen: {
     mainContainer: {
-      flex: 1,
       marginTop: Metrics.navBarHeight,
+      flex: 1,
       backgroundColor: Colors.transparent
     },
     backgroundImage: {

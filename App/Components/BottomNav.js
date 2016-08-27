@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Actions as NavigationActions, ActionConst } from 'react-native-router-flux'
 import styles from './Styles/BottomNavStyle'
 
 class BottomNav extends React.Component {
@@ -22,8 +22,8 @@ class BottomNav extends React.Component {
   render () {
     console.log(NavigationActions)
     return (
-      <View>
-        <TouchableOpacity style={styles.button}>
+      <View style={styles.bottomNav}>
+        <TouchableOpacity style={styles.button} onPress={this.props.dashboard}>
           <Text style={styles.buttonText}>Dashboard</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={this.props.post}>
@@ -37,8 +37,6 @@ class BottomNav extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('navacts', NavigationActions)
-  console.log('navactslog', NavigationActions.loginScreen)
   return {
     dashboard: NavigationActions.dashboard,
     post: NavigationActions.post,

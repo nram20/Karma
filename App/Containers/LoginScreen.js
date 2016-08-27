@@ -5,7 +5,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
 
 // Styles
-import styles from './Styles/PresentationScreenStyle'
+import styles from './Styles/LoginScreenStyle'
 
 class LoginScreen extends React.Component {
 
@@ -78,7 +78,6 @@ class LoginScreen extends React.Component {
               </Text>
             </TouchableOpacity>
           </View>
-
         </View>
       </View>
     )
