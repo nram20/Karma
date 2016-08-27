@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text } from 'react-native'
+import { ListView, View, Text } from 'react-native'
 import { connect } from 'react-redux'
 
 // Styles
@@ -7,22 +7,51 @@ import styles from './Styles/JobsScreenStyle'
 
 class JobsScreen extends React.Component {
 
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {}
-  // }
+  constructor (props) {
+    super(props)
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2
+      })
+    }
+  }
 
   render () {
     return (
-      <ScrollView style={styles.container}>
-        <Text>JobsScreen Container</Text>
-      </ScrollView>
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this._renderItem.bind(this)}
+        />
+      </View>
     )
+  }
+
+  _renderItem (item) {
+    return (
+      <View>
+        <Text style={{color: 'white'}} >
+          Title: {item.title}{'\n'}
+          Description: {item.description}{'\n'}
+          Location: {item.location}{'\n'}
+          Cost: {item.cost}{'\n'}
+          Poster: {item.poster}{'\n'}
+          ---------
+        </Text>
+      </View>
+    )
+  }
+
+  componentWillMount () {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(this.props.jobs)
+    })
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    jobs: state.jobs.localJobs
   }
 }
 

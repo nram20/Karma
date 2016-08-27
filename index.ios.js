@@ -13,3 +13,5 @@ class RNBase extends React.Component {
 }
 
 AppRegistry.registerComponent('Karma', () => RNBase)
+
+export const dispatch = store.dispatch
