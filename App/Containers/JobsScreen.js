@@ -4,49 +4,59 @@ import { connect } from 'react-redux'
 
 // Styles
 import styles from './Styles/JobsScreenStyle'
+import AlertMessage from '../Components/AlertMessageComponent'
 
 class JobsScreen extends React.Component {
 
   constructor (props) {
     super(props)
+
+    const rowHasChanged = (r1, r2) => r1 !== r2
+
+    // DataSource configured
+    const ds = new ListView.DataSource({rowHasChanged})
+
+    // Datasource is always in state
     this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2
-      })
+      dataSource: ds.cloneWithRows(this.props.jobs || {})
     }
+
+    this._renderItem = this._renderItem.bind(this)
   }
 
   render () {
     return (
       <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this._renderItem.bind(this)}
-        />
+        <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
+        <ListView dataSource={this.state.dataSource} renderRow={this._renderItem} />
       </View>
     )
+  }
+
+  _noRowData () {
+    return this.state.dataSource.getRowCount() === 0
   }
 
   _renderItem (item) {
     return (
       <View>
-        <Text style={{color: 'white'}} >
-          Title: {item.title}{'\n'}
-          Description: {item.description}{'\n'}
-          Location: {item.location}{'\n'}
-          Cost: {item.cost}{'\n'}
-          Poster: {item.poster}{'\n'}
-          ---------
+        <Text style={{color: 'white'}}>
+          Title:
+          {item.title}
+          {'\n'} Description:
+          {item.description}
+          {'\n'} Location:
+          {item.location}
+          {'\n'} Cost:
+          {item.cost}
+          {'\n'} Poster:
+          {item.poster}
+          {'\n'} ---------
         </Text>
       </View>
     )
   }
 
-  componentWillMount () {
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this.props.jobs)
-    })
-  }
 }
 
 const mapStateToProps = (state) => {
