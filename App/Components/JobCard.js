@@ -25,7 +25,7 @@ export default class JobCard extends React.Component {
       location,
       cost,
       poster
-    } = this.props
+    } = this.props.item
 
     return (
       <TouchableOpacity style={styles.container}>

@@ -31,12 +31,7 @@ class JobsScreen extends React.Component {
   _renderItem (item) {
     return (
       <JobCard
-        jobId={item.jobId}
-        title={item.title}
-        description={item.description}
-        location={item.location}
-        cost={item.cost}
-        poster={item.poster}
+        item={item}
       />
     )
   }
@@ -84,6 +79,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    viewDetails: jobId => {
+
+    }
   }
 }
 
