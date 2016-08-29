@@ -2,6 +2,8 @@ import React from 'react'
 import { ListView, View } from 'react-native'
 import { connect } from 'react-redux'
 import JobCard from '../Components/JobCard'
+import Actions from '../Actions/Creators'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/JobsScreenStyle'
@@ -39,11 +41,12 @@ class JobsScreen extends React.Component {
   }
 
   _renderItem (item, version, id) {
+    const job = Object.assign({}, item, { id })
     return (
       <View>
         <JobCard
-          item={item}
-          id={id}
+          handleClick={this.props.viewDetails}
+          item={job}
         />
       </View>
     )
@@ -58,8 +61,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    viewDetails: jobId => {
-
+    viewDetails: job => {
+      dispatch(Actions.selectJob(job))
+      NavigationActions.jobDetails()
     }
   }
 }

@@ -40,6 +40,10 @@ const appliedFailure = (state, action) => state.merge({
   error: true
 })
 
+const selectJob = (state, action) => state.merge({
+  selectedJob: action.job
+})
+
 // map our types to our handlers
 const ACTION_HANDLERS = {
   [Types.JOBS_RECEIVE]: receive,
@@ -47,7 +51,8 @@ const ACTION_HANDLERS = {
   [Types.APPLIED_JOBS_RECEIVE]: appliedReceive,
   [Types.APPLIED_JOBS_RECEIVE_FAILURE]: appliedFailure,
   [Types.POSTED_JOBS_DETAILS_SET]: postedDetailsSet,
-  [Types.POSTED_JOBS_DETAILS_SET_FAILURE]: postedDetailsSetFailure
+  [Types.POSTED_JOBS_DETAILS_SET_FAILURE]: postedDetailsSetFailure,
+  [Types.SELECT_JOB_FOR_DETAILS]: selectJob
 }
 
 export default createReducer(INITIAL_STATE, ACTION_HANDLERS)
