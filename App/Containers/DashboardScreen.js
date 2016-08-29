@@ -12,7 +12,7 @@ class DashboardScreen extends React.Component {
     this.state = {
       postedDataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2
-      }),
+      })
       // appliedDataSource: new ListView.DataSource({
       //   rowHasChanged: (row1, row2) => row1 !== row2
       // })
@@ -51,14 +51,14 @@ class DashboardScreen extends React.Component {
 
   componentWillMount () {
     this.setState({
-      postedDataSource: this.state.postedDataSource.cloneWithRows(this.props.postedJobs),
+      postedDataSource: this.state.postedDataSource.cloneWithRows(this.props.postedJobs)
       // appliedDataSource: this.state.appliedDataSource.cloneWithRows(this.props.appliedJobs)
     })
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('statey',state)
+  console.log('statey', state)
   return {
     postedJobs: state.jobs.postedJobs
     // appliedJobs: state.jobs.appliedJobs,
