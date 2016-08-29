@@ -24,17 +24,20 @@ export default class JobCard extends React.Component {
       description,
       location,
       cost,
-      poster
+      poster,
+      id
     } = this.props.item
-    console.log('title:', title, description)
+    const { item, handleClick } = this.props
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity style={styles.container}
+        onPress={() => handleClick(item)}
+      >
         <Text style={styles.text}>{title}</Text>
         <Text style={styles.text}>{description}</Text>
         <Text style={styles.text}>Where: {location}</Text>
         <Text style={styles.text}>Karma: {cost}</Text>
         <Text style={styles.text}>Poster : {poster}</Text>
-        <Text style={styles.text}>Id: {this.props.id}</Text>
+        <Text style={styles.text}>Id: {id}</Text>
       </TouchableOpacity>
     )
   }

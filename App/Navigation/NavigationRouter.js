@@ -4,6 +4,7 @@ import BottomNav from '../Components/BottomNav'
 
 // screens identified by the router
 import RegisterScreen from '../Containers/RegisterScreen'
+import JobDetailsView from '../Containers/JobDetailsView'
 import LoginScreen from '../Containers/LoginScreen'
 import SplashScreen from '../Containers/SplashScreen'
 import JobsScreen from '../Containers/JobsScreen'
@@ -26,6 +27,7 @@ class NavigationRouter extends Component {
         <NavBar key='navvy' navBar={BottomNav} >
           <Scene initial key='loginScreen' component={LoginScreen} title='Login' />
           <Scene key='register' component={RegisterScreen} title='Register' />
+          <Scene key='jobDetails' component={JobDetailsView} title='Job Details' />
           <Scene key='splash' component={SplashScreen} title='Splash!' />
           <Scene key='dashboard' component={DashboardScreen} title='Dashboard' />
           <Scene key='post' component={PostScreen} title='Post a Job!' />

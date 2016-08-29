@@ -16,6 +16,11 @@ const logout = () => ({ type: Types.LOGOUT })
 
 const startup = () => ({ type: Types.STARTUP })
 
+const selectJob = (job) => ({
+  job,
+  type: Types.SELECT_JOB_FOR_DETAILS
+})
+
 /**
  Makes available all the action creators we've created.
  */
@@ -25,5 +30,6 @@ export default {
   postedDetailsSet,
   postedDetailsSetFailure,
   logout,
-  startup
+  startup,
+  selectJob
 }
