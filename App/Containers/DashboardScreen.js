@@ -17,7 +17,8 @@ class DashboardScreen extends React.Component {
 
     // Datasource is always in state
     this.state = {
-      postedDataSource: ds.cloneWithRows(this.props.postedJobs || {})
+      postedDataSource: ds.cloneWithRows(this.props.postedJobs || {}),
+      appliedDataSource: ds.cloneWithRows(this.props.appliedJobs || {})
     }
 
     this._renderItem = this._renderItem.bind(this)
@@ -28,10 +29,7 @@ class DashboardScreen extends React.Component {
       <View style={styles.container}>
         <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
         <ListView dataSource={this.state.postedDataSource} renderRow={this._renderItem} />
-        {/* <ListView */}
-        {/*   dataSource={this.state.appliedDataSource} */}
-        {/*   renderRow={this._renderItem.bind(this)} */}
-        {/* /> */}
+        <ListView dataSource={this.state.appliedDataSource} renderRow={this._renderItem} />
       </View>
     )
   }
@@ -64,8 +62,8 @@ class DashboardScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    postedJobs: state.jobs.postedJobs
-  // appliedJobs: state.jobs.appliedJobs,
+    postedJobs: state.jobs.postedJobs,
+    appliedJobs: state.jobs.appliedJobs
   }
 }
 

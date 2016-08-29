@@ -12,6 +12,12 @@ const postedDetailsSet = postedJobs =>
 const postedDetailsSetFailure = error =>
   ({ type: Types.POSTED_JOBS_DETAILS_SET_FAILURE, error })
 
+const appliedDetailsSet = appliedJobs =>
+  ({ type: Types.APPLIED_JOBS_DETAILS_SET, appliedJobs })
+
+const appliedDetailsSetFailure = error =>
+  ({ type: Types.APPLIED_JOBS_DETAILS_SET_FAILURE, error })
+
 const logout = () => ({ type: Types.LOGOUT })
 
 const startup = () => ({ type: Types.STARTUP })
@@ -29,6 +35,8 @@ export default {
   localJobsReceivedFailure,
   postedDetailsSet,
   postedDetailsSetFailure,
+  appliedDetailsSet,
+  appliedDetailsSetFailure,
   logout,
   startup,
   selectJob
