@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import { Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
@@ -28,7 +28,9 @@ class LoginScreen extends React.Component {
 
   login () {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-      .catch(console.log)
+      .catch(error => {
+        Alert.alert('One small problem...', error.message)
+      })
   }
 
   changeEmail (email) {
