@@ -1,15 +1,13 @@
-import { take, call, put } from 'redux-saga/effects'
-// import R from 'ramda'
+import {take, call, put} from 'redux-saga/effects'
 import Types from '../Actions/Types'
 import Actions from '../Actions/Creators'
-// import I18n from '../I18n/I18n.js'
 import db from '../Config/FirebaseConfig.js'
 
 export default () => {
   function * worker (postedJobs) {
     let postedJobIdArray = Object.keys(postedJobs)
-    let postedPromiseArray = []
-    postedPromiseArray = postedJobIdArray.map(el => {
+
+    let postedPromiseArray = postedJobIdArray.map(el => {
       let ref = db.ref(`jobs/${el}`)
       return ref.once('value', data => data)
     })

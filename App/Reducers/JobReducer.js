@@ -1,8 +1,6 @@
 import Types from '../Actions/Types'
 import Immutable from 'seamless-immutable'
 import { createReducer } from 'reduxsauce'
-// import db from '../Config/FirebaseConfig'
-// import firebase from 'firebase'
 
 export const INITIAL_STATE = Immutable({
   localJobs: {},
@@ -10,29 +8,30 @@ export const INITIAL_STATE = Immutable({
   appliedJobs: {}
 })
 
-const receive = (state, action) => state.merge({
-  localJobs: action.localJobs,
-  error: false
-})
+const receive = (state, action) =>
+  state.merge({
+    localJobs: action.localJobs,
+    error: false
+  })
 
-const failure = (state, action) => state.merge({
-  error: true
-})
+const failure = (state, action) =>
+  state.merge({
+    error: true
+  })
 
-const postedDetailsSet = (state, action) => state.merge({
-  postedJobs: action.postedJobs,
-  error: false
-})
+const postedDetailsSet = (state, action) =>
+  state.merge({
+    postedJobs: action.postedJobs,
+    error: false
+  })
 
-const postedDetailsSetFailure = (state, action) => state.merge({
-  error: true
-})
+const postedDetailsSetFailure = (state, action) =>
+  state.merge({
+    error: true
+  })
 
-// const postedFailure = (state, action) => state.merge({
-//   error: true
-// })
-
-const appliedReceive = (state, action) => state
+const appliedReceive = (state, action) =>
+  state
 // state.merge({
 //   appliedJobs: action.appliedJobs
 // })

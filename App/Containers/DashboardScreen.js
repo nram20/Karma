@@ -59,6 +59,7 @@ class DashboardScreen extends React.Component {
       </View>
     )
   }
+
 }
 
 const mapStateToProps = (state) => {
