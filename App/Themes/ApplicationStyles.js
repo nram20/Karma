@@ -59,16 +59,16 @@ const ApplicationStyles = {
     alignItems: 'center'
   },
   sectionTitle: {
-    ...Fonts.style.h4,
-    color: Colors.coal,
+    // ...Fonts.style.h4,
+    // color: Colors.coal,
     backgroundColor: Colors.ricePaper,
     padding: Metrics.smallMargin,
     marginTop: Metrics.smallMargin,
     marginHorizontal: Metrics.baseMargin,
     borderWidth: 1,
     borderColor: Colors.ember,
-    alignItems: 'center',
-    textAlign: 'center'
+    alignItems: 'center'
+    // textAlign: 'center'
   }
 }
 

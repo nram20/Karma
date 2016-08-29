@@ -1,6 +1,7 @@
 import React from 'react'
-import { ListView, View, Text } from 'react-native'
+import { ListView, View } from 'react-native'
 import { connect } from 'react-redux'
+import JobCard from '../Components/JobCard'
 
 // Styles
 import styles from './Styles/JobsScreenStyle'
@@ -37,26 +38,16 @@ class JobsScreen extends React.Component {
     return this.state.dataSource.getRowCount() === 0
   }
 
-  _renderItem (item) {
+  _renderItem (item, version, id) {
     return (
       <View>
-        <Text style={{color: 'white'}}>
-          Title:
-          {item.title}
-          {'\n'} Description:
-          {item.description}
-          {'\n'} Location:
-          {item.location}
-          {'\n'} Cost:
-          {item.cost}
-          {'\n'} Poster:
-          {item.poster}
-          {'\n'} ---------
-        </Text>
+        <JobCard
+          item={item}
+          id={id}
+        />
       </View>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {
@@ -67,6 +58,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    viewDetails: jobId => {
+
+    }
   }
 }
 
