@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import { Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
@@ -31,8 +31,11 @@ class RegisterScreen extends React.Component {
   register () {
     if (this.state.password === this.state.passwordConfirmation) {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .catch(error => {
+        Alert.alert('One small problem...', error.message)
+      })
     } else {
-      //  some alert that passwords don't match
+        Alert.alert('Error', 'Passwords don\'t match')
     }
   }
 
