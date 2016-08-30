@@ -21,6 +21,15 @@ const selectJob = (job) => ({
   type: Types.SELECT_JOB_FOR_DETAILS
 })
 
+const getLocation = (location) => ({
+  location,
+  type: Types.LOCATION_GET
+})
+
+const getLocationFail = () => ({
+  type: Types.LOCATION_GET_FAIL
+})
+
 /**
  Makes available all the action creators we've created.
  */
@@ -31,5 +40,7 @@ export default {
   postedDetailsSetFailure,
   logout,
   startup,
-  selectJob
+  selectJob,
+  getLocation,
+  getLocationFail
 }
