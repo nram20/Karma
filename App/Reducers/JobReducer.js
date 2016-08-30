@@ -8,11 +8,12 @@ export const INITIAL_STATE = Immutable({
   appliedJobs: {}
 })
 
-const receiveJob = (state, action) =>
-  state.merge({
-    localJobs: localJobs.concat(action.job),
+const receiveJob = (state, action) => {
+  return state.merge({
+    localJobs: state.localJobs.concat(action.job),
     error: false
   })
+}
 
 const clearLocalJobs = (state, action) => 
   state.merge({

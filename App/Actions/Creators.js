@@ -40,17 +40,18 @@ const clearLocalJobs = () => ({
   type: Types.CLEAR_LOCAL_JOBS
 })
 
-const recieveJob = (job) => ({
+const receiveJob = (job) => ({
   type: Types.JOB_RECEIVE,
   job
 })
 
 const localJobsRequest = (latitude, longitude) => {
   return ({
-  latitude,
-  longitude,
-  type: Types.LOCAL_JOBS_REQUEST
-})}
+    latitude,
+    longitude,
+    type: Types.LOCAL_JOBS_REQUEST
+  })
+}
 /**
  Makes available all the action creators we've created.
  */
@@ -66,7 +67,7 @@ export default {
   selectJob,
   getLocation,
   getLocationFail,
-  clearLocalJobs, 
-  recieveJob,
+  clearLocalJobs,
+  receiveJob,
   localJobsRequest
 }

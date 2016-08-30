@@ -24,7 +24,6 @@ class SplashScreen extends React.Component {
     // );
     this.watchID = navigator.geolocation.watchPosition(position => {
       this.props.getLocation(position)
-      this.props.getJobs(position.coords.latitude, position.coords.longitude)
     }, error => Alert.alert(error.message), {enableHighAccuracy: true, timeout: 200000, maximumAge: 20000})
   }
   componentWillUnmount () {
@@ -34,13 +33,11 @@ class SplashScreen extends React.Component {
     return (
       <View style={styles.mainContainer}>
         <Text>This is the first screen you see when you're logged in!</Text>
-        <Text> Curr location: {this.props.currLocation.latitude} ,{this.props.currLocation.longitude} </Text>
         <Button onPress={() => { console.log('hi test') }}> Click Me! </Button>
       </View>
     )
   }
 }
-
 const mapStateToProps = (state) => {
   return {
     currLocation: state.location.currLocation
@@ -54,7 +51,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     getJobs: (latitude, longitude) => {
       dispatch(Actions.localJobsRequest(latitude, longitude))
-    } 
+    }
   }
 }
 
