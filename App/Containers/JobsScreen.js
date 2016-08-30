@@ -26,6 +26,10 @@ class JobsScreen extends React.Component {
 
     this._renderItem = this._renderItem.bind(this)
   }
+  componentDidMount (){
+    this.props.getJobs(this.props.currLocation.latitude, this.props.currLocation.longitude)
+  }
+
 
   render () {
     return (
@@ -55,7 +59,8 @@ class JobsScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    jobs: state.jobs.localJobs
+    jobs: state.jobs.localJobs,
+    currLocation: state.location.currLocation
   }
 }
 
@@ -64,7 +69,10 @@ const mapDispatchToProps = (dispatch) => {
     viewDetails: job => {
       dispatch(Actions.selectJob(job))
       NavigationActions.jobDetails()
-    }
+    },
+    getJobs: (latitude, longitude) => {
+      dispatch(Actions.localJobsRequest(latitude, longitude))
+    } 
   }
 }
 
