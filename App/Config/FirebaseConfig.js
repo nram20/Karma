@@ -28,7 +28,7 @@ let geoFire = new GeoFire(firebaseRef)
 //  briefly show login screen before auth state is verified
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
-    console.log("user: ", user)
+    console.log('user: ', user)
     NavigationActions.splash()
     setLocalJobsListener()
     setPostedJobsListener(user)
