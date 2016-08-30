@@ -24,7 +24,7 @@ class NavigationRouter extends Component {
   render () {
     return (
       <Router>
-        <NavBar key='navvy' navBar={BottomNav} >
+        <NavBar key='navvy' navBar={BottomNav}>
           <Scene initial key='loginScreen' component={LoginScreen} title='Login' />
           <Scene key='register' component={RegisterScreen} title='Register' />
           <Scene key='jobDetails' component={JobDetailsView} title='Job Details' />

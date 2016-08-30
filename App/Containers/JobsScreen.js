@@ -1,6 +1,6 @@
 import React from 'react'
 import { ListView } from 'react-native'
-import { Container, Content, Tabs, View } from 'native-base'
+import { Container, Content, Tabs, View, Header, Title } from 'native-base'
 import { connect } from 'react-redux'
 import JobCard from '../Components/JobCard'
 import Actions from '../Actions/Creators'
@@ -33,6 +33,9 @@ class JobsScreen extends React.Component {
   render () {
     return (
       <Container>
+        <Header>
+          <Title>Register</Title>
+        </Header>
         <Content>
           <Tabs>
             <ListView
