@@ -30,7 +30,7 @@ firebase.auth().onAuthStateChanged(user => {
   if (user) {
     console.log('user: ', user)
     NavigationActions.splash()
-    setLocalJobsListener()
+    // setLocalJobsListener()
     setPostedJobsListener(user)
     setAppliedJobsListener(user)
   } else {
@@ -38,12 +38,12 @@ firebase.auth().onAuthStateChanged(user => {
   }
 })
 
-function setLocalJobsListener () {
-  let jobsRef = db.ref('jobs')
-  jobsRef.on('value', snapshot => {
-    dispatch({type: Types.JOBS_RECEIVE, localJobs: snapshot.val()})
-  })
-}
+// function setLocalJobsListener () {
+//   let jobsRef = db.ref('jobs')
+//   jobsRef.on('value', snapshot => {
+//     dispatch({type: Types.JOBS_RECEIVE, localJobs: snapshot.val()})
+//   })
+// }
 
 function setPostedJobsListener (user) {
   let jobsRef = db.ref(`jobsPosted/${user.uid}`)
@@ -57,7 +57,6 @@ function setPostedJobsListener (user) {
 function setAppliedJobsListener (user) {
   let jobsRef = db.ref(`jobsAppliedFor/${user.uid}`)
   jobsRef.on('value', snapshot => {
-    console.log('snappy', snapshot.val())
     dispatch({type: Types.APPLIED_JOBS_RECEIVE, appliedJobs: snapshot.val()})
   })
 }

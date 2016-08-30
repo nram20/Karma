@@ -7,7 +7,7 @@ import JobCard from '../Components/JobCard'
 import { Container, Content, Tabs } from 'native-base'
 
 // Styles
-// import styles from './Styles/DashboardScreenStyle'
+
 import AlertMessage from '../Components/AlertMessageComponent'
 
 class DashboardScreen extends React.Component {

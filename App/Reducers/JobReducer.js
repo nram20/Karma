@@ -3,14 +3,21 @@ import Immutable from 'seamless-immutable'
 import { createReducer } from 'reduxsauce'
 
 export const INITIAL_STATE = Immutable({
-  localJobs: {},
+  localJobs: [],
   postedJobs: {},
   appliedJobs: {}
 })
 
-const receive = (state, action) =>
+const receiveJob = (state, action) => {
+  return state.merge({
+    localJobs: state.localJobs.concat(action.job),
+    error: false
+  })
+}
+
+const clearLocalJobs = (state, action) => 
   state.merge({
-    localJobs: action.localJobs,
+    localJobs: [],
     error: false
   })
 
@@ -56,7 +63,7 @@ const selectJob = (state, action) => state.merge({
 
 // map our types to our handlers
 const ACTION_HANDLERS = {
-  [Types.JOBS_RECEIVE]: receive,
+  [Types.JOB_RECEIVE]: receiveJob,
   [Types.JOBS_RECEIVE_FAILURE]: failure,
   [Types.APPLIED_JOBS_RECEIVE]: appliedReceive,
   [Types.APPLIED_JOBS_RECEIVE_FAILURE]: appliedFailure,
@@ -64,7 +71,8 @@ const ACTION_HANDLERS = {
   [Types.POSTED_JOBS_DETAILS_SET_FAILURE]: postedDetailsSetFailure,
   [Types.APPLIED_JOBS_DETAILS_SET]: appliedDetailsSet,
   [Types.APPLIED_JOBS_DETAILS_SET_FAILURE]: appliedDetailsSetFailure,
-  [Types.SELECT_JOB_FOR_DETAILS]: selectJob
+  [Types.SELECT_JOB_FOR_DETAILS]: selectJob,
+  [Types.CLEAR_LOCAL_JOBS]: clearLocalJobs
 }
 
 export default createReducer(INITIAL_STATE, ACTION_HANDLERS)
