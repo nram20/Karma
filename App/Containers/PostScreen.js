@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
-import db from '../Config/FirebaseConfig'
+import { db, geoFire } from '../Config/FirebaseConfig'
 
 // Styles
 import styles from './Styles/PostScreenStyle'
@@ -16,7 +16,6 @@ class PostScreen extends React.Component {
 
     this.changeTitle = this.changeTitle.bind(this)
     this.changeDescription = this.changeDescription.bind(this)
-    this.changeLocation = this.changeLocation.bind(this)
     this.changeCost = this.changeCost.bind(this)
     this.post = this.post.bind(this)
   }
@@ -29,13 +28,14 @@ class PostScreen extends React.Component {
     jobToAdd.poster = currUser.uid
     jobToAdd.posterName = currUser.displayName
     let jobKey = jobRef.push(jobToAdd).key
+    console.log('location',location)
+    geoFire.set(jobKey, [this.props.location.latitude, this.props.location.longitude]).catch(err => console.log(err))
     let postedRef = db.ref(`jobsPosted/${currUser.uid}/${jobKey}`)
     postedRef.set(true)
 
     this.setState({
       title: '',
       description: '',
-      location: '',
       cost: ''
     })
   }
@@ -46,10 +46,6 @@ class PostScreen extends React.Component {
 
   changeDescription (description) {
     this.setState({description})
-  }
-
-  changeLocation (location) {
-    this.setState({location})
   }
 
   changeCost (cost) {
@@ -75,12 +71,6 @@ class PostScreen extends React.Component {
             value={this.state.description}
           />
           <TextInput
-            onChangeText={this.changeLocation}
-            placeholder='Location'
-            style={styles.input}
-            value={this.state.location}
-          />
-          <TextInput
             onChangeText={this.changeCost}
             placeholder='Cost'
             style={styles.input}
@@ -102,6 +92,7 @@ class PostScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    location: state.location.currLocation
   }
 }
 
