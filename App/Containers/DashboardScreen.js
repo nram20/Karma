@@ -1,6 +1,10 @@
 import React from 'react'
 import { ListView, View, Text } from 'react-native'
 import { connect } from 'react-redux'
+import Actions from '../Actions/Creators'
+import { Actions as NavigationActions } from 'react-native-router-flux'
+import JobCard from '../Components/JobCard'
+import { Container, Content, Tabs } from 'native-base'
 
 // Styles
 import styles from './Styles/DashboardScreenStyle'
@@ -14,11 +18,12 @@ class DashboardScreen extends React.Component {
 
     // DataSource configured
     const ds = new ListView.DataSource({rowHasChanged})
+    const ds2 = new ListView.DataSource({rowHasChanged})
 
     // Datasource is always in state
     this.state = {
       postedDataSource: ds.cloneWithRows(this.props.postedJobs || {}),
-      appliedDataSource: ds.cloneWithRows(this.props.appliedJobs || {})
+      appliedDataSource: ds2.cloneWithRows(this.props.appliedJobs || {})
     }
 
     this._renderItem = this._renderItem.bind(this)
@@ -26,11 +31,27 @@ class DashboardScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.container}>
-        <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
-        <ListView dataSource={this.state.postedDataSource} renderRow={this._renderItem} />
-        <ListView dataSource={this.state.appliedDataSource} renderRow={this._renderItem} />
-      </View>
+      <Container>
+        <Content>
+          <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
+          <Tabs>
+            <ListView
+              tabLabel="Jobs I've Posted"
+              dataSource={this.state.postedDataSource}
+              removeClippedSubviews={false}
+              renderRow={this._renderItem}
+              enableEmptySections
+            />
+            <ListView
+              tabLabel="Jobs I've Applied For"
+              dataSource={this.state.appliedDataSource}
+              removeClippedSubviews={false}
+              renderRow={this._renderItem}
+              enableEmptySections
+            />
+          </Tabs>
+        </Content>
+      </Container>
     )
   }
 
@@ -38,27 +59,17 @@ class DashboardScreen extends React.Component {
     return this.state.postedDataSource.getRowCount() === 0
   }
 
-  _renderItem (item) {
+  _renderItem (item, version, id) {
+    const job = Object.assign({}, item, { id })
     return (
-      <View>
-        <Text style={{color: 'white'}}>
-          Title:
-          {item.title}
-          {'\n'} Description:
-          {item.description}
-          {'\n'} Location:
-          {item.location}
-          {'\n'} Cost:
-          {item.cost}
-          {'\n'} Poster:
-          {item.poster}
-          {'\n'} ---------
-        </Text>
-      </View>
+        <JobCard
+          handleClick={this.props.viewDetails}
+          item={job}
+        />
     )
   }
-
 }
+
 
 const mapStateToProps = (state) => {
   return {
@@ -69,6 +80,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    viewDetails: job => {
+      dispatch(Actions.selectJob(job))
+      NavigationActions.jobDetails()
+    }
   }
 }
 

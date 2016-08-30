@@ -46,8 +46,9 @@ function setPostedJobsListener (user) {
 }
 
 function setAppliedJobsListener (user) {
-  let jobsRef = db.ref(`jobsApplied/${user.uid}`)
+  let jobsRef = db.ref(`jobsAppliedFor/${user.uid}`)
   jobsRef.on('value', snapshot => {
+    console.log('snappy',snapshot.val())
     dispatch({type: Types.APPLIED_JOBS_RECEIVE, appliedJobs: snapshot.val()})
   })
 }
