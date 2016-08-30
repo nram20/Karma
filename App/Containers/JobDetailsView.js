@@ -1,6 +1,9 @@
 import React from 'react'
 import { ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
+import { Button } from 'native-base'
+import firebase from 'firebase'
+import db from '../Config/FirebaseConfig'
 // import Actions from '../Actions/Creators'
 // import { Actions as NavigationActions } from 'react-native-router-flux'
 
@@ -9,10 +12,21 @@ import styles from './Styles/JobDetailsViewStyle'
 
 class JobDetailsView extends React.Component {
 
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {}
-  // }
+  constructor (props) {
+    super(props)
+    this.state = {}
+
+    this.applyToJob = this.applyToJob.bind(this)
+  }
+
+  applyToJob() {
+    let jobKey = this.props.job.id
+    let currUser = firebase.auth().currentUser.uid
+    let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
+    applicantsRef.set(true)
+    let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
+    appliedRef.set(true)
+  }
 
   render () {
     const {
@@ -31,6 +45,7 @@ class JobDetailsView extends React.Component {
         <Text style={styles.text}>Karma: {cost}</Text>
         <Text style={styles.text}>Poster : {poster}</Text>
         <Text style={styles.text}>Id: {id}</Text>
+        <Button onPress={this.applyToJob}>Apply</Button>
       </ScrollView>
     )
   }

@@ -23,11 +23,13 @@ class PostScreen extends React.Component {
 
   post () {
     let jobRef = db.ref('jobs')
-    let currUser = firebase.auth().currentUser.uid
+    let currUser = firebase.auth().currentUser
     let jobToAdd = Object.assign({}, this.state)
-    jobToAdd.poster = currUser
+    console.log(currUser)
+    jobToAdd.poster = currUser.uid
+    jobToAdd.posterName = currUser.displayName
     let jobKey = jobRef.push(jobToAdd).key
-    let postedRef = db.ref(`jobsPosted/${currUser}/${jobKey}`)
+    let postedRef = db.ref(`jobsPosted/${currUser.uid}/${jobKey}`)
     postedRef.set(true)
 
     this.setState({
