@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react'
-import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
+import { Container, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
 
 // Styles
 import styles from './Styles/PresentationScreenStyle'
@@ -62,49 +63,49 @@ class RegisterScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.mainContainer}>
-        <Text>Karma - Register</Text>
-        <View style={styles.container}>
-          <Text style={styles.feedback} />
-          <TextInput
-            onChangeText={this.changeEmail}
-            placeholder='Email'
-            style={styles.input}
-          />
-          <TextInput
-            onChangeText={this.changeDisplayName}
-            placeholder='Username'
-            style={styles.input}
-          />
-          <TextInput
-            onChangeText={this.changePassword}
-            placeholder='Password'
-            style={styles.input}
-            secureTextEntry
-          />
-          <TextInput
-            onChangeText={this.changePasswordConfirmation}
-            placeholder='Confirm Password'
-            style={styles.input}
-            secureTextEntry
-          />
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={this.register}
-          >
-            <Text style={styles.button}>Sign Up</Text>
-          </TouchableOpacity>
-          <View style={styles.links}>
-            <TouchableOpacity
-              onPress={this.props.loginScreen}
-            >
-              <Text style={styles.link}>
-                Log In
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      <Container>
+        <Header>
+          <Title> Register</Title>
+        </Header>
+
+        <Content style={styles.container}>
+          <InputGroup style={styles.input}>
+            <Icon name='ios-person' />
+            <Input
+              style={styles.input}
+              onChangeText={this.changeEmail}
+              placeholder='Email'
+            />
+          </InputGroup>
+
+          <InputGroup>
+            <Icon name='ios-unlock' />
+            <Input
+              style={styles.input}
+              onChangeText={this.changePassword}
+              placeholder='Password'
+              secureTextEntry
+            />
+          </InputGroup>
+
+          <InputGroup>
+            <Icon name='ios-unlock' />
+            <Input
+              style={styles.input}
+              onChangeText={this.changePasswordConfirmation}
+              placeholder='Confirm Password'
+              secureTextEntry
+            />
+          </InputGroup>
+
+          <Button block success iconRight onPress={this.register}>
+            Sign Up for Karma! <Icon name='ios-arrow-forward' />
+          </Button>
+          <Button small block iconLeft onPress={this.props.loginScreen}>
+            Back to Login <Icon name='ios-arrow-back' />
+          </Button>
+        </Content>
+      </Container>
     )
   }
 }

@@ -16,7 +16,6 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
     padding: 40
   },
   header: {
@@ -33,9 +32,6 @@ export default StyleSheet.create({
   input: {
     backgroundColor: white,
     height: 50,
-    borderColor: black,
-    borderWidth: 1,
-    borderRadius: 5,
     margin: 2,
     textAlign: 'center'
   },
