@@ -22,11 +22,9 @@ export default class JobCard extends React.Component {
   render () {
     const {
       title,
-      description,
       location,
       cost,
-      poster,
-      id
+      poster
     } = this.props.item
     const { item, handleClick } = this.props
     return (
