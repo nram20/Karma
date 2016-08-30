@@ -1,7 +1,8 @@
 import {take, call, put} from 'redux-saga/effects'
 import Types from '../Actions/Types'
 import Actions from '../Actions/Creators'
-import db from '../Config/FirebaseConfig.js'
+import { db } from '../Config/FirebaseConfig'
+// geoFire
 
 export default () => {
   function * worker (postedJobs) {

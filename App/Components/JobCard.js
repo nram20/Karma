@@ -1,6 +1,7 @@
 import React from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import styles from './Styles/JobCardStyle'
+import { Container, Content, Card, CardItem, Text } from 'native-base'
 
 export default class JobCard extends React.Component {
 
@@ -21,24 +22,32 @@ export default class JobCard extends React.Component {
   render () {
     const {
       title,
-      description,
       location,
       cost,
-      poster,
-      id
+      poster
     } = this.props.item
     const { item, handleClick } = this.props
     return (
-      <TouchableOpacity style={styles.container}
-        onPress={() => handleClick(item)}
-      >
-        <Text style={styles.text}>{title}</Text>
-        <Text style={styles.text}>{description}</Text>
-        <Text style={styles.text}>Where: {location}</Text>
-        <Text style={styles.text}>Karma: {cost}</Text>
-        <Text style={styles.text}>Poster : {poster}</Text>
-        <Text style={styles.text}>Id: {id}</Text>
-      </TouchableOpacity>
+      <Container>
+        <Content>
+          <Card>
+            <CardItem>
+              <Text>
+                {title}
+              </Text>
+              <Text note>
+                {poster}
+              </Text>
+            </CardItem>
+            <CardItem cardBody>
+              <TouchableOpacity onPress={() => handleClick(item)} >
+                <Text style={styles.text}>Where: {location}</Text>
+                <Text style={styles.text}>Karma: {cost}</Text>
+              </TouchableOpacity>
+            </CardItem>
+          </Card>
+        </Content>
+      </Container>
     )
   }
 }

@@ -19,11 +19,13 @@ class RegisterScreen extends React.Component {
 
     this.state = {
       email: '',
+      displayName: '',
       password: '',
       passwordConfirmation: ''
     }
 
     this.changeEmail = this.changeEmail.bind(this)
+    this.changeDisplayName = this.changeDisplayName.bind(this)
     this.changePassword = this.changePassword.bind(this)
     this.changePasswordConfirmation = this.changePasswordConfirmation.bind(this)
     this.register = this.register.bind(this)
@@ -32,9 +34,12 @@ class RegisterScreen extends React.Component {
   register () {
     if (this.state.password === this.state.passwordConfirmation) {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .catch(error => {
-        Alert.alert('One small problem...', error.message)
-      })
+        .then(user => {
+          user.updateProfile({ displayName: this.state.displayName })
+        })
+        .catch(error => {
+          Alert.alert('One small problem...', error.message)
+        })
     } else {
       Alert.alert('Error', 'Passwords don\'t match')
     }
@@ -42,6 +47,10 @@ class RegisterScreen extends React.Component {
 
   changeEmail (email) {
     this.setState({email})
+  }
+
+  changeDisplayName (displayName) {
+    this.setState({displayName})
   }
 
   changePassword (password) {
