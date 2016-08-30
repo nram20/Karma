@@ -19,7 +19,7 @@ class JobDetailsView extends React.Component {
     this.applyToJob = this.applyToJob.bind(this)
   }
 
-  applyToJob() {
+  applyToJob () {
     let jobKey = this.props.job.id
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)

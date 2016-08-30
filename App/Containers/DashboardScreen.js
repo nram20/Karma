@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListView, View, Text } from 'react-native'
+import { ListView } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -7,7 +7,6 @@ import JobCard from '../Components/JobCard'
 import { Container, Content, Tabs } from 'native-base'
 
 // Styles
-import styles from './Styles/DashboardScreenStyle'
 import AlertMessage from '../Components/AlertMessageComponent'
 
 class DashboardScreen extends React.Component {
@@ -62,14 +61,13 @@ class DashboardScreen extends React.Component {
   _renderItem (item, version, id) {
     const job = Object.assign({}, item, { id })
     return (
-        <JobCard
-          handleClick={this.props.viewDetails}
-          item={job}
-        />
+      <JobCard
+        handleClick={this.props.viewDetails}
+        item={job}
+      />
     )
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {
