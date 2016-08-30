@@ -1,10 +1,9 @@
 import React, {PropTypes} from 'react'
-import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { Text, View, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
-import { Container, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base';
-
+import { Container, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
 
 // Styles
 import styles from './Styles/LoginScreenStyle'
@@ -54,25 +53,24 @@ class LoginScreen extends React.Component {
           <InputGroup style={styles.input}>
             <Icon name='ios-person' />
             <Input
-            style={styles.input}
-            onChangeText={this.changeEmail}
-            placeholder='Email'
+              style={styles.input}
+              onChangeText={this.changeEmail}
+              placeholder='Email'
             />
-          </InputGroup> 
+          </InputGroup>
           <InputGroup>
             <Icon name='ios-unlock' />
-            <Input 
-            style={styles.input}
-            onChangeText={this.changePassword}
-            placeholder='Password'
-            secureTextEntry
+            <Input
+              style={styles.input}
+              onChangeText={this.changePassword}
+              placeholder='Password'
+              secureTextEntry
             />
-          </InputGroup>            
-          
-          <Button block success iconRight onPress={this.login}> 
-            Sign In <Icon name="ios-arrow-forward"/>
-          </Button>
+          </InputGroup>
 
+          <Button block success iconRight onPress={this.login}>
+            Sign In <Icon name='ios-arrow-forward' />
+          </Button>
 
           <View style={styles.links}>
             <Button small>
@@ -80,7 +78,6 @@ class LoginScreen extends React.Component {
                 Forgot Password
               </Text>
             </Button>
-            
 
             <Button small
               onPress={this.props.register}
@@ -89,9 +86,8 @@ class LoginScreen extends React.Component {
                 Sign Up
               </Text>
             </Button>
-           </View> 
-          </Content>            
-
+          </View>
+        </Content>
       </Container>
     )
   }
