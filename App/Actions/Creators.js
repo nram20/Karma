@@ -12,6 +12,12 @@ const postedDetailsSet = postedJobs =>
 const postedDetailsSetFailure = error =>
   ({ type: Types.POSTED_JOBS_DETAILS_SET_FAILURE, error })
 
+const appliedDetailsSet = appliedJobs =>
+  ({ type: Types.APPLIED_JOBS_DETAILS_SET, appliedJobs })
+
+const appliedDetailsSetFailure = error =>
+  ({ type: Types.APPLIED_JOBS_DETAILS_SET_FAILURE, error })
+
 const logout = () => ({ type: Types.LOGOUT })
 
 const startup = () => ({ type: Types.STARTUP })
@@ -19,6 +25,15 @@ const startup = () => ({ type: Types.STARTUP })
 const selectJob = (job) => ({
   job,
   type: Types.SELECT_JOB_FOR_DETAILS
+})
+
+const getLocation = (location) => ({
+  location,
+  type: Types.LOCATION_GET
+})
+
+const getLocationFail = () => ({
+  type: Types.LOCATION_GET_FAIL
 })
 
 /**
@@ -29,7 +44,11 @@ export default {
   localJobsReceivedFailure,
   postedDetailsSet,
   postedDetailsSetFailure,
+  appliedDetailsSet,
+  appliedDetailsSetFailure,
   logout,
   startup,
-  selectJob
+  selectJob,
+  getLocation,
+  getLocationFail
 }

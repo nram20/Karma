@@ -4,6 +4,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import { dispatch } from '../../index.ios'
 
 import firebase from 'firebase'
+import GeoFire from 'geofire'
 import Types from '../Actions/Types.js'
 
 const firebaseConfig = {
@@ -16,6 +17,13 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 let db = firebase.database()
+
+// Generate location firebase location
+let firebaseRef = db.ref('locations')
+
+// Create a new GeoFire instance at locations
+let geoFire = new GeoFire(firebaseRef)
+
 //  might want to move the login check to a loading screen so we don't
 //  briefly show login screen before auth state is verified
 firebase.auth().onAuthStateChanged(user => {
@@ -46,10 +54,14 @@ function setPostedJobsListener (user) {
 }
 
 function setAppliedJobsListener (user) {
-  let jobsRef = db.ref(`jobsApplied/${user.uid}`)
+  let jobsRef = db.ref(`jobsAppliedFor/${user.uid}`)
   jobsRef.on('value', snapshot => {
+    console.log('snappy',snapshot.val())
     dispatch({type: Types.APPLIED_JOBS_RECEIVE, appliedJobs: snapshot.val()})
   })
 }
 
-export default db
+export {
+  db,
+  geoFire
+}

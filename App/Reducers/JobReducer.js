@@ -30,11 +30,21 @@ const postedDetailsSetFailure = (state, action) =>
     error: true
   })
 
+const appliedDetailsSet = (state, action) =>
+  state.merge({
+    appliedJobs: action.appliedJobs,
+    error: false
+  })
+
+const appliedDetailsSetFailure = (state, action) =>
+  state.merge({
+    error: true
+  })
+
 const appliedReceive = (state, action) =>
-  state
-// state.merge({
-//   appliedJobs: action.appliedJobs
-// })
+  state.merge({
+    appliedJobs: action.appliedJobs
+  })
 
 const appliedFailure = (state, action) => state.merge({
   error: true
@@ -52,6 +62,8 @@ const ACTION_HANDLERS = {
   [Types.APPLIED_JOBS_RECEIVE_FAILURE]: appliedFailure,
   [Types.POSTED_JOBS_DETAILS_SET]: postedDetailsSet,
   [Types.POSTED_JOBS_DETAILS_SET_FAILURE]: postedDetailsSetFailure,
+  [Types.APPLIED_JOBS_DETAILS_SET]: appliedDetailsSet,
+  [Types.APPLIED_JOBS_DETAILS_SET_FAILURE]: appliedDetailsSetFailure,
   [Types.SELECT_JOB_FOR_DETAILS]: selectJob
 }
 
