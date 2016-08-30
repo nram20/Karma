@@ -13,8 +13,18 @@ class SplashScreen extends React.Component {
   watchID: ?number = null
 
   componentDidMount () {
+    // console.log('mounted');
+    // navigator.geolocation.getCurrentPosition(
+    //   (position) => {
+    //     var initialPosition = JSON.stringify(position);
+    //     this.setState({initialPosition});
+    //   },
+    //   (error) => alert(error.message),
+    //   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    // );
     this.watchID = navigator.geolocation.watchPosition(position => {
       this.props.getLocation(position)
+      this.props.getJobs(position.coords.latitude, position.coords.longitude)
     }, error => Alert.alert(error.message), {enableHighAccuracy: true, timeout: 200000, maximumAge: 20000})
   }
   componentWillUnmount () {
@@ -41,7 +51,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getLocation: location => {
       dispatch(Actions.getLocation(location))
-    }
+    },
+    getJobs: (latitude, longitude) => {
+      dispatch(Actions.localJobsRequest(latitude, longitude))
+    } 
   }
 }
 
