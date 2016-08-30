@@ -32,8 +32,8 @@ export default StyleSheet.create({
   input: {
     backgroundColor: white,
     height: 50,
-    margin: 2,
-    textAlign: 'center'
+    margin: 2
+    // textAlign: 'center'
   },
   buttonContainer: {
     backgroundColor: white,
