@@ -52,6 +52,11 @@ const localJobsRequest = (latitude, longitude) => {
     type: Types.LOCAL_JOBS_REQUEST
   })
 }
+
+const newMapRegion = region => ({
+  type: Types.NEW_MAP_REGION,
+  region
+})
 /**
  Makes available all the action creators we've created.
  */
@@ -69,5 +74,6 @@ export default {
   getLocationFail,
   clearLocalJobs,
   receiveJob,
-  localJobsRequest
+  localJobsRequest,
+  newMapRegion
 }

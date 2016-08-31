@@ -30,4 +30,6 @@ export default createTypes(`
   CLEAR_LOCAL_JOBS
 
   LOCAL_JOBS_REQUEST
+
+  NEW_MAP_REGION
 `)
