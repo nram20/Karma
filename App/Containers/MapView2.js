@@ -28,13 +28,14 @@ class MapView2 extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
       this.setState({
-        jobs: nextProps.jobs
+        jobs: nextProps.jobs,
+        annotations: this._getAnnotations(nextProps.jobs)
       })
     }
   }
 
-
   render() {
+    console.log ('this.state.annots:', this.state.annotations)
     return (
       <View style={styles.container}>
         <MapView
@@ -43,7 +44,6 @@ class MapView2 extends Component {
           onRegionChangeComplete={this._onRegionChangeComplete}
           region={this.state.mapRegion}
           annotations={this.state.annotations}
-          showUserLocation={this.state.showUserLocation}
         />
       </View>
     )
@@ -103,13 +103,13 @@ class MapView2 extends Component {
     }
   }
 
-  _onRegionInputChanged = (region) => {
-    this.setState({
-      mapRegion: region,
-      mapRegionInput: region,
-      annotations: this._getAnnotations(region)
-    })
-  }
+  // _onRegionInputChanged = (region) => {
+  //   this.setState({
+  //     mapRegion: region,
+  //     mapRegionInput: region,
+  //     annotations: this._getAnnotations(region)
+  //   })
+  // }
 }
 
 var styles = StyleSheet.create({
