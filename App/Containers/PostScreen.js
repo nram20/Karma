@@ -28,7 +28,6 @@ class PostScreen extends React.Component {
     jobToAdd.poster = currUser.uid
     jobToAdd.posterName = currUser.displayName
     let jobKey = jobRef.push(jobToAdd).key
-    console.log('location',location)
     geoFire.set(jobKey, [this.props.location.latitude, this.props.location.longitude]).catch(err => console.log(err))
     let postedRef = db.ref(`jobsPosted/${currUser.uid}/${jobKey}`)
     postedRef.set(true)

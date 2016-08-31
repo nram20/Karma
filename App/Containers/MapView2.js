@@ -25,7 +25,7 @@ class MapView2 extends Component {
     this.mapAnnotations = this.mapAnnotations.bind(this)
   }
 
-  componentWillRecieveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
       this.setState({
         jobs: nextProps.jobs
@@ -90,10 +90,10 @@ class MapView2 extends Component {
     this.setState({
       mapRegionInput: region
     })
-  };
+  }
 
   _onRegionChangeComplete = (region) => {
-    this.props.newMapRegion(region)react
+    this.props.newMapRegion(region)
     if (this.state.isFirstLoad) {
       this.setState({
         mapRegionInput: region,
