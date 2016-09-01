@@ -91,7 +91,7 @@ class JobDetailsView extends React.Component {
     console.log('jobbbb', this.props.job)
     console.log('appllll', this.props.appliedJobs)
 
-    let controls;
+    let controls
     if (poster === currUser) {
       controls = <Button onPress={this.cancelJob}>Cancel Job</Button> 
     } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.id)) {
@@ -101,7 +101,8 @@ class JobDetailsView extends React.Component {
     }
 
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
+      <ScrollView >
         <Text style={styles.text}>{title}</Text>
         <Text style={styles.text}>{description}</Text>
         <Text style={styles.text}>Where: {location}</Text>
@@ -112,6 +113,7 @@ class JobDetailsView extends React.Component {
         {controls}
         <Button onPress={this.logOut}>Log the Fuck Out</Button>
       </ScrollView>
+      </View>
     )
   }
 }

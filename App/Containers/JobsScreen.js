@@ -37,9 +37,6 @@ class JobsScreen extends React.Component {
   render () {
     return (
       <Container style={{flex:1}} >
-        <Header>
-          <Title>Register</Title>
-        </Header>
         <Content>
           <Tabs style={styles.tabs}>
             <ListView

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListView } from 'react-native'
+import { ListView, Alertd } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -29,6 +29,24 @@ class DashboardScreen extends React.Component {
     this._renderItem = this._renderItem.bind(this)
   }
 
+  watchID: ?number = null
+
+  componentDidMount () {
+    // console.log('mounted');
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.getLocation(position)
+      },
+      (error) => Alert.alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition(position => {
+      this.props.getLocation(position)
+    }, error => Alert.alert(error.message), {enableHighAccuracy: true, timeout: 200000, maximumAge: 20000})
+  }
+  componentWillUnmount () {
+    navigator.geolocation.clearWatch(this.watchID)
+  }
   render () {
     return (
       <Container>
@@ -78,7 +96,8 @@ class DashboardScreen extends React.Component {
 const mapStateToProps = (state) => {
   return {
     postedJobs: state.jobs.postedJobs,
-    appliedJobs: state.jobs.appliedJobs
+    appliedJobs: state.jobs.appliedJobs,
+    currLocation: state.location.currLocation
   }
 }
 
@@ -87,6 +106,9 @@ const mapDispatchToProps = (dispatch) => {
     viewDetails: job => {
       dispatch(Actions.selectJob(job))
       NavigationActions.jobDetails()
+    },
+    getLocation: location => {
+      dispatch(Actions.getLocation(location))
     }
   }
 }

@@ -3,6 +3,7 @@ import { Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { db, geoFire } from '../Config/FirebaseConfig'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/PostScreenStyle'
