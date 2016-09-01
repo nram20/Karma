@@ -40,29 +40,30 @@ class JobDetailsView extends React.Component {
   }
 
   applyToJob () {
-    let jobKey = this.props.job.id
+    console.log('****this.props.job:', this.props.job);
+    let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
     applicantsRef.set(true)
     let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
     appliedRef.set(true)
-    this.props.actions.applyToJob(this.props.job)
+    // this.props.actions.applyToJob(this.props.job)
   }
 
   unapplyToJob () {
     console.log('thispropsjob',this.props.job)
-    let jobKey = this.props.job.id
+    let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
     applicantsRef.remove()
     let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
     appliedRef.remove()
-    this.props.actions.unapplyToJob(this.props.job)
+    // this.props.actions.unapplyToJob(this.props.job)
   }
 
   cancelJob () {
     console.log('incancel',this.props.job)
-    let jobKey = this.props.job.id
+    let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     db.ref(`jobsPosted/${currUser}/${jobKey}`).remove()
       .catch(console.log)
@@ -117,7 +118,7 @@ class JobDetailsView extends React.Component {
           />
         </View>
       )
-    } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.id)) {
+    } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.key)) {
       controls = <Button onPress={this.unapplyToJob}>unApply</Button>
     } else {
       controls = <Button onPress={this.applyToJob}>Apply</Button>
@@ -132,7 +133,7 @@ class JobDetailsView extends React.Component {
           <Text style={styles.text}>Karma: {cost}</Text>
           <Text style={styles.text}>Poster : {poster}</Text>
           <Text style={styles.text}>Poster : {posterName}</Text>
-          <Text style={styles.text}>Id: {key}</Text>
+          <Text style={styles.text}>Key: {key}</Text>
           {controls}
           <Button onPress={this.logOut}>Log the Fuck Out</Button>
         </ScrollView>

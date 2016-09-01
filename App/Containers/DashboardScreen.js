@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListView, Alertd } from 'react-native'
+import { ListView, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -7,6 +7,7 @@ import JobCard from '../Components/JobCard'
 import { Container, Content, Tabs } from 'native-base'
 
 // Styles
+import styles from './Styles/JobDetailsViewStyle'
 
 import AlertMessage from '../Components/AlertMessageComponent'
 
@@ -55,7 +56,7 @@ class DashboardScreen extends React.Component {
 
   render () {
     return (
-      <Container>
+      <Container style={styles.container}>
         <Content>
           <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
           <Tabs>
@@ -85,9 +86,13 @@ class DashboardScreen extends React.Component {
     return this.state.postedDataSource.getRowCount() === 0
   }
 
-  _renderItem (item, version, id) {
-    console.log('iiiiiitem',item)
-    const job = item ? Object.assign({}, item, { id }) : {}
+  _renderItem (item, version, key) {
+    console.log('*********version, key', version, key);
+    console.log('---------')
+    console.log(item)
+    console.log(key)
+    console.log('---------')
+    const job = item ? Object.assign({}, item, { key }) : {}
     return (
       <JobCard
         handleClick={this.props.viewDetails}
