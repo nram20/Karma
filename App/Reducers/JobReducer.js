@@ -8,12 +8,12 @@ export const INITIAL_STATE = Immutable({
   appliedJobs: {}
 })
 
-const receiveJob = (state, action) => {
-  return state.merge({
+const receiveJob = (state, action) =>
+  state.merge({
     localJobs: state.localJobs.concat(action.job),
     error: false
   })
-}
+
 
 const clearLocalJobs = (state, action) => 
   state.merge({
@@ -53,13 +53,39 @@ const appliedReceive = (state, action) =>
     appliedJobs: action.appliedJobs
   })
 
-const appliedFailure = (state, action) => state.merge({
-  error: true
-})
+const appliedFailure = (state, action) =>
+  state.merge({
+    error: true
+  })
 
-const selectJob = (state, action) => state.merge({
-  selectedJob: action.job
-})
+const selectJob = (state, action) =>
+  state.merge({
+    selectedJob: action.job
+  })
+
+const applyToJob = (state, action) => {
+  let appliedJobs = Object.assign({}, state.appliedJobs)
+  appliedJobs[action.job.key] = action.job
+  console.log('appliedjobsreducer', appliedJobs)
+  return state.merge({
+    appliedJobs
+  })
+}
+
+const unapplyToJob = (state, action) => {
+  let appliedJobs = {}
+  if (state.jobs) {
+    for (let job in state.jobs.appliedJobs) {
+      if (job !== action.job) {
+        appliedJobs[job] = state.jobs.appliedJobs[job]
+      }
+    }
+  }
+  console.log('unappliedjobsreducer',appliedJobs)
+  return state.merge({
+    appliedJobs
+  })
+}
 
 // map our types to our handlers
 const ACTION_HANDLERS = {
@@ -72,6 +98,8 @@ const ACTION_HANDLERS = {
   [Types.APPLIED_JOBS_DETAILS_SET]: appliedDetailsSet,
   [Types.APPLIED_JOBS_DETAILS_SET_FAILURE]: appliedDetailsSetFailure,
   [Types.SELECT_JOB_FOR_DETAILS]: selectJob,
+  [Types.APPLY_TO_JOB]: applyToJob,
+  [Types.UNAPPLY_TO_JOB]: unapplyToJob,
   [Types.CLEAR_LOCAL_JOBS]: clearLocalJobs
 }
 

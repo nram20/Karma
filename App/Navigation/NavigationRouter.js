@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Scene, Router, NavBar } from 'react-native-router-flux'
+import { Text } from 'react-native'
+import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux'
 import BottomNav from '../Components/BottomNav'
 
 // screens identified by the router
@@ -15,29 +16,44 @@ import ListviewGridExample from '../Containers/ListviewGridExample'
 import MapviewExample from '../Containers/MapviewExample'
 import APITestingScreen from '../Containers/APITestingScreen'
 import DeviceInfoScreen from '../Containers/DeviceInfoScreen'
+import Testing from '../Containers/Testing'
 
 /* **************************
  * Documentation: https://github.com/aksonov/react-native-router-flux
  ***************************/
+ class TabIcon extends React.Component {
+    render(){
+        return (
+            <Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
+        );
+    }
+}
+
 
 class NavigationRouter extends Component {
   render () {
     return (
       <Router>
-        <NavBar key='navvy' navBar={BottomNav}>
-          <Scene initial key='loginScreen' component={LoginScreen} title='Login' />
+        <Scene key='root'>
+          <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} title='Login' />
           <Scene key='register' component={RegisterScreen} title='Register' />
-          <Scene key='jobDetails' component={JobDetailsView} title='Job Details' />
-          <Scene key='splash' component={SplashScreen} title='Splash!' />
-          <Scene key='dashboard' component={DashboardScreen} title='Dashboard' />
-          <Scene key='post' component={PostScreen} title='Post a Job!' />
-          <Scene key='jobs' component={JobsScreen} title='Jobs' />
+          <Scene key='splash' component={SplashScreen} title='Splash!' panHandlers={null} />
           <Scene key='listviewExample' component={ListviewExample} title='Listview Example' />
           <Scene key='listviewGridExample' component={ListviewGridExample} title='Listview Grid' />
           <Scene key='mapviewExample' component={MapviewExample} title='Mapview Example' />
           <Scene key='apiTesting' component={APITestingScreen} title='API Testing' />
+          <Scene key='jobDetails' component={JobDetailsView} title='Job' navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} />
           <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
-        </NavBar>
+          <Scene tabs key='tabbar' animated direction='vertical' duration={300}>
+            <Scene key='dashboard' icon={TabIcon} component={DashboardScreen} title='Dashboard' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}}>
+            </Scene>
+            <Scene key='post' icon={TabIcon} component={PostScreen} title='Post a Job!' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}}>
+            </Scene>
+            <Scene key='jobs' icon={TabIcon} component={JobsScreen} title='Jobs' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} hideNavBar></Scene>
+
+            
+          </Scene>
+        </Scene>
       </Router>
     )
   }

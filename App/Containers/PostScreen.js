@@ -3,6 +3,7 @@ import { Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { db, geoFire } from '../Config/FirebaseConfig'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/PostScreenStyle'
@@ -28,7 +29,6 @@ class PostScreen extends React.Component {
     jobToAdd.poster = currUser.uid
     jobToAdd.posterName = currUser.displayName
     let jobKey = jobRef.push(jobToAdd).key
-    console.log('location',location)
     geoFire.set(jobKey, [this.props.location.latitude, this.props.location.longitude]).catch(err => console.log(err))
     let postedRef = db.ref(`jobsPosted/${currUser.uid}/${jobKey}`)
     postedRef.set(true)

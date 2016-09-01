@@ -1,7 +1,5 @@
-var React = require('react');
-var ReactNative = require('react-native');
-var { PropTypes } = React;
-var {
+import React, { Component, PropTypes } from 'react'
+import {
   Image,
   MapView,
   StyleSheet,
@@ -9,17 +7,35 @@ var {
   TextInput,
   TouchableOpacity,
   View
-} = ReactNative;
+} from 'react-native'
+import { connect } from 'react-redux'
+import Actions from '../Actions/Creators'
 
-export default class MapView2 extends React.Component {
-  state = {
-    isFirstLoad: true,
-    mapRegion: undefined,
-    mapRegionInput: undefined,
-    annotations: []
+class MapView2 extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isFirstLoad: true,
+      mapRegion: undefined,
+      mapRegionInput: undefined,
+      jobs: this.props.jobs,
+      showUserLocation: true
+    }
+    console.log ('this.props:', this.props)
+    this.mapAnnotations = this.mapAnnotations.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      this.setState({
+        jobs: nextProps.jobs,
+        annotations: this._getAnnotations(nextProps.jobs)
+      })
+    }
   }
 
   render() {
+    console.log ('this.state.annots:', this.state.annotations)
     return (
       <View style={styles.container}>
         <MapView
@@ -33,21 +49,51 @@ export default class MapView2 extends React.Component {
     )
   }
 
-  _getAnnotations = (region) => {
-    return [{
-      longitude: region.longitude,
-      latitude: region.latitude,
-      title: 'You Are Here'
-    }]
+  mapAnnotations(jobs) {
+    const annots = [];
+    jobs.forEach(job => {
+      const annot = {
+        longitude: job.location[1],
+        latitude: job.location[0],
+        title: job.title,
+      }
+      annots.push(annot)
+    })
+    return annots;
   }
 
+  _getAnnotations = (region) => {
+    return this.mapAnnotations(this.state.jobs)
+  }
+
+  // console.log('region', region)
+  // return [
+  //   {
+  //     longitude: region.longitude,
+  //     latitude: region.latitude,
+  //     title: 'You Are Here'
+  //   },
+  //   {
+  //     longitude: -90,
+  //     latitude: 40,
+  //     title: ' ',
+  //     tintColor: 'blue',
+  //     onFocus: () => console.log('hey yo!'),
+  //     // rightCalloutView: <View style={{height: 100, width: 100, backgroundColor: 'blue'}} />,
+  //     // leftCalloutView: <View style={{height: 100, width: 100, backgroundColor: 'blue'}} />,
+  //     detailCalloutView: <View style={{height: 100, width: 100, backgroundColor: 'blue', borderRadius: 5}} />
+  //   }
+  // ]
+
   _onRegionChange = (region) => {
+    console.log('onRegionChange', this.props)
     this.setState({
       mapRegionInput: region
     })
-  };
+  }
 
   _onRegionChangeComplete = (region) => {
+    this.props.newMapRegion(region)
     if (this.state.isFirstLoad) {
       this.setState({
         mapRegionInput: region,
@@ -57,24 +103,23 @@ export default class MapView2 extends React.Component {
     }
   }
 
-  _onRegionInputChanged = (region) => {
-    this.setState({
-      mapRegion: region,
-      mapRegionInput: region,
-      annotations: this._getAnnotations(region)
-    })
-  }
+  // _onRegionInputChanged = (region) => {
+  //   this.setState({
+  //     mapRegion: region,
+  //     mapRegionInput: region,
+  //     annotations: this._getAnnotations(region)
+  //   })
+  // }
 }
 
 var styles = StyleSheet.create({
   map: {
-    height: 150,
-    margin: 10,
+    flex: 1,
     borderWidth: 1,
     borderColor: '#000000'
   },
   container: {
-    flex: 1
+    flex: 1,
   },
   row: {
     flexDirection: 'row',
@@ -96,3 +141,13 @@ var styles = StyleSheet.create({
     borderColor: '#777777'
   }
 })
+
+const mapStateToProps = state => ({
+  jobs: state.jobs.localJobs
+})
+
+const mapDispatchToProps = dispatch => ({
+  newMapRegion: region => dispatch(Actions.newMapRegion(region))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapView2)

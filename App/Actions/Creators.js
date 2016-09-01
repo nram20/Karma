@@ -27,6 +27,16 @@ const selectJob = (job) => ({
   type: Types.SELECT_JOB_FOR_DETAILS
 })
 
+const applyToJob = (job) => ({
+  job,
+  type: Types.APPLY_TO_JOB
+})
+
+const unapplyToJob = (job) => ({
+  job,
+  type: Types.UNAPPLY_TO_JOB
+})
+
 const getLocation = (location) => ({
   location,
   type: Types.LOCATION_GET
@@ -52,6 +62,11 @@ const localJobsRequest = (latitude, longitude) => {
     type: Types.LOCAL_JOBS_REQUEST
   })
 }
+
+const newMapRegion = region => ({
+  type: Types.NEW_MAP_REGION,
+  region
+})
 /**
  Makes available all the action creators we've created.
  */
@@ -65,9 +80,12 @@ export default {
   logout,
   startup,
   selectJob,
+  applyToJob,
+  unapplyToJob,
   getLocation,
   getLocationFail,
   clearLocalJobs,
   receiveJob,
-  localJobsRequest
+  localJobsRequest,
+  newMapRegion
 }

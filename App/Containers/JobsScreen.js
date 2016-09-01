@@ -9,7 +9,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import MapView from './MapView2'
 
 // Styles
-// import styles from './Styles/JobsScreenStyle'
+import styles from './Styles/JobsScreenStyle'
 // import AlertMessage from '../Components/AlertMessageComponent'
 
 class JobsScreen extends React.Component {
@@ -36,12 +36,9 @@ class JobsScreen extends React.Component {
 
   render () {
     return (
-      <Container>
-        <Header>
-          <Title>Register</Title>
-        </Header>
+      <Container style={{flex:1}} >
         <Content>
-          <Tabs>
+          <Tabs style={styles.tabs}>
             <ListView
               tabLabel='List'
               removeClippedSubviews={false}
@@ -91,7 +88,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     getJobs: (latitude, longitude) => {
       dispatch(Actions.localJobsRequest(latitude, longitude))
-    } 
+    }
   }
 }
 
