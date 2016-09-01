@@ -27,7 +27,7 @@ export default () => {
       })
       return appliedJobsObject
     }
-
+    console.log('******* appliedObj', appliedObj);
     yield put(Actions.appliedDetailsSet(appliedObj))
   }
 

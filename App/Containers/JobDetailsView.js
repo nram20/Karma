@@ -28,7 +28,8 @@ class JobDetailsView extends React.Component {
   }
 
   applyToJob () {
-    let jobKey = this.props.job.id
+    console.log('****this.props.job:', this.props.job);
+    let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
     applicantsRef.set(true)
@@ -39,7 +40,7 @@ class JobDetailsView extends React.Component {
 
   unapplyToJob () {
     console.log('thispropsjob',this.props.job)
-    let jobKey = this.props.job.id
+    let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
     applicantsRef.remove()
