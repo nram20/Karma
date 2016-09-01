@@ -59,6 +59,7 @@ class DashboardScreen extends React.Component {
         <Content>
           <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
           <Tabs>
+
             <ListView
               tabLabel="Jobs I've Posted"
               dataSource={this.state.postedDataSource}
@@ -66,6 +67,7 @@ class DashboardScreen extends React.Component {
               renderRow={this._renderItem}
               enableEmptySections
             />
+
             <ListView
               tabLabel="Jobs I've Applied For"
               dataSource={this.state.appliedDataSource}
@@ -84,11 +86,7 @@ class DashboardScreen extends React.Component {
   }
 
   _renderItem (item, version, id) {
-
-    console.log('---------')
-    console.log(item)
-    console.log(id)
-    console.log('---------')
+    console.log('iiiiiitem',item)
     const job = item ? Object.assign({}, item, { id }) : {}
     return (
       <JobCard

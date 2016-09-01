@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { ListView, View, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'native-base'
@@ -15,12 +15,24 @@ class JobDetailsView extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {}
+
+    const rowHasChanged = (r1, r2) => r1 !== r2
+    const ds = new ListView.DataSource({rowHasChanged})
+
+    this.state = {
+      appliedDataSource: ds
+    }
 
     this.applyToJob = this.applyToJob.bind(this)
     this.unapplyToJob = this.unapplyToJob.bind(this)
     this.cancelJob = this.cancelJob.bind(this)
     this.logOut = this.logOut.bind(this)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      appliedDataSource: this.state.appliedDataSource.cloneWithRows(nextProps.appliedJobs || {})
+    })
   }
 
   logOut () {
@@ -93,7 +105,18 @@ class JobDetailsView extends React.Component {
 
     let controls
     if (poster === currUser) {
-      controls = <Button onPress={this.cancelJob}>Cancel Job</Button> 
+      controls = (
+        <View>
+          <Button onPress={this.cancelJob}>Cancel Job</Button> 
+          <ListView
+            tabLabel="Jobs I've Posted"
+            dataSource={this.state.appliedDataSource}
+            removeClippedSubviews={false}
+            renderRow={this._renderItem}
+            enableEmptySections
+          />
+        </View>
+      )
     } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.id)) {
       controls = <Button onPress={this.unapplyToJob}>unApply</Button>
     } else {
@@ -102,18 +125,28 @@ class JobDetailsView extends React.Component {
 
     return (
       <View style={styles.container}>
-      <ScrollView >
-        <Text style={styles.text}>{title}</Text>
-        <Text style={styles.text}>{description}</Text>
-        <Text style={styles.text}>Where: {location}</Text>
-        <Text style={styles.text}>Karma: {cost}</Text>
-        <Text style={styles.text}>Poster : {poster}</Text>
-        <Text style={styles.text}>Poster : {posterName}</Text>
-        <Text style={styles.text}>Id: {key}</Text>
-        {controls}
-        <Button onPress={this.logOut}>Log the Fuck Out</Button>
-      </ScrollView>
+        <ScrollView >
+          <Text style={styles.text}>{title}</Text>
+          <Text style={styles.text}>{description}</Text>
+          <Text style={styles.text}>Where: {location}</Text>
+          <Text style={styles.text}>Karma: {cost}</Text>
+          <Text style={styles.text}>Poster : {poster}</Text>
+          <Text style={styles.text}>Poster : {posterName}</Text>
+          <Text style={styles.text}>Id: {key}</Text>
+          {controls}
+          <Button onPress={this.logOut}>Log the Fuck Out</Button>
+        </ScrollView>
       </View>
+    )
+  }
+
+  _renderItem (item, version, id) {
+    const job = item ? Object.assign({}, item, { id }) : {}
+    return (
+      <JobCard
+        handleClick={this.props.viewDetails}
+        item={job}
+      />
     )
   }
 }
