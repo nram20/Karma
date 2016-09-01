@@ -1,9 +1,9 @@
 import React from 'react'
-import { ScrollView, Text } from 'react-native'
+import { View, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { Button } from 'native-base'
 import firebase from 'firebase'
-import db from '../Config/FirebaseConfig'
+import { db } from '../Config/FirebaseConfig'
 // import Actions from '../Actions/Creators'
 // import { Actions as NavigationActions } from 'react-native-router-flux'
 
@@ -17,6 +17,7 @@ class JobDetailsView extends React.Component {
     this.state = {}
 
     this.applyToJob = this.applyToJob.bind(this)
+    this.cancelJob = this.cancelJob.bind(this)
   }
 
   applyToJob () {
@@ -28,15 +29,50 @@ class JobDetailsView extends React.Component {
     appliedRef.set(true)
   }
 
+  cancelJob () {
+    let jobKey = this.props.job.id
+    let currUser = firebase.auth().currentUser.uid
+    db.ref(`jobsPosted/${currUser}/${jobKey}`).remove()
+      .catch(console.log)
+    let applicantsRef = db.ref(`applicants/${jobKey}`)
+    applicantsRef.once('value', applicants => applicants)
+      .then(applicants => {
+        if (applicants.val()) {
+          let applicantsArray = Object.keys(applicants.val())
+          applicantsArray.forEach(applicant => {
+            db.ref(`jobsAppliedFor/${applicant}/${jobKey}`).remove()
+              .catch(console.log)
+          })
+        }
+      })
+      .then(() => {
+        applicantsRef.remove()
+      })
+      .catch(console.log)
+      .catch(console.log)
+    db.ref(`jobs/${jobKey}`).remove()
+    db.ref(`locations/${jobKey}`).remove()
+  }
+
   render () {
+    console.log(this.props.job)
     const {
       title,
       description,
       location,
       cost,
       poster,
+      posterName,
       id
     } = this.props.job
+
+    let currUser = firebase.auth().currentUser.uid
+
+    // const controls = (<View>
+    //   <Button onPress={this.cancelJob}>Cancel Job</Button><Button onPress={this.applyToJob}>Apply</Button>
+    // </View>)
+    const controls = (poster === currUser) ? <Button onPress={this.cancelJob}>Cancel Job</Button> : <Button onPress={this.applyToJob}>Apply</Button>
+
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.text}>{title}</Text>
@@ -44,8 +80,9 @@ class JobDetailsView extends React.Component {
         <Text style={styles.text}>Where: {location}</Text>
         <Text style={styles.text}>Karma: {cost}</Text>
         <Text style={styles.text}>Poster : {poster}</Text>
+        <Text style={styles.text}>Poster : {posterName}</Text>
         <Text style={styles.text}>Id: {id}</Text>
-        <Button onPress={this.applyToJob}>Apply</Button>
+        {controls}
       </ScrollView>
     )
   }
