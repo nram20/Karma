@@ -79,6 +79,15 @@ class RegisterScreen extends React.Component {
           </InputGroup>
 
           <InputGroup>
+            <Icon name='ios-person' />
+            <Input
+              style={styles.input}
+              onChangeText={this.changeDisplayName}
+              placeholder='Username'
+            />
+          </InputGroup>
+
+          <InputGroup>
             <Icon name='ios-unlock' />
             <Input
               style={styles.input}

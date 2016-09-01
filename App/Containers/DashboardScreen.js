@@ -60,7 +60,12 @@ class DashboardScreen extends React.Component {
   }
 
   _renderItem (item, version, id) {
-    const job = Object.assign({}, item, { id })
+
+    console.log('---------')
+    console.log(item)
+    console.log(id)
+    console.log('---------')
+    const job = item ? Object.assign({}, item, { id }) : {}
     return (
       <JobCard
         handleClick={this.props.viewDetails}

@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { Button } from 'native-base'
 import firebase from 'firebase'
 import { db } from '../Config/FirebaseConfig'
-// import Actions from '../Actions/Creators'
+import Actions from '../Actions/Creators'
 // import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
@@ -17,7 +18,13 @@ class JobDetailsView extends React.Component {
     this.state = {}
 
     this.applyToJob = this.applyToJob.bind(this)
+    this.unapplyToJob = this.unapplyToJob.bind(this)
     this.cancelJob = this.cancelJob.bind(this)
+    this.logOut = this.logOut.bind(this)
+  }
+
+  logOut () {
+    firebase.auth().signOut()
   }
 
   applyToJob () {
@@ -27,9 +34,22 @@ class JobDetailsView extends React.Component {
     applicantsRef.set(true)
     let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
     appliedRef.set(true)
+    this.props.actions.applyToJob(this.props.job)
+  }
+
+  unapplyToJob () {
+    console.log('thispropsjob',this.props.job)
+    let jobKey = this.props.job.id
+    let currUser = firebase.auth().currentUser.uid
+    let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
+    applicantsRef.remove()
+    let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
+    appliedRef.remove()
+    this.props.actions.unapplyToJob(this.props.job)
   }
 
   cancelJob () {
+    console.log('incancel',this.props.job)
     let jobKey = this.props.job.id
     let currUser = firebase.auth().currentUser.uid
     db.ref(`jobsPosted/${currUser}/${jobKey}`).remove()
@@ -55,7 +75,7 @@ class JobDetailsView extends React.Component {
   }
 
   render () {
-    console.log(this.props.job)
+    console.log('actttt',this.props.actions)
     const {
       title,
       description,
@@ -63,15 +83,22 @@ class JobDetailsView extends React.Component {
       cost,
       poster,
       posterName,
-      id
+      key
     } = this.props.job
 
     let currUser = firebase.auth().currentUser.uid
 
-    // const controls = (<View>
-    //   <Button onPress={this.cancelJob}>Cancel Job</Button><Button onPress={this.applyToJob}>Apply</Button>
-    // </View>)
-    const controls = (poster === currUser) ? <Button onPress={this.cancelJob}>Cancel Job</Button> : <Button onPress={this.applyToJob}>Apply</Button>
+    console.log('jobbbb', this.props.job)
+    console.log('appllll', this.props.appliedJobs)
+
+    let controls;
+    if (poster === currUser) {
+      controls = <Button onPress={this.cancelJob}>Cancel Job</Button> 
+    } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.id)) {
+      controls = <Button onPress={this.unapplyToJob}>unApply</Button>
+    } else {
+      controls = <Button onPress={this.applyToJob}>Apply</Button>
+    }
 
     return (
       <ScrollView style={styles.container}>
@@ -81,8 +108,9 @@ class JobDetailsView extends React.Component {
         <Text style={styles.text}>Karma: {cost}</Text>
         <Text style={styles.text}>Poster : {poster}</Text>
         <Text style={styles.text}>Poster : {posterName}</Text>
-        <Text style={styles.text}>Id: {id}</Text>
+        <Text style={styles.text}>Id: {key}</Text>
         {controls}
+        <Button onPress={this.logOut}>Log the Fuck Out</Button>
       </ScrollView>
     )
   }
@@ -90,12 +118,15 @@ class JobDetailsView extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    job: state.jobs.selectedJob
+    job: state.jobs.selectedJob,
+    appliedJobs: state.jobs.appliedJobs
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
+  console.log('ac',Actions)
   return {
+    actions: bindActionCreators(Actions, dispatch),
   }
 }
 

@@ -27,6 +27,16 @@ const selectJob = (job) => ({
   type: Types.SELECT_JOB_FOR_DETAILS
 })
 
+const applyToJob = (job) => ({
+  job,
+  type: Types.APPLY_TO_JOB
+})
+
+const unapplyToJob = (job) => ({
+  job,
+  type: Types.UNAPPLY_TO_JOB
+})
+
 const getLocation = (location) => ({
   location,
   type: Types.LOCATION_GET
@@ -70,6 +80,8 @@ export default {
   logout,
   startup,
   selectJob,
+  applyToJob,
+  unapplyToJob,
   getLocation,
   getLocationFail,
   clearLocalJobs,
