@@ -14,16 +14,14 @@ class DashboardScreen extends React.Component {
 
   constructor (props) {
     super(props)
-    const rowHasChanged = (r1, r2) => r1 !== r2
 
-    // DataSource configured
+    const rowHasChanged = (r1, r2) => r1 !== r2
     const ds = new ListView.DataSource({rowHasChanged})
     const ds2 = new ListView.DataSource({rowHasChanged})
 
-    // Datasource is always in state
     this.state = {
-      postedDataSource: ds.cloneWithRows(this.props.postedJobs || {}),
-      appliedDataSource: ds2.cloneWithRows(this.props.appliedJobs || {})
+      postedDataSource: ds,
+      appliedDataSource: ds2
     }
 
     this._renderItem = this._renderItem.bind(this)
@@ -31,8 +29,14 @@ class DashboardScreen extends React.Component {
 
   watchID: ?number = null
 
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      postedDataSource: this.state.postedDataSource.cloneWithRows(nextProps.postedJobs || {}),
+      appliedDataSource: this.state.appliedDataSource.cloneWithRows(nextProps.appliedJobs || {})
+    })
+  }
+
   componentDidMount () {
-    // console.log('mounted');
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.props.getLocation(position)
@@ -44,9 +48,11 @@ class DashboardScreen extends React.Component {
       this.props.getLocation(position)
     }, error => Alert.alert(error.message), {enableHighAccuracy: true, timeout: 200000, maximumAge: 20000})
   }
+
   componentWillUnmount () {
     navigator.geolocation.clearWatch(this.watchID)
   }
+
   render () {
     return (
       <Container>

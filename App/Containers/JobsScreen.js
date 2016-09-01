@@ -18,21 +18,24 @@ class JobsScreen extends React.Component {
     super(props)
 
     const rowHasChanged = (r1, r2) => r1 !== r2
-
-    // DataSource configured
     const ds = new ListView.DataSource({rowHasChanged})
 
-    // Datasource is always in state
     this.state = {
-      dataSource: ds.cloneWithRows(this.props.jobs || {})
+      dataSource: ds
     }
 
     this._renderItem = this._renderItem.bind(this)
   }
+
   componentDidMount (){
     this.props.getJobs(this.props.currLocation.latitude, this.props.currLocation.longitude)
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(nextProps.jobs || {})
+    })
+  }
 
   render () {
     return (
