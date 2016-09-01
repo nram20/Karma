@@ -7,6 +7,7 @@ import JobCard from '../Components/JobCard'
 import { Container, Content, Tabs } from 'native-base'
 
 // Styles
+import styles from './Styles/JobDetailsViewStyle'
 
 import AlertMessage from '../Components/AlertMessageComponent'
 
@@ -55,7 +56,7 @@ class DashboardScreen extends React.Component {
 
   render () {
     return (
-      <Container>
+      <Container style={styles.container}>
         <Content>
           <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
           <Tabs>
@@ -83,13 +84,13 @@ class DashboardScreen extends React.Component {
     return this.state.postedDataSource.getRowCount() === 0
   }
 
-  _renderItem (item, version, id) {
-
+  _renderItem (item, version, key) {
+    console.log('*********version, key', version, key);
     console.log('---------')
     console.log(item)
-    console.log(id)
+    console.log(key)
     console.log('---------')
-    const job = item ? Object.assign({}, item, { id }) : {}
+    const job = item ? Object.assign({}, item, { key }) : {}
     return (
       <JobCard
         handleClick={this.props.viewDetails}

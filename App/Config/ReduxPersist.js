@@ -3,7 +3,7 @@ import { persistentStoreBlacklist, persistentStoreWhitelist } from '../Reducers/
 import { AsyncStorage } from 'react-native'
 
 const REDUX_PERSIST = {
-  active: false,
+  active: true,
   reducerVersion: '1',
   storeConfig: {
     storage: AsyncStorage,
