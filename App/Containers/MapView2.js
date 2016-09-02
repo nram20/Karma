@@ -8,8 +8,34 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
+import { Button, Content, Container, Icon } from 'native-base'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
+
+const calloutStyles = {
+  content: {
+    borderColor: 'black',
+    width: 100
+  },
+  buttonView: {
+    flex: 1,
+
+  }
+}
+
+// Detail callout for map pins
+const DetailCallout = (props) => {
+  return (
+    <View style={calloutStyles.content}>
+      <View style={calloutStyles.buttonView}>
+        <Button block style={{backgroundColor: '#384850', marginLeft: -10, marginRight: -10}} >
+          <Icon name='ios-search' style={{color: '#00c497'}}/>
+        </Button>
+      </View>
+    </View>
+  )
+}
+
 
 class MapView2 extends Component {
   constructor(props) {
@@ -37,15 +63,17 @@ class MapView2 extends Component {
   render() {
     console.log ('this.state.annots:', this.state.annotations)
     return (
-      <View style={styles.container}>
-        <MapView
-          style={styles.map}
-          onRegionChange={this._onRegionChange}
-          onRegionChangeComplete={this._onRegionChangeComplete}
-          region={this.state.mapRegion}
-          annotations={this.state.annotations}
-        />
-      </View>
+      <Container style={styles.container}>
+        <Content>
+          <MapView
+            style={styles.map}
+            onRegionChange={this._onRegionChange}
+            onRegionChangeComplete={this._onRegionChangeComplete}
+            region={this.state.mapRegion}
+            annotations={this.state.annotations}
+          />
+        </Content>
+    </Container>
     )
   }
 
@@ -56,6 +84,7 @@ class MapView2 extends Component {
         longitude: job.location[1],
         latitude: job.location[0],
         title: job.title,
+        rightCalloutView: <DetailCallout props={{}}></DetailCallout>
       }
       annots.push(annot)
     })
@@ -116,7 +145,8 @@ var styles = StyleSheet.create({
   map: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#000000'
+    borderColor: '#000000',
+    height: 560
   },
   container: {
     flex: 1,
