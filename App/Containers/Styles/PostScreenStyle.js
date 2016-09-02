@@ -27,6 +27,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between'
 
   },
+
   body: {
     flex: 24
   },
@@ -38,6 +39,14 @@ export default StyleSheet.create({
     borderRadius: 5,
     margin: 2,
     textAlign: 'center'
+  },
+  cardHeader: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    textAlign: 'center'
+
+
   },
   buttonContainer: {
     backgroundColor: white,
