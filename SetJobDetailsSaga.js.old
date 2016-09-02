@@ -7,9 +7,10 @@ import { db } from '../Config/FirebaseConfig'
 export default () => {
   function * worker (postedJobs) {
     let postedJobIdArray = Object.keys(postedJobs)
+
     let postedPromiseArray = postedJobIdArray.map(el => {
       let ref = db.ref(`jobs/${el}`)
-      return ref.once('value')
+      return ref.once('value', data => data)
         .then(data => {
           let applicantRef = db.ref(`applicants/${el}`)
           return applicantRef.once('value', applicants => applicants)
@@ -17,6 +18,7 @@ export default () => {
               let jobData = data.val()
               if (applicants.val()) {
                 jobData.applicants = Object.keys(applicants.val())
+                console.log('jobapps', jobData.applicants)
               }
               return jobData
             })

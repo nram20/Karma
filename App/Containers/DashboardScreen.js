@@ -87,10 +87,6 @@ class DashboardScreen extends React.Component {
   }
 
   _renderItem (item, version, key) {
-    console.log('----dashboard-----')
-    console.log('item',item)
-    console.log('key',key)
-    console.log('---------')
     const job = item ? Object.assign({}, item, { key }) : {}
     return (
       <JobCard
@@ -102,6 +98,7 @@ class DashboardScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('dashstate',state)
   return {
     postedJobs: state.jobs.postedJobs,
     appliedJobs: state.jobs.appliedJobs,

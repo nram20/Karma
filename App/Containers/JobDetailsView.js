@@ -20,10 +20,11 @@ class JobDetailsView extends React.Component {
     const rowHasChanged = (r1, r2) => r1 !== r2
     const ds = new ListView.DataSource({rowHasChanged})
     console.log('apples',this.props)
-    let applicantDataSource = ds.cloneWithRows(this.props.applicants || {})
+    let applicantDataSource = ds.cloneWithRows(this.props.applicants|| {})
 
     this.state = {
-      applicantDataSource
+      applicantDataSource,
+      usersData: []
     }
 
     this._renderItem = this._renderItem.bind(this)
@@ -31,6 +32,8 @@ class JobDetailsView extends React.Component {
     this.unapplyToJob = this.unapplyToJob.bind(this)
     this.cancelJob = this.cancelJob.bind(this)
     this.logOut = this.logOut.bind(this)
+    this.getUsersData = this.getUsersData.bind(this)
+
   }
 
   logOut () {
@@ -86,6 +89,7 @@ class JobDetailsView extends React.Component {
   }
 
   render () {
+    console.log('detailrender', this.state.applicantDataSource)
     const {
       title,
       description,
@@ -130,20 +134,38 @@ class JobDetailsView extends React.Component {
           <Text style={styles.text}>Poster : {posterName}</Text>
           <Text style={styles.text}>Key: {key}</Text>
           {controls}
-          <Button onPress={this.logOut}>Log the Fuck Out</Button>
+          <Button onPress={this.logOut}>Log Out (development only)</Button>
         </ScrollView>
       </View>
     )
   }
 
   componentWillReceiveProps (nextProps) {
-    this.setState({
-      applicantDataSource: this.state.applicantDataSource.cloneWithRows(nextProps.applicants || {})
+    this.getUsersData(nextProps.applicants || [])
+  }
+
+  componentDidMount () {
+    this.getUsersData(this.props.applicants || [])
+  }
+
+  getUsersData(usersArray) {
+    applicantPromiseArray = []
+    usersArray.forEach(el => {
+      let applicantRef = db.ref(`users/${el}`)
+      applicantPromiseArray.push(applicantRef.once('value'))
     })
+
+    Promise.all(applicantPromiseArray)
+      .then(usersData => {
+        usersData = usersData.map(el => el.val())
+        this.setState({
+          applicantDataSource: this.state.applicantDataSource.cloneWithRows(usersData || {})
+        })
+      })
   }
 
   _renderItem (userId) {
-    console.log(userId)
+    console.log('userId?',userId)
     return (
       <TouchableOpacity onPress={() => console.log('name touched')} >
         <Text style={{color: 'white'}}>{userId}</Text>
