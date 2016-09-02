@@ -11,12 +11,23 @@ export default () => {
     let postedPromiseArray = postedJobIdArray.map(el => {
       let ref = db.ref(`jobs/${el}`)
       return ref.once('value', data => data)
+        .then(data => {
+          let applicantRef = db.ref(`applicants/${el}`)
+          return applicantRef.once('value', applicants => applicants)
+            .then(applicants => {
+              let jobData = data.val()
+              if (applicants.val()) {
+                jobData.applicants = Object.keys(applicants.val())
+                console.log('jobapps', jobData.applicants)
+              }
+              return jobData
+            })
+        })
     })
 
     let postedObj = yield Promise.all(postedPromiseArray)
       .then(postedJobsArray => {
-        let newPostedJobsArray = postedJobsArray.map(el => el.val())
-        return makePostedObj(postedJobIdArray, newPostedJobsArray)
+        return makePostedObj(postedJobIdArray, postedJobsArray)
       })
 
     function makePostedObj (ids, jobs) {

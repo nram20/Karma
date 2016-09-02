@@ -84,7 +84,6 @@ const mapStateToProps = (state) => {
   return {
     jobs: state.jobs.localJobs,
     currLocation: state.location.currLocation,
-
   }
 }
 
