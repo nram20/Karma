@@ -88,6 +88,13 @@ class MapView2 extends Component {
       }
       annots.push(annot)
     })
+    const { currLocation } = this.props
+    const myLocation = {
+      longitude: currLocation.longitude,
+      latitude: currLocation.latitude,
+      title: 'You Are Here',
+      
+    }
     return annots;
   }
 
@@ -173,7 +180,8 @@ var styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-  jobs: state.jobs.localJobs
+  jobs: state.jobs.localJobs,
+  currLocation: state.location.currLocation
 })
 
 const mapDispatchToProps = dispatch => ({
