@@ -38,10 +38,6 @@ class NavigationRouter extends Component {
           <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} title='Login' />
           <Scene key='register' component={RegisterScreen} title='Register' />
           <Scene key='splash' component={SplashScreen} title='Splash!' panHandlers={null} />
-          <Scene key='listviewExample' component={ListviewExample} title='Listview Example' />
-          <Scene key='listviewGridExample' component={ListviewGridExample} title='Listview Grid' />
-          <Scene key='mapviewExample' component={MapviewExample} title='Mapview Example' />
-          <Scene key='apiTesting' component={APITestingScreen} title='API Testing' />
           <Scene key='jobDetails' component={JobDetailsView} title='Job' navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} />
           <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
           <Scene tabs key='tabbar' animated direction='vertical' duration={300}>

@@ -64,7 +64,10 @@ class JobsScreen extends React.Component {
   }
 
   _renderItem (item, version, id) {
-    console.log('version, key', version, id);
+    console.log('---jobscreen------')
+    console.log('item',item)
+    console.log('key',id)
+    console.log('---------')
     const job = Object.assign({}, item, { id })
     return (
       <View>

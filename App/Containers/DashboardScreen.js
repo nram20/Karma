@@ -87,10 +87,9 @@ class DashboardScreen extends React.Component {
   }
 
   _renderItem (item, version, key) {
-    console.log('*********version, key', version, key);
-    console.log('---------')
-    console.log(item)
-    console.log(key)
+    console.log('----dashboard-----')
+    console.log('item',item)
+    console.log('key',key)
     console.log('---------')
     const job = item ? Object.assign({}, item, { key }) : {}
     return (
