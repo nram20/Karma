@@ -24,11 +24,10 @@ class JobDetailsView extends React.Component {
   }
 
   logOut () {
-    firebase.auth().signOut()
+    firebase.auth().signOut() 
   }
 
   applyToJob () {
-    console.log('****this.props.job:', this.props.job);
     let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)

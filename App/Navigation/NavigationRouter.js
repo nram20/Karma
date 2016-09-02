@@ -35,7 +35,7 @@ class NavigationRouter extends Component {
     return (
       <Router>
         <Scene key='root'>
-          <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} title='Login' />
+          <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} hideBackImage title='Login' />
           <Scene key='register' component={RegisterScreen} title='Register' />
           <Scene key='splash' component={SplashScreen} title='Splash!' panHandlers={null} />
           <Scene key='listviewExample' component={ListviewExample} title='Listview Example' />
