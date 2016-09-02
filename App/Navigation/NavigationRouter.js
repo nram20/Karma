@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Text } from 'react-native'
+import { Text, StyleSheet, View } from 'react-native'
 import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux'
 import BottomNav from '../Components/BottomNav'
+import { Colors } from '../Themes'
 
 // screens identified by the router
 import RegisterScreen from '../Containers/RegisterScreen'
@@ -21,14 +22,26 @@ import Testing from '../Containers/Testing'
 /* **************************
  * Documentation: https://github.com/aksonov/react-native-router-flux
  ***************************/
- class TabIcon extends React.Component {
-    render(){
-        return (
-            <Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
-        );
-    }
-}
 
+
+ var styles = StyleSheet.create({
+  tabbar: {
+    backgroundColor: Colors.steel,
+    borderRadius: 5,
+  },
+  container: {
+    borderColor: 'rgb(135, 135, 135)',
+    borderWidth: 1
+  }
+ })
+
+class TabIcon extends React.Component {
+  render() {
+    return (
+      <Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
+    )
+  }
+}
 
 class NavigationRouter extends Component {
   render () {
@@ -36,9 +49,9 @@ class NavigationRouter extends Component {
       <Router>
         <Scene key='root'>
           <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} hideBackImage title='Login' />
-          <Scene key='register' component={RegisterScreen} title='Register' />    
+          <Scene key='register' component={RegisterScreen} title='Register' />
           <Scene key='jobDetails' component={JobDetailsView} title='Job' navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} />
-          <Scene tabs key='tabbar' animated direction='vertical' duration={300} >
+          <Scene tabs key='tabbar' tabBarIconContainerStyle={styles.container} tabBarStyle={styles.tabbar} animated direction='vertical' duration={300} >
             <Scene key='dashboard' icon={TabIcon} component={DashboardScreen} title='Dashboard' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}}>
             </Scene>
             <Scene key='post' icon={TabIcon} component={PostScreen} title='Post a Job!' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} >
