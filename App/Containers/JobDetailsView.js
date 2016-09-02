@@ -6,7 +6,7 @@ import { Button } from 'native-base'
 import firebase from 'firebase'
 import { db } from '../Config/FirebaseConfig'
 import Actions from '../Actions/Creators'
-// import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/JobDetailsViewStyle'
@@ -36,17 +36,17 @@ class JobDetailsView extends React.Component {
   }
 
   logOut () {
-    firebase.auth().signOut()
+    firebase.auth().signOut() 
   }
 
   applyToJob () {
-    console.log('****this.props.job:', this.props.job);
     let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
     applicantsRef.set(true)
     let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
     appliedRef.set(true)
+    NavigationActions.pop()
     // this.props.actions.applyToJob(this.props.job)
   }
 
@@ -62,7 +62,6 @@ class JobDetailsView extends React.Component {
   }
 
   cancelJob () {
-    console.log('incancel',this.props.job)
     let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     db.ref(`jobsPosted/${currUser}/${jobKey}`).remove()
@@ -85,6 +84,8 @@ class JobDetailsView extends React.Component {
       .catch(console.log)
     db.ref(`jobs/${jobKey}`).remove()
     db.ref(`locations/${jobKey}`).remove()
+    NavigationActions.pop()
+
   }
 
   render () {
@@ -160,8 +161,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('ac',Actions)
   return {
+    dashboard: NavigationActions.dashboard,
     actions: bindActionCreators(Actions, dispatch),
   }
 }

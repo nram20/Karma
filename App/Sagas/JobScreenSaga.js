@@ -5,7 +5,7 @@ import { db, geoFire } from '../Config/FirebaseConfig.js'
 import { dispatch } from '../../index.ios'
 
 export default () => {
-  function * worker (latitude, longitude) {
+  function * worker (latitude, longitude, currUser) {
     yield put(Actions.clearLocalJobs())
 
     let geoQuery = geoFire.query({
@@ -19,20 +19,24 @@ export default () => {
       ref.once('value', data => {
         data = data.val()
         job.poster = data.poster
-        job.description = data.description
-        job.title = data.title
-        job.cost = data.cost
-        dispatch(Actions.receiveJob(job))
+        if(currUser !== data.poster) { 
+          job.description = data.description
+          job.title = data.title
+          job.cost = data.cost
+          dispatch(Actions.receiveJob(job))
+      }
       })
     })
+
+
   }
 
   function * watcher () {
     while (true) {
       const action = yield take(Types.LOCAL_JOBS_REQUEST)
 
-      const { latitude, longitude } = action
-      yield call(worker, latitude, longitude)
+      const { latitude, longitude, currUser } = action
+      yield call(worker, latitude, longitude, currUser)
     }
   }
 

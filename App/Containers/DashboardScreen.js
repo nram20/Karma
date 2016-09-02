@@ -16,7 +16,7 @@ class DashboardScreen extends React.Component {
   constructor (props) {
     super(props)
 
-    const rowHasChanged = (r1, r2) => r1 !== r2
+    const rowHasChanged = (r1, r2) => r1.poster !== r2.poster
     const ds = new ListView.DataSource({rowHasChanged})
     const ds2 = new ListView.DataSource({rowHasChanged})
 

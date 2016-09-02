@@ -35,19 +35,15 @@ class NavigationRouter extends Component {
     return (
       <Router>
         <Scene key='root'>
-          <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} title='Login' />
-          <Scene key='register' component={RegisterScreen} title='Register' />
-          <Scene key='splash' component={SplashScreen} title='Splash!' panHandlers={null} />
+          <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} hideBackImage title='Login' />
+          <Scene key='register' component={RegisterScreen} title='Register' />    
           <Scene key='jobDetails' component={JobDetailsView} title='Job' navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} />
-          <Scene key='deviceInfo' component={DeviceInfoScreen} title='Device Info' />
-          <Scene tabs key='tabbar' animated direction='vertical' duration={300}>
+          <Scene tabs key='tabbar' animated direction='vertical' duration={300} >
             <Scene key='dashboard' icon={TabIcon} component={DashboardScreen} title='Dashboard' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}}>
             </Scene>
-            <Scene key='post' icon={TabIcon} component={PostScreen} title='Post a Job!' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}}>
+            <Scene key='post' icon={TabIcon} component={PostScreen} title='Post a Job!' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} >
             </Scene>
-            <Scene key='jobs' icon={TabIcon} component={JobsScreen} title='Jobs' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} hideNavBar></Scene>
-
-            
+            <Scene key='jobs' icon={TabIcon} component={JobsScreen} title='Jobs' panHandlers={null} navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} hideNavBar ></Scene>
           </Scene>
         </Scene>
       </Router>

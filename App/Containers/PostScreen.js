@@ -21,12 +21,6 @@ class PostScreen extends React.Component {
     this.post = this.post.bind(this)
   }
 
-  componentDidMount () {
-
-    console.log('postmounted');
-  }
-
-
   post () {
     let jobRef = db.ref('jobs')
     let currUser = firebase.auth().currentUser
@@ -105,6 +99,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    
   }
 }
 
