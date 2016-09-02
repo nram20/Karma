@@ -19,7 +19,6 @@ const calloutStyles = {
   },
   buttonView: {
     flex: 1,
-
   }
 }
 
@@ -35,7 +34,6 @@ const DetailCallout = (props) => {
     </View>
   )
 }
-
 
 class MapView2 extends Component {
   constructor(props) {

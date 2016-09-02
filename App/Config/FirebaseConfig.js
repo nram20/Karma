@@ -50,6 +50,16 @@ function setPostedJobsListener (user) {
     if (snapshot.val()) {
       dispatch({type: Types.POSTED_JOBS_RECEIVE, postedJobs: snapshot.val()})
     }
+  }) 
+  db.ref(`jobsPosted`).on('child_removed', oldChildSnapshot => {
+    console.log('oldsnap',user.uid)
+    console.log('oldsnap',oldChildSnapshot.key)
+    console.log('oldsnap',user.uid == oldChildSnapshot.key)
+    if (user.uid === oldChildSnapshot.key) {
+      if (oldChildSnapshot) {
+        dispatch({type: Types.POSTED_JOBS_RECEIVE, postedJobs: {}})
+      }
+    }
   })
 }
 
