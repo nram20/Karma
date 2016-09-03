@@ -35,7 +35,7 @@ class NavigationRouter extends Component {
     return (
       <Router>
         <Scene key='root'>
-          <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} hideBackImage title='Login' />
+          <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} hideBackImage title='Login' navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: 'white'}}/>
           <Scene key='register' component={RegisterScreen} title='Register' />    
           <Scene key='jobDetails' component={JobDetailsView} title='Job' navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} />
           <Scene tabs key='tabbar' animated direction='vertical' duration={300} >

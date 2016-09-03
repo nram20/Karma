@@ -16,7 +16,8 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 40
+    padding: 40,
+    backgroundColor: '#50a2a7'
   },
   header: {
     marginTop: 60,
