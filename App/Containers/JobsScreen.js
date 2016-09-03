@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 import JobCard from '../Components/JobCard'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import Metrics from '../Themes/Metrics'
+import light from '../Themes/light'
 import firebase from 'firebase'
 
 import MapView from './MapView2'
@@ -43,17 +45,17 @@ class JobsScreen extends React.Component {
 
   render () {
     return (
-      <Container style={{flex:1}} >
-        <Content>
+      <Container style={{ paddingTop: 20 }}>
+        <Content theme={light}>
           <Tabs style={styles.tabs}>
             <ListView
-              tabLabel='List'
+              tabLabel={'List'}
               removeClippedSubviews={false}
               dataSource={this.state.dataSource}
               renderRow={this._renderItem}
               enableEmptySections
             />
-            <MapView tabLabel='Map' />
+            <MapView tabLabel={'Map'} />
           </Tabs>
         </Content>
       </Container>

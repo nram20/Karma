@@ -6,11 +6,13 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  Dimensions
 } from 'react-native'
 import { Button, Content, Container, Icon } from 'native-base'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
+import Metrics from '../Themes/Metrics'
 
 const calloutStyles = {
   content: {
@@ -45,7 +47,6 @@ class MapView2 extends Component {
       jobs: this.props.jobs,
       showUserLocation: true
     }
-    console.log ('this.props:', this.props)
     this.mapAnnotations = this.mapAnnotations.bind(this)
   }
 
@@ -59,19 +60,14 @@ class MapView2 extends Component {
   }
 
   render() {
-    console.log ('this.state.annots:', this.state.annotations)
     return (
-      <Container style={styles.container}>
-        <Content>
-          <MapView
-            style={styles.map}
-            onRegionChange={this._onRegionChange}
-            onRegionChangeComplete={this._onRegionChangeComplete}
-            region={this.state.mapRegion}
-            annotations={this.state.annotations}
-          />
-        </Content>
-    </Container>
+      <MapView
+        style={styles.map}
+        onRegionChange={this._onRegionChange}
+        onRegionChangeComplete={this._onRegionChangeComplete}
+        region={this.state.mapRegion}
+        annotations={this.state.annotations}
+      />
     )
   }
 
@@ -90,8 +86,7 @@ class MapView2 extends Component {
     const myLocation = {
       longitude: currLocation.longitude,
       latitude: currLocation.latitude,
-      title: 'You Are Here',
-      
+      title: 'You Are Here'
     }
     return annots;
   }
@@ -146,15 +141,14 @@ class MapView2 extends Component {
   // }
 }
 
+console.log('widthy',Dimensions.get('window').width)
+
 var styles = StyleSheet.create({
   map: {
-    flex: 1,
     borderWidth: 1,
     borderColor: '#000000',
-    height: 560
-  },
-  container: {
-    flex: 1,
+    height: Dimensions.get('window').height - Metrics.navBarHeight - 50 - 1,
+    width: Dimensions.get('window').width,
   },
   row: {
     flexDirection: 'row',
@@ -179,7 +173,7 @@ var styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   jobs: state.jobs.localJobs,
-  currLocation: state.location.currLocation
+    currLocation: state.location.currLocation
 })
 
 const mapDispatchToProps = dispatch => ({
