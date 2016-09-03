@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import JobCard from '../Components/JobCard'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import firebase from 'firebase'
 
 import MapView from './MapView2'
 
@@ -28,7 +29,10 @@ class JobsScreen extends React.Component {
   }
 
   componentDidMount (){
-    this.props.getJobs(this.props.currLocation.latitude, this.props.currLocation.longitude)
+    let currUser = firebase.auth().currentUser.uid
+
+    this.props.getJobs(this.props.currLocation.latitude, this.props.currLocation.longitude, currUser)
+
   }
 
   componentWillReceiveProps (nextProps) {
@@ -79,7 +83,8 @@ class JobsScreen extends React.Component {
 const mapStateToProps = (state) => {
   return {
     jobs: state.jobs.localJobs,
-    currLocation: state.location.currLocation
+    currLocation: state.location.currLocation,
+
   }
 }
 
@@ -89,8 +94,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(Actions.selectJob(job))
       NavigationActions.jobDetails()
     },
-    getJobs: (latitude, longitude) => {
-      dispatch(Actions.localJobsRequest(latitude, longitude))
+    getJobs: (latitude, longitude, currUser) => {
+      dispatch(Actions.localJobsRequest(latitude, longitude, currUser))
     }
   }
 }

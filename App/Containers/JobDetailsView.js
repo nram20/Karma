@@ -1,12 +1,12 @@
 import React from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { ListView, View, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'native-base'
 import firebase from 'firebase'
 import { db } from '../Config/FirebaseConfig'
 import Actions from '../Actions/Creators'
-// import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/JobDetailsViewStyle'
@@ -15,7 +15,13 @@ class JobDetailsView extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {}
+
+    const rowHasChanged = (r1, r2) => r1 !== r2
+    const ds = new ListView.DataSource({rowHasChanged})
+
+    this.state = {
+      appliedDataSource: ds
+    }
 
     this.applyToJob = this.applyToJob.bind(this)
     this.unapplyToJob = this.unapplyToJob.bind(this)
@@ -23,34 +29,40 @@ class JobDetailsView extends React.Component {
     this.logOut = this.logOut.bind(this)
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      appliedDataSource: this.state.appliedDataSource.cloneWithRows(nextProps.appliedJobs || {})
+    })
+  }
+
   logOut () {
-    firebase.auth().signOut()
+    firebase.auth().signOut() 
   }
 
   applyToJob () {
-    let jobKey = this.props.job.id
+    let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
     applicantsRef.set(true)
     let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
     appliedRef.set(true)
-    this.props.actions.applyToJob(this.props.job)
+    NavigationActions.pop()
+    // this.props.actions.applyToJob(this.props.job)
   }
 
   unapplyToJob () {
     console.log('thispropsjob',this.props.job)
-    let jobKey = this.props.job.id
+    let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
     applicantsRef.remove()
     let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
     appliedRef.remove()
-    this.props.actions.unapplyToJob(this.props.job)
+    // this.props.actions.unapplyToJob(this.props.job)
   }
 
   cancelJob () {
-    console.log('incancel',this.props.job)
-    let jobKey = this.props.job.id
+    let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     db.ref(`jobsPosted/${currUser}/${jobKey}`).remove()
       .catch(console.log)
@@ -72,6 +84,8 @@ class JobDetailsView extends React.Component {
       .catch(console.log)
     db.ref(`jobs/${jobKey}`).remove()
     db.ref(`locations/${jobKey}`).remove()
+    NavigationActions.pop()
+
   }
 
   render () {
@@ -93,8 +107,19 @@ class JobDetailsView extends React.Component {
 
     let controls
     if (poster === currUser) {
-      controls = <Button onPress={this.cancelJob}>Cancel Job</Button> 
-    } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.id)) {
+      controls = (
+        <View>
+          <Button onPress={this.cancelJob}>Cancel Job</Button> 
+          <ListView
+            tabLabel="Jobs I've Posted"
+            dataSource={this.state.appliedDataSource}
+            removeClippedSubviews={false}
+            renderRow={this._renderItem}
+            enableEmptySections
+          />
+        </View>
+      )
+    } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.key)) {
       controls = <Button onPress={this.unapplyToJob}>unApply</Button>
     } else {
       controls = <Button onPress={this.applyToJob}>Apply</Button>
@@ -102,18 +127,28 @@ class JobDetailsView extends React.Component {
 
     return (
       <View style={styles.container}>
-      <ScrollView >
-        <Text style={styles.text}>{title}</Text>
-        <Text style={styles.text}>{description}</Text>
-        <Text style={styles.text}>Where: {location}</Text>
-        <Text style={styles.text}>Karma: {cost}</Text>
-        <Text style={styles.text}>Poster : {poster}</Text>
-        <Text style={styles.text}>Poster : {posterName}</Text>
-        <Text style={styles.text}>Id: {key}</Text>
-        {controls}
-        <Button onPress={this.logOut}>Log the Fuck Out</Button>
-      </ScrollView>
+        <ScrollView >
+          <Text style={styles.text}>{title}</Text>
+          <Text style={styles.text}>{description}</Text>
+          <Text style={styles.text}>Where: {location}</Text>
+          <Text style={styles.text}>Karma: {cost}</Text>
+          <Text style={styles.text}>Poster : {poster}</Text>
+          <Text style={styles.text}>Poster : {posterName}</Text>
+          <Text style={styles.text}>Key: {key}</Text>
+          {controls}
+          <Button onPress={this.logOut}>Log the Fuck Out</Button>
+        </ScrollView>
       </View>
+    )
+  }
+
+  _renderItem (item, version, id) {
+    const job = item ? Object.assign({}, item, { id }) : {}
+    return (
+      <JobCard
+        handleClick={this.props.viewDetails}
+        item={job}
+      />
     )
   }
 }
@@ -126,8 +161,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('ac',Actions)
   return {
+    dashboard: NavigationActions.dashboard,
     actions: bindActionCreators(Actions, dispatch),
   }
 }

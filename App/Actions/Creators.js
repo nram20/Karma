@@ -55,10 +55,11 @@ const receiveJob = (job) => ({
   job
 })
 
-const localJobsRequest = (latitude, longitude) => {
+const localJobsRequest = (latitude, longitude, currUser) => {
   return ({
     latitude,
     longitude,
+    currUser,
     type: Types.LOCAL_JOBS_REQUEST
   })
 }

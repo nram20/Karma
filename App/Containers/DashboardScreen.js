@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListView, Alertd } from 'react-native'
+import { ListView, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -7,6 +7,7 @@ import JobCard from '../Components/JobCard'
 import { Container, Content, Tabs } from 'native-base'
 
 // Styles
+import styles from './Styles/JobDetailsViewStyle'
 
 import AlertMessage from '../Components/AlertMessageComponent'
 
@@ -15,7 +16,7 @@ class DashboardScreen extends React.Component {
   constructor (props) {
     super(props)
 
-    const rowHasChanged = (r1, r2) => r1 !== r2
+    const rowHasChanged = (r1, r2) => r1.poster !== r2.poster
     const ds = new ListView.DataSource({rowHasChanged})
     const ds2 = new ListView.DataSource({rowHasChanged})
 
@@ -55,10 +56,11 @@ class DashboardScreen extends React.Component {
 
   render () {
     return (
-      <Container>
+      <Container style={styles.container}>
         <Content>
           <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
           <Tabs>
+
             <ListView
               tabLabel="Jobs I've Posted"
               dataSource={this.state.postedDataSource}
@@ -66,6 +68,7 @@ class DashboardScreen extends React.Component {
               renderRow={this._renderItem}
               enableEmptySections
             />
+
             <ListView
               tabLabel="Jobs I've Applied For"
               dataSource={this.state.appliedDataSource}
@@ -83,13 +86,12 @@ class DashboardScreen extends React.Component {
     return this.state.postedDataSource.getRowCount() === 0
   }
 
-  _renderItem (item, version, id) {
-
+  _renderItem (item, version, key) {
+    console.log('----dashboard-----')
+    console.log('item',item)
+    console.log('key',key)
     console.log('---------')
-    console.log(item)
-    console.log(id)
-    console.log('---------')
-    const job = item ? Object.assign({}, item, { id }) : {}
+    const job = item ? Object.assign({}, item, { key }) : {}
     return (
       <JobCard
         handleClick={this.props.viewDetails}

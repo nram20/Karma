@@ -5,16 +5,19 @@ import { db, geoFire } from '../Config/FirebaseConfig.js'
 
 export default () => {
   function * worker (appliedJobs) {
+    console.log('*****appliedJobs', appliedJobs);
     appliedJobs = appliedJobs || {}
     let appliedJobIdArray = Object.keys(appliedJobs)
 
     let appliedPromiseArray = appliedJobIdArray.map(el => {
+      console.log('***el', el);
       let ref = db.ref(`jobs/${el}`)
       return ref.once('value', data => data)
     })
 
     let appliedObj = yield Promise.all(appliedPromiseArray)
       .then(appliedJobsArray => {
+        console.log('appliedJobsArray', appliedJobsArray);
         let newAppliedJobsArray = appliedJobsArray.map(el => el.val())
         return makeAppliedObj(appliedJobIdArray, newAppliedJobsArray)
       })
@@ -27,7 +30,7 @@ export default () => {
       })
       return appliedJobsObject
     }
-
+    console.log('******* appliedObj', appliedObj);
     yield put(Actions.appliedDetailsSet(appliedObj))
   }
 

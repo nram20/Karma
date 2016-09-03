@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
 import { Container, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
+import karmaTheme from '../../node_modules/native-base/Components/Themes/light'
+// import karmaTheme from '../NativeBase/karmaTheme'
 
 // Styles
 import styles from './Styles/LoginScreenStyle'
@@ -45,7 +47,7 @@ class LoginScreen extends React.Component {
   render () {
     return (
       <Container>
-        <Header>
+        <Header style={styles.header}>
           <Title>Login</Title>
         </Header>
 
@@ -53,15 +55,15 @@ class LoginScreen extends React.Component {
           <InputGroup style={styles.input}>
             <Icon name='ios-person' />
             <Input
-              style={styles.input}
+              
               onChangeText={this.changeEmail}
               placeholder='Email'
             />
           </InputGroup>
-          <InputGroup>
+          <InputGroup style={styles.input}>
             <Icon name='ios-unlock' />
             <Input
-              style={styles.input}
+            
               onChangeText={this.changePassword}
               placeholder='Password'
               secureTextEntry
@@ -73,13 +75,13 @@ class LoginScreen extends React.Component {
           </Button>
 
           <View style={styles.links}>
-            <Button small>
+            <Button small primary>
               <Text style={styles.link}>
                 Forgot Password
               </Text>
             </Button>
 
-            <Button small
+            <Button small primary
               onPress={this.props.register}
             >
               <Text style={styles.link}>

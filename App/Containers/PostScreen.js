@@ -22,6 +22,7 @@ class PostScreen extends React.Component {
     this.post = this.post.bind(this)
   }
 
+
   componentDidMount () {
 
     console.log('postmounted');
@@ -46,6 +47,7 @@ class PostScreen extends React.Component {
     console.log(currUser)
     jobToAdd.poster = currUser.uid
     jobToAdd.posterName = currUser.displayName
+    jobToAdd.location = [this.props.location.latitude, this.props.location.longitude]
     let jobKey = jobRef.push(jobToAdd).key
     geoFire.set(jobKey, [this.props.location.latitude, this.props.location.longitude]).catch(err => console.log(err))
     let postedRef = db.ref(`jobsPosted/${currUser.uid}/${jobKey}`)
@@ -150,6 +152,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    
   }
 }
 
