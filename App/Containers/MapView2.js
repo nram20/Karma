@@ -23,7 +23,6 @@ const calloutStyles = {
 
 // Detail callout for map pins
 const DetailCallout = (props) => {
-  console.log('detailCalloutProps', props)
   return (
     <View style={calloutStyles.content}>
       <View style={calloutStyles.buttonView}>
@@ -38,12 +37,20 @@ const DetailCallout = (props) => {
 class MapView2 extends Component {
   constructor (props) {
     super(props)
+
+    const { currLocation } = this.props
+
+    const initialRegion = {
+      latitude: currLocation.latitude,
+      longitude: currLocation.longitude,
+      latitudeDelta: 2,
+      longitudeDelta: 2
+    }
+
     this.state = {
       isFirstLoad: true,
-      mapRegion: undefined,
-      mapRegionInput: undefined,
+      mapRegion: initialRegion,
       jobs: this.props.jobs,
-      showUserLocation: true
     }
     this.mapAnnotations = this.mapAnnotations.bind(this)
   }
@@ -72,7 +79,6 @@ class MapView2 extends Component {
   mapAnnotations (jobs) {
     const annots = []
     jobs.forEach(job => {
-      console.log('-------- job', job)
       const annot = {
         longitude: job.location[1],
         latitude: job.location[0],
@@ -116,7 +122,7 @@ class MapView2 extends Component {
   // ]
 
   _onRegionChange = (region) => {
-    console.log('onRegionChange', this.props)
+    console.log('region', region)
     this.setState({
       mapRegionInput: region
     })
