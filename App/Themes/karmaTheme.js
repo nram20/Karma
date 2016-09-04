@@ -1,11 +1,18 @@
 import Color from 'color';
 
 import {Platform} from 'react-native';
+const cyan = '#50a2a7';
+const burntRed = '#9b2915';
+const gold = '#e9b44c';
+const pale = '#e4d6a7';
+const offblack = '#1c110a';
+
+
 
 export default {
-    brandPrimary : '#5067FF',
+    brandPrimary : burntRed,
     brandInfo: '#5bc0de',
-    brandSuccess: '#5cb85c',
+    brandSuccess: gold,
     brandDanger: '#d9534f',
     brandWarning: '#f0ad4e',
     brandSidebar: '#252932',
@@ -62,12 +69,12 @@ export default {
 
     footerHeight: 55,
     toolbarHeight: (Platform.OS === 'ios' ) ? 64 : 56,
-    toolbarDefaultBg: (Platform.OS === 'ios' ) ? '#F8F8F8' : '#039BE5',
-    toolbarInverseBg: '#222',
+    toolbarDefaultBg: cyan,
+    toolbarInverseBg: cyan,
 
     iosToolbarBtnColor: '#007aff',
 
-    toolbarTextColor: (Platform.OS==='ios') ? '#000' : '#fff',
+    toolbarTextColor: burntRed,
 
     checkboxBgColor: '#039BE5',
     checkboxTickColor: '#fff',
@@ -81,7 +88,7 @@ export default {
 
     radioBtnSize: (Platform.OS === 'ios') ? 25 : 23,
 
-    tabBgColor: '#F8F8F8',
+    tabBgColor: cyan,
     tabFontSize: 15,
     tabTextColor: '#fff',
 
@@ -155,7 +162,7 @@ export default {
 
     listBorderColor: '#ddd',
     listDividerBg: '#ddd',
-    listItemPadding: 9,
+    listItemPadding: 12,
     listItemHeight: 45,
     listNoteColor: '#808080',
     listNoteSize: 13,

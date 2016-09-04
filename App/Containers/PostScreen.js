@@ -5,6 +5,7 @@ import firebase from 'firebase'
 import { db, geoFire } from '../Config/FirebaseConfig'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Container, Card, CardItem, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
+import karmaTheme from '../NativeBase/karmaTheme'
 
 // Styles
 import styles from './Styles/PostScreenStyle'
@@ -89,7 +90,7 @@ class PostScreen extends React.Component {
   render () {
     return (
 
-        <Container style={styles.mainContainer}>
+        <Container style={styles.mainContainer} theme={karmaTheme}>
           <Content>
             <Card>
               <CardItem header>

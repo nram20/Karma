@@ -5,6 +5,7 @@ import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import JobCard from '../Components/JobCard'
 import { Container, Content, Tabs } from 'native-base'
+import karmaTheme from '../NativeBase/karmaTheme'
 
 // Styles
 import styles from './Styles/JobDetailsViewStyle'
@@ -56,7 +57,7 @@ class DashboardScreen extends React.Component {
 
   render () {
     return (
-      <Container style={styles.container}>
+      <Container style={styles.container} theme={karmaTheme}>
         <Content>
           <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
           <Tabs>
