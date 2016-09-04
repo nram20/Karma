@@ -30,6 +30,8 @@ export default createTypes(`
   APPLY_TO_JOB
   UNAPPLY_TO_JOB
 
+  HIRE_WORKER
+
   SELECT_JOB_FOR_DETAILS
 
 
