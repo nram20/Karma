@@ -157,8 +157,8 @@ export default {
 
     contentPadding: 10,
 
-    listBorderColor: '#ddd',
-    listDividerBg: '#ddd',
+    listBorderColor: cyan,
+    listDividerBg: cyan,
     listItemPadding: 12,
     listItemHeight: 45,
     listNoteColor: '#808080',

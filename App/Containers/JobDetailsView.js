@@ -2,11 +2,12 @@ import React from 'react'
 import { TouchableOpacity, ListView, View, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Button } from 'native-base'
 import firebase from 'firebase'
 import { db } from '../Config/FirebaseConfig'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Container, Card, CardItem, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
+
 
 // Styles
 import styles from './Styles/JobDetailsViewStyle'
@@ -186,8 +187,10 @@ class JobDetailsView extends React.Component {
     }
 
     return (
+
+
       <View style={styles.container}>
-        <ScrollView >
+        <ScrollView>
           <Text style={styles.text}>{title}</Text>
           <Text style={styles.text}>{description}</Text>
           <Text style={styles.text}>Where: {location}</Text>
