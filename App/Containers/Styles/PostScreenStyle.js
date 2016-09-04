@@ -34,7 +34,6 @@ export default StyleSheet.create({
     fontWeight: 'bold'
   },
 
-
   body: {
     flex: 24
   },
@@ -44,15 +43,13 @@ export default StyleSheet.create({
     borderColor: black,
     borderWidth: 1,
     borderRadius: 5,
-    margin: 2,
+    margin: 2
   },
   cardHeader: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     textAlign: 'center'
-
-
   },
   buttonContainer: {
     backgroundColor: white,

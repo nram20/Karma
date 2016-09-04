@@ -1,15 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import {
-  Image,
   MapView,
   StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
   View,
   Dimensions
 } from 'react-native'
-import { Button, Content, Container, Icon } from 'native-base'
+import { Button, Icon } from 'native-base'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Metrics from '../Themes/Metrics'
@@ -21,7 +17,7 @@ const calloutStyles = {
     width: 100
   },
   buttonView: {
-    flex: 1,
+    flex: 1
   }
 }
 
@@ -31,8 +27,8 @@ const DetailCallout = (props) => {
   return (
     <View style={calloutStyles.content}>
       <View style={calloutStyles.buttonView}>
-        <Button block onPress={() => props.viewDetails(props.job)} style={{backgroundColor: '#384850', marginLeft: -10, marginRight: -10}} >
-          <Icon name='ios-search' style={{color: '#00c497'}}/>
+        <Button block onPress={() => props.viewDetails(props.job)} style={{ backgroundColor: '#384850', marginLeft: -10, marginRight: -10 }} >
+          <Icon name='ios-search' style={{ color: '#00c497' }} />
         </Button>
       </View>
     </View>
@@ -40,7 +36,7 @@ const DetailCallout = (props) => {
 }
 
 class MapView2 extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       isFirstLoad: true,
@@ -52,7 +48,7 @@ class MapView2 extends Component {
     this.mapAnnotations = this.mapAnnotations.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (this.props !== nextProps) {
       this.setState({
         jobs: nextProps.jobs,
@@ -61,7 +57,7 @@ class MapView2 extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <MapView
         style={styles.map}
@@ -73,15 +69,15 @@ class MapView2 extends Component {
     )
   }
 
-  mapAnnotations(jobs) {
-    const annots = [];
+  mapAnnotations (jobs) {
+    const annots = []
     jobs.forEach(job => {
       console.log('-------- job', job)
       const annot = {
         longitude: job.location[1],
         latitude: job.location[0],
         title: job.title,
-        detailCalloutView: <DetailCallout job={job} viewDetails={this.props.viewDetails}></DetailCallout>
+        detailCalloutView: <DetailCallout job={job} viewDetails={this.props.viewDetails} />
       }
       annots.push(annot)
     })
@@ -89,15 +85,11 @@ class MapView2 extends Component {
     const myLocation = {
       longitude: currLocation.longitude,
       latitude: currLocation.latitude,
-<<<<<<< HEAD
-      title: 'You Are Here'
-=======
       title: 'You Are Here',
-      tintColor: 'blue',
->>>>>>> origin/elliot
+      tintColor: 'blue'
     }
     annots.push(myLocation)
-    return annots;
+    return annots
   }
 
   _getAnnotations = (region) => {
@@ -150,14 +142,12 @@ class MapView2 extends Component {
   // }
 }
 
-console.log('widthy',Dimensions.get('window').width)
-
 var styles = StyleSheet.create({
   map: {
     borderWidth: 1,
     borderColor: '#000000',
     height: Dimensions.get('window').height - Metrics.navBarHeight - 50 - 1,
-    width: Dimensions.get('window').width,
+    width: Dimensions.get('window').width
   },
   row: {
     flexDirection: 'row',
@@ -182,7 +172,7 @@ var styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   jobs: state.jobs.localJobs,
-    currLocation: state.location.currLocation
+  currLocation: state.location.currLocation
 })
 
 const mapDispatchToProps = dispatch => ({

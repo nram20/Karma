@@ -13,14 +13,13 @@ class SplashScreen extends React.Component {
   watchID: ?number = null
 
   componentDidMount () {
-    // console.log('mounted');
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.props.getLocation(position)
       },
       (error) => Alert.alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
+    )
     this.watchID = navigator.geolocation.watchPosition(position => {
       this.props.getLocation(position)
     }, error => Alert.alert(error.message), {enableHighAccuracy: true, timeout: 200000, maximumAge: 20000})

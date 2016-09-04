@@ -3,7 +3,6 @@ import { TouchableOpacity, ListView, View, ScrollView, Text } from 'react-native
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'native-base'
-import JobCard from '../Components/JobCard'
 import firebase from 'firebase'
 import { db } from '../Config/FirebaseConfig'
 import Actions from '../Actions/Creators'
@@ -19,7 +18,7 @@ class JobDetailsView extends React.Component {
 
     const rowHasChanged = (r1, r2) => r1 !== r2
     const ds = new ListView.DataSource({rowHasChanged})
-    let applicantDataSource = ds.cloneWithRows(this.props.applicants|| {})
+    let applicantDataSource = ds.cloneWithRows(this.props.applicants || {})
 
     this.state = {
       applicantDataSource,
@@ -35,11 +34,10 @@ class JobDetailsView extends React.Component {
     this.cancelJob = this.cancelJob.bind(this)
     this.logOut = this.logOut.bind(this)
     this.getUsersData = this.getUsersData.bind(this)
-
   }
 
   logOut () {
-    firebase.auth().signOut() 
+    firebase.auth().signOut()
   }
 
   applyToJob () {
@@ -62,7 +60,6 @@ class JobDetailsView extends React.Component {
   }
 
   hireApplicant (applicant) {
-    let currUser = firebase.auth().currentUser.uid
     let jobKey = this.props.job.key
     let jobRef = db.ref(`jobs/${jobKey}/hired`)
     jobRef.set(applicant)
@@ -81,7 +78,7 @@ class JobDetailsView extends React.Component {
     db.ref(`locations/${jobKey}`).remove()
     db.ref(`locations/${jobKey}`).remove()
 
-    if(this.props.job.hired !== undefined) {
+    if (this.props.job.hired !== undefined) {
       let hiredUser = this.props.job.hired.id
       db.ref(`jobsWorking/${hiredUser}/${jobKey}`).remove()
     }
@@ -120,7 +117,7 @@ class JobDetailsView extends React.Component {
     NavigationActions.pop()
   }
 
-  clearApplicantsListInFirebase() {
+  clearApplicantsListInFirebase () {
     let jobKey = this.props.job.key
     let applicantsRef = db.ref(`applicants/${jobKey}`)
     return applicantsRef.once('value')
@@ -213,8 +210,8 @@ class JobDetailsView extends React.Component {
     this.getUsersData(this.props.applicants || [])
   }
 
-  getUsersData(usersArray) {
-    applicantPromiseArray = []
+  getUsersData (usersArray) {
+    let applicantPromiseArray = []
     usersArray.forEach(userId => {
       let applicantRef = db.ref(`users/${userId}`)
       applicantPromiseArray.push(
@@ -222,7 +219,7 @@ class JobDetailsView extends React.Component {
           .then(userData => {
             let dataObj = userData.val()
             dataObj.id = userId
-            return dataObj 
+            return dataObj
           })
       )
     })
@@ -255,7 +252,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     dashboard: NavigationActions.dashboard,
-    actions: bindActionCreators(Actions, dispatch),
+    actions: bindActionCreators(Actions, dispatch)
   }
 }
 

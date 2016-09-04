@@ -14,8 +14,7 @@ const receiveJob = (state, action) =>
     error: false
   })
 
-
-const clearLocalJobs = (state, action) => 
+const clearLocalJobs = (state, action) =>
   state.merge({
     localJobs: [],
     error: false
@@ -91,7 +90,6 @@ const unapplyToJob = (state, action) => {
       }
     }
   }
-  console.log('unappliedjobsreducer',appliedJobs)
   return state.merge({
     appliedJobs
   })

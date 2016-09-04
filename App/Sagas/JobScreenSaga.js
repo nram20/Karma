@@ -19,16 +19,14 @@ export default () => {
       ref.once('value', data => {
         data = data.val()
         job.poster = data.poster
-        if(currUser !== data.poster) { 
+        if (currUser !== data.poster) {
           job.description = data.description
           job.title = data.title
           job.cost = data.cost
           dispatch(Actions.receiveJob(job))
-      }
+        }
       })
     })
-
-
   }
 
   function * watcher () {

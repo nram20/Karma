@@ -1,12 +1,10 @@
 import React from 'react'
 import { ListView } from 'react-native'
-import { Container, Content, Tabs, View, Header, Title } from 'native-base'
+import { Container, Content, Tabs, View } from 'native-base'
 import { connect } from 'react-redux'
 import JobCard from '../Components/JobCard'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-import Metrics from '../Themes/Metrics'
-import light from '../Themes/light'
 import firebase from 'firebase'
 
 import MapView from './MapView2'
@@ -16,7 +14,6 @@ import styles from './Styles/JobsScreenStyle'
 // import AlertMessage from '../Components/AlertMessageComponent'
 
 class JobsScreen extends React.Component {
-
   constructor (props) {
     super(props)
 
@@ -30,11 +27,10 @@ class JobsScreen extends React.Component {
     this._renderItem = this._renderItem.bind(this)
   }
 
-  componentDidMount (){
+  componentDidMount () {
     let currUser = firebase.auth().currentUser.uid
 
     this.props.getJobs(this.props.currLocation.latitude, this.props.currLocation.longitude, currUser)
-
   }
 
   componentWillReceiveProps (nextProps) {
@@ -46,7 +42,7 @@ class JobsScreen extends React.Component {
   render () {
     return (
       <Container style={{ paddingTop: 20 }}>
-        <Content theme={light}>
+        <Content>
           <Tabs style={styles.tabs}>
             <ListView
               tabLabel={'List'}
@@ -85,7 +81,7 @@ class JobsScreen extends React.Component {
 const mapStateToProps = (state) => {
   return {
     jobs: state.jobs.localJobs,
-    currLocation: state.location.currLocation,
+    currLocation: state.location.currLocation
   }
 }
 
