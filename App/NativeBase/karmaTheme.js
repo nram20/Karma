@@ -3,7 +3,7 @@ import {Platform} from 'react-native'
 
 const burntRed = '#9b2915'
 const gold = '#e9b44c'
-const cyan = '#50a2a7git'
+const cyan = '#50a2a7'
 
 export default {
 
