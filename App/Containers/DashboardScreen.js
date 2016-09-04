@@ -93,12 +93,13 @@ class DashboardScreen extends React.Component {
         handleClick={this.props.viewDetails}
         item={job}
       />
+  
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('dashstate',state)
+  console.log('dashstate', state)
   return {
     postedJobs: state.jobs.postedJobs,
     appliedJobs: state.jobs.appliedJobs,

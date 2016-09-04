@@ -29,6 +29,7 @@ export default class JobCard extends React.Component {
     const { item, handleClick } = this.props
     return (
       <Container>
+        
         <Content>
           <Card>
             <CardItem>
@@ -47,6 +48,7 @@ export default class JobCard extends React.Component {
             </CardItem>
           </Card>
         </Content>
+
       </Container>
     )
   }

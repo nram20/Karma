@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles } from '../../Themes/'
+import { Metrics, ApplicationStyles, Colors } from '../../Themes/'
 
 const black = '#000'
 const white = '#fff'
@@ -16,18 +16,20 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 40
+    padding: 40,
+    backgroundColor: '#50a2a7',
+    marginTop: Metrics.navBarHeight
   },
   header: {
-    marginTop: 60,
-    padding: 10,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    backgroundColor: Colors.cyan
 
   },
   body: {
     flex: 24
+  },
+  buttonSuccessText: {
+    color: '#9b2915',
+    fontWeight: 'bold'
   },
 
   input: {
@@ -54,7 +56,8 @@ export default StyleSheet.create({
   },
   link: {
     width: 125,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: white
   },
   title: {
     textAlign: 'center'

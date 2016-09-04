@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import { Alert } from 'react-native'
+import { Alert, ScrollView, View } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
@@ -70,7 +70,7 @@ class RegisterScreen extends React.Component {
 
   render () {
     return (
-      <Container>
+        <Container>
         <Header>
           <Title> Register</Title>
         </Header>
@@ -79,49 +79,49 @@ class RegisterScreen extends React.Component {
           <InputGroup style={styles.input}>
             <Icon name='ios-person' />
             <Input
-              style={styles.input}
               onChangeText={this.changeEmail}
               placeholder='Email'
             />
           </InputGroup>
 
-          <InputGroup>
+          <InputGroup style={styles.input}>
             <Icon name='ios-person' />
             <Input
-              style={styles.input}
               onChangeText={this.changeDisplayName}
               placeholder='Username'
             />
           </InputGroup>
 
-          <InputGroup>
+          <InputGroup style={styles.input}>
             <Icon name='ios-unlock' />
             <Input
-              style={styles.input}
               onChangeText={this.changePassword}
               placeholder='Password'
               secureTextEntry
             />
           </InputGroup>
 
-          <InputGroup>
+          <InputGroup style={styles.input}>
             <Icon name='ios-unlock' />
             <Input
-              style={styles.input}
+              
               onChangeText={this.changePasswordConfirmation}
               placeholder='Confirm Password'
               secureTextEntry
             />
           </InputGroup>
 
+       
           <Button block success iconRight onPress={this.register}>
             Sign Up for Karma! <Icon name='ios-arrow-forward' />
           </Button>
           <Button small block iconLeft onPress={this.props.loginScreen}>
             Back to Login <Icon name='ios-arrow-back' />
           </Button>
+    
         </Content>
       </Container>
+ 
     )
   }
 }

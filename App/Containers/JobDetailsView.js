@@ -59,9 +59,8 @@ class JobDetailsView extends React.Component {
     appliedRef.remove()
   }
 
-  //TODO
   hireApplicant (applicantId) {
-    console.log('applicantId')
+    console.log('applicantId',applicantId)
     let currUser = firebase.auth().currentUser.uid
     let jobKey = this.props.job.key
     let jobRef = db.ref(`jobs/${jobKey}/hired`)
