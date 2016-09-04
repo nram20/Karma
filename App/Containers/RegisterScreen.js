@@ -3,6 +3,7 @@ import { Alert, ScrollView, View } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
+import { db } from '../Config/FirebaseConfig'
 import { Container, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
 
 // Styles
@@ -36,6 +37,12 @@ class RegisterScreen extends React.Component {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(user => {
           user.updateProfile({ displayName: this.state.displayName })
+          let userToAdd = {}
+          userToAdd.displayName = this.state.displayName
+          userToAdd.currentKarma = 0
+          userToAdd.totalKarma = 0
+          let ref = db.ref(`users/${user.uid}`)
+          ref.set(userToAdd)
         })
         .catch(error => {
           Alert.alert('One small problem...', error.message)

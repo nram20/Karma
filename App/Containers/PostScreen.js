@@ -132,7 +132,7 @@ class PostScreen extends React.Component {
             </Card>             
 
             <Button block success iconRight onPress={this.post}>
-              Post Job <Icon name='ios-arrow-forward' />
+              <Text style={styles.buttonText}>Post Job</Text> <Icon name='ios-arrow-forward' style={{color: '#9b2915'}}/>
             </Button>        
 
             

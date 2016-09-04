@@ -19,7 +19,6 @@ const calloutStyles = {
   },
   buttonView: {
     flex: 1,
-
   }
 }
 
@@ -35,7 +34,6 @@ const DetailCallout = (props) => {
     </View>
   )
 }
-
 
 class MapView2 extends Component {
   constructor(props) {
@@ -84,10 +82,17 @@ class MapView2 extends Component {
         longitude: job.location[1],
         latitude: job.location[0],
         title: job.title,
-        rightCalloutView: <DetailCallout props={{}}></DetailCallout>
+        detailCalloutView: <DetailCallout props={{}}></DetailCallout>
       }
       annots.push(annot)
     })
+    const { currLocation } = this.props
+    const myLocation = {
+      longitude: currLocation.longitude,
+      latitude: currLocation.latitude,
+      title: 'You Are Here',
+      
+    }
     return annots;
   }
 
@@ -173,7 +178,8 @@ var styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-  jobs: state.jobs.localJobs
+  jobs: state.jobs.localJobs,
+  currLocation: state.location.currLocation
 })
 
 const mapDispatchToProps = dispatch => ({

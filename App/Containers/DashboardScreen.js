@@ -16,7 +16,7 @@ class DashboardScreen extends React.Component {
   constructor (props) {
     super(props)
 
-    const rowHasChanged = (r1, r2) => r1.poster !== r2.poster
+    const rowHasChanged = (r1, r2) => r1 !== r2
     const ds = new ListView.DataSource({rowHasChanged})
     const ds2 = new ListView.DataSource({rowHasChanged})
 
@@ -87,21 +87,19 @@ class DashboardScreen extends React.Component {
   }
 
   _renderItem (item, version, key) {
-    console.log('----dashboard-----')
-    console.log('item',item)
-    console.log('key',key)
-    console.log('---------')
     const job = item ? Object.assign({}, item, { key }) : {}
     return (
       <JobCard
         handleClick={this.props.viewDetails}
         item={job}
       />
+  
     )
   }
 }
 
 const mapStateToProps = (state) => {
+  console.log('dashstate', state)
   return {
     postedJobs: state.jobs.postedJobs,
     appliedJobs: state.jobs.appliedJobs,

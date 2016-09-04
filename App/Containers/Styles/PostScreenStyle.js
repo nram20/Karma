@@ -11,6 +11,7 @@ export default StyleSheet.create({
     width: Metrics.images.logo,
     resizeMode: 'contain'
   },
+
   centered: {
     alignItems: 'center'
   },
@@ -27,6 +28,12 @@ export default StyleSheet.create({
     justifyContent: 'space-between'
 
   },
+
+  buttonText: {
+    color: '#9b2915',
+    fontWeight: 'bold'
+  },
+
 
   body: {
     flex: 24

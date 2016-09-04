@@ -1,8 +1,9 @@
 import React from 'react'
-import { ListView, View, ScrollView, Text } from 'react-native'
+import { TouchableOpacity, ListView, View, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'native-base'
+import JobCard from '../Components/JobCard'
 import firebase from 'firebase'
 import { db } from '../Config/FirebaseConfig'
 import Actions from '../Actions/Creators'
@@ -18,21 +19,21 @@ class JobDetailsView extends React.Component {
 
     const rowHasChanged = (r1, r2) => r1 !== r2
     const ds = new ListView.DataSource({rowHasChanged})
+    console.log('apples',this.props)
+    let applicantDataSource = ds.cloneWithRows(this.props.applicants|| {})
 
     this.state = {
-      appliedDataSource: ds
+      applicantDataSource,
+      usersData: []
     }
 
+    this._renderItem = this._renderItem.bind(this)
     this.applyToJob = this.applyToJob.bind(this)
     this.unapplyToJob = this.unapplyToJob.bind(this)
     this.cancelJob = this.cancelJob.bind(this)
     this.logOut = this.logOut.bind(this)
-  }
+    this.getUsersData = this.getUsersData.bind(this)
 
-  componentWillReceiveProps (nextProps) {
-    this.setState({
-      appliedDataSource: this.state.appliedDataSource.cloneWithRows(nextProps.appliedJobs || {})
-    })
   }
 
   logOut () {
@@ -47,7 +48,6 @@ class JobDetailsView extends React.Component {
     let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
     appliedRef.set(true)
     NavigationActions.pop()
-    // this.props.actions.applyToJob(this.props.job)
   }
 
   unapplyToJob () {
@@ -89,7 +89,7 @@ class JobDetailsView extends React.Component {
   }
 
   render () {
-    console.log('actttt',this.props.actions)
+    console.log('detailrender', this.state.applicantDataSource)
     const {
       title,
       description,
@@ -102,17 +102,15 @@ class JobDetailsView extends React.Component {
 
     let currUser = firebase.auth().currentUser.uid
 
-    console.log('jobbbb', this.props.job)
-    console.log('appllll', this.props.appliedJobs)
-
     let controls
     if (poster === currUser) {
       controls = (
         <View>
           <Button onPress={this.cancelJob}>Cancel Job</Button> 
+          <Text style={{color: 'grey'}}>Applicants:</Text>
           <ListView
             tabLabel="Jobs I've Posted"
-            dataSource={this.state.appliedDataSource}
+            dataSource={this.state.applicantDataSource}
             removeClippedSubviews={false}
             renderRow={this._renderItem}
             enableEmptySections
@@ -136,19 +134,42 @@ class JobDetailsView extends React.Component {
           <Text style={styles.text}>Poster : {posterName}</Text>
           <Text style={styles.text}>Key: {key}</Text>
           {controls}
-          <Button onPress={this.logOut}>Log the Fuck Out</Button>
+          <Button onPress={this.logOut}>Log Out (development only)</Button>
         </ScrollView>
       </View>
     )
   }
 
-  _renderItem (item, version, id) {
-    const job = item ? Object.assign({}, item, { id }) : {}
+  componentWillReceiveProps (nextProps) {
+    this.getUsersData(nextProps.applicants || [])
+  }
+
+  componentDidMount () {
+    this.getUsersData(this.props.applicants || [])
+  }
+
+  getUsersData(usersArray) {
+    applicantPromiseArray = []
+    usersArray.forEach(el => {
+      let applicantRef = db.ref(`users/${el}`)
+      applicantPromiseArray.push(applicantRef.once('value'))
+    })
+
+    Promise.all(applicantPromiseArray)
+      .then(usersData => {
+        usersData = usersData.map(el => el.val())
+        this.setState({
+          applicantDataSource: this.state.applicantDataSource.cloneWithRows(usersData || {})
+        })
+      })
+  }
+
+  _renderItem (userId) {
+    console.log('userId?',userId)
     return (
-      <JobCard
-        handleClick={this.props.viewDetails}
-        item={job}
-      />
+      <TouchableOpacity onPress={() => console.log('name touched')} >
+        <Text style={{color: 'white'}}>{userId}</Text>
+      </TouchableOpacity>
     )
   }
 }
@@ -156,7 +177,7 @@ class JobDetailsView extends React.Component {
 const mapStateToProps = (state) => {
   return {
     job: state.jobs.selectedJob,
-    appliedJobs: state.jobs.appliedJobs
+    applicants: state.jobs.selectedJob.applicants
   }
 }
 
