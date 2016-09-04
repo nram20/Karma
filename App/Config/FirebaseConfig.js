@@ -32,6 +32,7 @@ firebase.auth().onAuthStateChanged(user => {
     // setLocalJobsListener()
     setPostedJobsListener(user)
     setAppliedJobsListener(user)
+    setWorkingJobsListener(user)
   } else {
     NavigationActions.loginScreen()
   }
@@ -52,9 +53,6 @@ function setPostedJobsListener (user) {
     }
   }) 
   db.ref(`jobsPosted`).on('child_removed', oldChildSnapshot => {
-    console.log('oldsnap',user.uid)
-    console.log('oldsnap',oldChildSnapshot.key)
-    console.log('oldsnap',user.uid == oldChildSnapshot.key)
     if (user.uid === oldChildSnapshot.key) {
       if (oldChildSnapshot) {
         dispatch({type: Types.POSTED_JOBS_RECEIVE, postedJobs: {}})
@@ -67,6 +65,13 @@ function setAppliedJobsListener (user) {
   let jobsRef = db.ref(`jobsAppliedFor/${user.uid}`)
   jobsRef.on('value', snapshot => {
     dispatch({type: Types.APPLIED_JOBS_RECEIVE, appliedJobs: snapshot.val()})
+  })
+}
+
+function setWorkingJobsListener (user) {
+  let jobsRef = db.ref(`working/${user.uid}`)
+  jobsRef.on('value', snapshot => {
+    dispatch({type: Types.WORKING_JOBS_RECEIVE, workingJobs: snapshot.val()})
   })
 }
 

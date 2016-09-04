@@ -39,8 +39,8 @@ class RegisterScreen extends React.Component {
           user.updateProfile({ displayName: this.state.displayName })
           let userToAdd = {}
           userToAdd.displayName = this.state.displayName
-          userToAdd.currentKarma = 0
-          userToAdd.totalKarma = 0
+          userToAdd.currentKarma = 30
+          userToAdd.totalKarma = 30
           let ref = db.ref(`users/${user.uid}`)
           ref.set(userToAdd)
         })
