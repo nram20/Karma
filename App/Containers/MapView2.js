@@ -13,6 +13,7 @@ import { Button, Content, Container, Icon } from 'native-base'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Metrics from '../Themes/Metrics'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 const calloutStyles = {
   content: {
@@ -26,10 +27,11 @@ const calloutStyles = {
 
 // Detail callout for map pins
 const DetailCallout = (props) => {
+  console.log('detailCalloutProps', props)
   return (
     <View style={calloutStyles.content}>
       <View style={calloutStyles.buttonView}>
-        <Button block style={{backgroundColor: '#384850', marginLeft: -10, marginRight: -10}} >
+        <Button block onPress={() => props.viewDetails(props.job)} style={{backgroundColor: '#384850', marginLeft: -10, marginRight: -10}} >
           <Icon name='ios-search' style={{color: '#00c497'}}/>
         </Button>
       </View>
@@ -74,11 +76,12 @@ class MapView2 extends Component {
   mapAnnotations(jobs) {
     const annots = [];
     jobs.forEach(job => {
+      console.log('-------- job', job)
       const annot = {
         longitude: job.location[1],
         latitude: job.location[0],
         title: job.title,
-        detailCalloutView: <DetailCallout props={{}}></DetailCallout>
+        detailCalloutView: <DetailCallout job={job} viewDetails={this.props.viewDetails}></DetailCallout>
       }
       annots.push(annot)
     })
@@ -86,8 +89,14 @@ class MapView2 extends Component {
     const myLocation = {
       longitude: currLocation.longitude,
       latitude: currLocation.latitude,
+<<<<<<< HEAD
       title: 'You Are Here'
+=======
+      title: 'You Are Here',
+      tintColor: 'blue',
+>>>>>>> origin/elliot
     }
+    annots.push(myLocation)
     return annots;
   }
 
@@ -177,7 +186,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  newMapRegion: region => dispatch(Actions.newMapRegion(region))
+  newMapRegion: region => dispatch(Actions.newMapRegion(region)),
+  viewDetails: job => {
+    dispatch(Actions.selectJob(job))
+    NavigationActions.jobDetails()
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapView2)
