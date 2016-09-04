@@ -23,6 +23,8 @@ export default () => {
           job.description = data.description
           job.title = data.title
           job.cost = data.cost
+          job.posterName = data.posterName
+
           dispatch(Actions.receiveJob(job))
         }
       })
