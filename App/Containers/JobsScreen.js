@@ -46,11 +46,9 @@ class JobsScreen extends React.Component {
   render () {
     return (
       <Container style={{ paddingTop: 20 }}>
-<<<<<<< HEAD
+
         <Content theme={karmaTheme}>
-=======
-        <Content>
->>>>>>> 1c445cde18530c37d6e7651d1eefc7b1afb1a642
+
           <Tabs style={styles.tabs}>
             <ListView
               tabLabel={'List'}

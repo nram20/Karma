@@ -3,13 +3,11 @@ import { Text, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { db, geoFire } from '../Config/FirebaseConfig'
-<<<<<<< HEAD
+
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Container, Card, CardItem, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
 import karmaTheme from '../NativeBase/karmaTheme'
-=======
-import { Container, Card, CardItem, Button, Content, Input, InputGroup, Icon } from 'native-base'
->>>>>>> 1c445cde18530c37d6e7651d1eefc7b1afb1a642
+
 
 // Styles
 import styles from './Styles/PostScreenStyle'
