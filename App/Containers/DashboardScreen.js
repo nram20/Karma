@@ -45,7 +45,7 @@ class DashboardScreen extends React.Component {
       },
       (error) => Alert.alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
+    )
     this.watchID = navigator.geolocation.watchPosition(position => {
       this.props.getLocation(position)
     }, error => Alert.alert(error.message), {enableHighAccuracy: true, timeout: 200000, maximumAge: 20000})
@@ -94,7 +94,6 @@ class DashboardScreen extends React.Component {
         handleClick={this.props.viewDetails}
         item={job}
       />
-  
     )
   }
 }

@@ -30,22 +30,22 @@ const startup = () => ({ type: Types.STARTUP })
 
 const selectJob = (job) => ({
   job,
-    type: Types.SELECT_JOB_FOR_DETAILS
+  type: Types.SELECT_JOB_FOR_DETAILS
 })
 
 const applyToJob = (job) => ({
   job,
-    type: Types.APPLY_TO_JOB
+  type: Types.APPLY_TO_JOB
 })
 
 const unapplyToJob = (job) => ({
   job,
-    type: Types.UNAPPLY_TO_JOB
+  type: Types.UNAPPLY_TO_JOB
 })
 
 const getLocation = (location) => ({
   location,
-    type: Types.LOCATION_GET
+  type: Types.LOCATION_GET
 })
 
 const getLocationFail = () => ({
@@ -58,7 +58,7 @@ const clearLocalJobs = () => ({
 
 const receiveJob = (job) => ({
   type: Types.JOB_RECEIVE,
-    job
+  job
 })
 
 const localJobsRequest = (latitude, longitude, currUser) => {
@@ -72,7 +72,7 @@ const localJobsRequest = (latitude, longitude, currUser) => {
 
 const newMapRegion = region => ({
   type: Types.NEW_MAP_REGION,
-    region
+  region
 })
 /**
  Makes available all the action creators we've created.
@@ -95,8 +95,6 @@ export default {
   receiveJob,
   localJobsRequest,
   newMapRegion,
-  appliedDetailsSet,
-  appliedDetailsSetFailure,
   workingDetailsSet,
   workingDetailsSetFailure
 }

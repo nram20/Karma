@@ -3,7 +3,6 @@ import { TouchableOpacity, ListView, View, ScrollView, Text } from 'react-native
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Button } from 'native-base'
-import JobCard from '../Components/JobCard'
 import firebase from 'firebase'
 import { db } from '../Config/FirebaseConfig'
 import Actions from '../Actions/Creators'
@@ -19,7 +18,7 @@ class JobDetailsView extends React.Component {
 
     const rowHasChanged = (r1, r2) => r1 !== r2
     const ds = new ListView.DataSource({rowHasChanged})
-    let applicantDataSource = ds.cloneWithRows(this.props.applicants|| {})
+    let applicantDataSource = ds.cloneWithRows(this.props.applicants || {})
 
     this.state = {
       applicantDataSource,
@@ -27,17 +26,18 @@ class JobDetailsView extends React.Component {
     }
 
     this._renderItem = this._renderItem.bind(this)
+    this.clearApplicantsListInFirebase = this.clearApplicantsListInFirebase.bind(this)
     this.applyToJob = this.applyToJob.bind(this)
-    this.hireApplicant = this.hireApplicant.bind(this)
     this.unapplyToJob = this.unapplyToJob.bind(this)
+    this.hireApplicant = this.hireApplicant.bind(this)
+    this.markCompleted = this.markCompleted.bind(this)
     this.cancelJob = this.cancelJob.bind(this)
     this.logOut = this.logOut.bind(this)
     this.getUsersData = this.getUsersData.bind(this)
-
   }
 
   logOut () {
-    firebase.auth().signOut() 
+    firebase.auth().signOut()
   }
 
   applyToJob () {
@@ -59,45 +59,81 @@ class JobDetailsView extends React.Component {
     appliedRef.remove()
   }
 
-  hireApplicant (applicantId) {
-    console.log('applicantId',applicantId)
-    let currUser = firebase.auth().currentUser.uid
+  hireApplicant (applicant) {
     let jobKey = this.props.job.key
     let jobRef = db.ref(`jobs/${jobKey}/hired`)
-    jobRef.set(applicantId)
-    let workingRef = db.ref(`working/${applicantId}/${jobKey}`)
+    jobRef.set(applicant)
+    let workingRef = db.ref(`jobsWorking/${applicant.id}/${jobKey}`)
     workingRef.set(true)
+    this.clearApplicantsListInFirebase()
   }
 
   cancelJob () {
     let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
+
     db.ref(`jobsPosted/${currUser}/${jobKey}`).remove()
-      .catch(console.log)
+    db.ref(`jobsWorking/${currUser}/${jobKey}`).remove()
+    db.ref(`jobs/${jobKey}`).remove()
+    db.ref(`locations/${jobKey}`).remove()
+    db.ref(`locations/${jobKey}`).remove()
+
+    if (this.props.job.hired !== undefined) {
+      let hiredUser = this.props.job.hired.id
+      db.ref(`jobsWorking/${hiredUser}/${jobKey}`).remove()
+    }
+
+    let userRef = db.ref(`users/${currUser}`)
+    userRef.once('value')
+      .then(userDataSnap => {
+        let userData = userDataSnap.val()
+        userData.currentKarma = +userData.currentKarma + +this.props.job.cost
+        userRef.set(userData)
+      })
+    NavigationActions.pop()
+  }
+
+  markCompleted () {
+    let jobKey = this.props.job.key
+    let currUser = firebase.auth().currentUser.uid
+    let hiredUser = this.props.job.hired.id
+
+    db.ref(`jobs/${jobKey}`).remove()
+    db.ref(`jobsPosted/${currUser}/${jobKey}`).remove()
+    db.ref(`jobsWorking/${hiredUser}/${jobKey}`).remove()
+    db.ref(`locations/${jobKey}`).remove()
+    db.ref(`locations/${jobKey}`).remove()
+
+    let userRef = db.ref(`users/${hiredUser}`)
+    userRef.once('value')
+      .then(userDataSnap => {
+        let userData = userDataSnap.val()
+        userData.currentKarma = +this.props.job.cost + +userData.currentKarma
+        userData.totalKarma = +this.props.job.cost + +userData.totalKarma
+        userRef.set(userData)
+      })
+
+    this.clearApplicantsListInFirebase()
+    NavigationActions.pop()
+  }
+
+  clearApplicantsListInFirebase () {
+    let jobKey = this.props.job.key
     let applicantsRef = db.ref(`applicants/${jobKey}`)
-    applicantsRef.once('value', applicants => applicants)
+    return applicantsRef.once('value')
       .then(applicants => {
         if (applicants.val()) {
           let applicantsArray = Object.keys(applicants.val())
           applicantsArray.forEach(applicant => {
             db.ref(`jobsAppliedFor/${applicant}/${jobKey}`).remove()
-              .catch(console.log)
+            db.ref(`applicants/${jobKey}`).remove()
           })
         }
       })
-      .then(() => {
-        applicantsRef.remove()
-      })
       .catch(console.log)
-      .catch(console.log)
-    db.ref(`jobs/${jobKey}`).remove()
-    db.ref(`locations/${jobKey}`).remove()
-    NavigationActions.pop()
-
   }
 
   render () {
-    console.log('detailrender', this.state.applicantDataSource)
     const {
       title,
       description,
@@ -110,11 +146,19 @@ class JobDetailsView extends React.Component {
 
     let currUser = firebase.auth().currentUser.uid
 
-    let controls
-    if (poster === currUser) {
-      controls = (
+    let applicants
+    if (this.props.job.hired) {
+      applicants = (
         <View>
-          <Button onPress={this.cancelJob}>Cancel Job</Button> 
+          <Button onPress={this.markCompleted}>Job Completed</Button>
+          <Text style={{color: 'grey'}}>Hired Applicant:</Text>
+          <Text>{this.props.job.hired.id}</Text>
+          {/* <Text>{this.props.job.hired.id}</Text> */}
+        </View>
+      )
+    } else {
+      applicants = (
+        <View>
           <Text style={{color: 'grey'}}>Applicants:</Text>
           <ListView
             tabLabel="Jobs I've Posted"
@@ -123,6 +167,16 @@ class JobDetailsView extends React.Component {
             renderRow={this._renderItem}
             enableEmptySections
           />
+        </View>
+      )
+    }
+
+    let controls
+    if (poster === currUser) {
+      controls = (
+        <View>
+          <Button onPress={this.cancelJob}>Cancel Job</Button>
+          {applicants}
         </View>
       )
     } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.key)) {
@@ -156,26 +210,32 @@ class JobDetailsView extends React.Component {
     this.getUsersData(this.props.applicants || [])
   }
 
-  getUsersData(usersArray) {
-    applicantPromiseArray = []
-    usersArray.forEach(el => {
-      let applicantRef = db.ref(`users/${el}`)
-      applicantPromiseArray.push(applicantRef.once('value'))
+  getUsersData (usersArray) {
+    let applicantPromiseArray = []
+    usersArray.forEach(userId => {
+      let applicantRef = db.ref(`users/${userId}`)
+      applicantPromiseArray.push(
+        applicantRef.once('value')
+          .then(userData => {
+            let dataObj = userData.val()
+            dataObj.id = userId
+            return dataObj
+          })
+      )
     })
 
     Promise.all(applicantPromiseArray)
       .then(usersData => {
-        usersData = usersData.map(el => el.val())
         this.setState({
           applicantDataSource: this.state.applicantDataSource.cloneWithRows(usersData || {})
         })
       })
   }
 
-  _renderItem (userId) {
+  _renderItem (applicant) {
     return (
-      <TouchableOpacity onPress={userId => this.hireApplicant(userId)} >
-        <Text style={{color: 'white'}}>{userId}</Text>
+      <TouchableOpacity onPress={() => this.hireApplicant(applicant)} >
+        <Text style={{color: 'white'}}>{applicant.id}</Text>
       </TouchableOpacity>
     )
   }
@@ -192,7 +252,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     dashboard: NavigationActions.dashboard,
-    actions: bindActionCreators(Actions, dispatch),
+    actions: bindActionCreators(Actions, dispatch)
   }
 }
 

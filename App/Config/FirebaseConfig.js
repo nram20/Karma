@@ -28,7 +28,6 @@ let geoFire = new GeoFire(firebaseRef)
 //  briefly show login screen before auth state is verified
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
-
     NavigationActions.tabbar()
 
     // setLocalJobsListener()
@@ -53,7 +52,7 @@ function setPostedJobsListener (user) {
     if (snapshot.val()) {
       dispatch({type: Types.POSTED_JOBS_RECEIVE, postedJobs: snapshot.val()})
     }
-  }) 
+  })
   db.ref(`jobsPosted`).on('child_removed', oldChildSnapshot => {
     if (user.uid === oldChildSnapshot.key) {
       if (oldChildSnapshot) {

@@ -29,7 +29,6 @@ export default class JobCard extends React.Component {
     const { item, handleClick } = this.props
     return (
       <Container>
-        
         <Content>
           <Card>
             <CardItem>

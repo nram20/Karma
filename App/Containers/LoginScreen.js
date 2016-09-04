@@ -3,9 +3,13 @@ import { Text, View, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import firebase from 'firebase'
+<<<<<<< HEAD
 import { Container, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
 // import karmaTheme from '../../node_modules/native-base/Components/Themes/light'
 import karmaTheme from '../NativeBase/karmaTheme'
+=======
+import { Container, Button, Content, Input, InputGroup, Icon } from 'native-base'
+>>>>>>> 1c445cde18530c37d6e7651d1eefc7b1afb1a642
 
 // Styles
 import styles from './Styles/LoginScreenStyle'
@@ -48,12 +52,10 @@ class LoginScreen extends React.Component {
     return (
       <Container theme={karmaTheme}>
 
-
         <Content style={styles.container}>
           <InputGroup style={styles.input}>
             <Icon name='ios-person' />
             <Input
-              
               onChangeText={this.changeEmail}
               placeholder='Email'
             />
@@ -61,7 +63,6 @@ class LoginScreen extends React.Component {
           <InputGroup style={styles.input}>
             <Icon name='ios-unlock' />
             <Input
-            
               onChangeText={this.changePassword}
               placeholder='Password'
               secureTextEntry

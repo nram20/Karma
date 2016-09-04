@@ -1,8 +1,6 @@
 import React from 'react'
 import { ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
-import Actions from '../Actions/Creators'
-import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/TestingStyle'

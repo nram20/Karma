@@ -1,15 +1,10 @@
-import Color from 'color';
+import Color from 'color'
+import {Platform} from 'react-native'
 
-import {Platform} from 'react-native';
-const cyan = '#50a2a7';
-const burntRed = '#9b2915';
-const gold = '#e9b44c';
-const pale = '#e4d6a7';
-const offblack = '#1c110a';
-
-
+const burntRed = '#9b2915'
 
 export default {
+
     brandPrimary : burntRed,
     brandInfo: '#5bc0de',
     brandSuccess: gold,
