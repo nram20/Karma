@@ -45,7 +45,6 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     margin: 2,
-    textAlign: 'center'
   },
   cardHeader: {
     flex: 1,
