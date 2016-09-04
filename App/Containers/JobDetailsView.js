@@ -74,23 +74,26 @@ class JobDetailsView extends React.Component {
   cancelJob () {
     let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
-    let hiredUser = this.props.job.hired.id
 
     db.ref(`jobsPosted/${currUser}/${jobKey}`).remove()
     db.ref(`jobsWorking/${currUser}/${jobKey}`).remove()
     db.ref(`jobs/${jobKey}`).remove()
     db.ref(`locations/${jobKey}`).remove()
     db.ref(`locations/${jobKey}`).remove()
-    if(this.props.job.hired.id !== undefined) {
+
+    if(this.props.job.hired !== undefined) {
+      let hiredUser = this.props.job.hired.id
       db.ref(`jobsWorking/${hiredUser}/${jobKey}`).remove()
     }
-    let userRef = db.ref(`users/${currUser.uid}`)
+
+    let userRef = db.ref(`users/${currUser}`)
     userRef.once('value')
       .then(userDataSnap => {
         let userData = userDataSnap.val()
         userData.currentKarma = +userData.currentKarma + +this.props.job.cost
         userRef.set(userData)
       })
+    NavigationActions.pop()
   }
 
   markCompleted () {
