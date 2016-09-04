@@ -89,8 +89,8 @@ class NavigationRouter extends Component {
       <Router>
         <Scene key='root'>
 
-          <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} hideBackImage title='Login' navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: 'white'}}/>
-          <Scene key='register' component={RegisterScreen} title='Register' />    
+          <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} hideBackImage title='Login' navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}}/>
+          <Scene key='register' component={RegisterScreen} title='Register' navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}}/>    
           <Scene key='jobDetails' component={JobDetailsView} title='Job' navigationBarStyle={{backgroundColor:'red'}} titleStyle={{color:'black'}} />
           <Scene tabs key='tabbar' type='reset' tabBarIconContainerStyle={styles.container} tabBarStyle={styles.tabbar} animated direction='vertical' duration={300} >
             <Scene key='dashboard' icon={DashIcon} component={DashboardScreen} title='Dashboard' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}}>

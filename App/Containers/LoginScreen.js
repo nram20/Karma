@@ -47,9 +47,7 @@ class LoginScreen extends React.Component {
   render () {
     return (
       <Container>
-        <Header style={styles.header}>
-          <Title>Login</Title>
-        </Header>
+
 
         <Content style={styles.container}>
           <InputGroup style={styles.input}>
@@ -71,7 +69,7 @@ class LoginScreen extends React.Component {
           </InputGroup>
 
           <Button block success iconRight onPress={this.login}>
-            Sign In <Icon name='ios-arrow-forward' />
+            <Text style={styles.buttonSuccessText}>Sign In</Text> <Icon name='ios-arrow-forward' />
           </Button>
 
           <View style={styles.links}>

@@ -17,7 +17,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     padding: 40,
-    backgroundColor: '#50a2a7'
+    backgroundColor: '#50a2a7',
+    marginTop: Metrics.navBarHeight
   },
   header: {
     backgroundColor: Colors.cyan
@@ -25,6 +26,10 @@ export default StyleSheet.create({
   },
   body: {
     flex: 24
+  },
+  buttonSuccessText: {
+    color: '#9b2915',
+    fontWeight: 'bold'
   },
 
   input: {
