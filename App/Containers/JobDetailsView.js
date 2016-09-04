@@ -19,7 +19,6 @@ class JobDetailsView extends React.Component {
 
     const rowHasChanged = (r1, r2) => r1 !== r2
     const ds = new ListView.DataSource({rowHasChanged})
-    console.log('apples',this.props)
     let applicantDataSource = ds.cloneWithRows(this.props.applicants|| {})
 
     this.state = {
@@ -29,6 +28,7 @@ class JobDetailsView extends React.Component {
 
     this._renderItem = this._renderItem.bind(this)
     this.applyToJob = this.applyToJob.bind(this)
+    this.hireApplicant = this.hireApplicant.bind(this)
     this.unapplyToJob = this.unapplyToJob.bind(this)
     this.cancelJob = this.cancelJob.bind(this)
     this.logOut = this.logOut.bind(this)
@@ -51,14 +51,22 @@ class JobDetailsView extends React.Component {
   }
 
   unapplyToJob () {
-    console.log('thispropsjob',this.props.job)
     let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
     applicantsRef.remove()
     let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
     appliedRef.remove()
-    // this.props.actions.unapplyToJob(this.props.job)
+  }
+
+  hireApplicant (applicantId) {
+    console.log('applicantId',applicantId)
+    let currUser = firebase.auth().currentUser.uid
+    let jobKey = this.props.job.key
+    let jobRef = db.ref(`jobs/${jobKey}/hired`)
+    jobRef.set(applicantId)
+    let workingRef = db.ref(`working/${applicantId}/${jobKey}`)
+    workingRef.set(true)
   }
 
   cancelJob () {
@@ -165,9 +173,8 @@ class JobDetailsView extends React.Component {
   }
 
   _renderItem (userId) {
-    console.log('userId?',userId)
     return (
-      <TouchableOpacity onPress={() => console.log('name touched')} >
+      <TouchableOpacity onPress={userId => this.hireApplicant(userId)} >
         <Text style={{color: 'white'}}>{userId}</Text>
       </TouchableOpacity>
     )
@@ -177,6 +184,7 @@ class JobDetailsView extends React.Component {
 const mapStateToProps = (state) => {
   return {
     job: state.jobs.selectedJob,
+    appliedJobs: state.jobs.appliedJobs,
     applicants: state.jobs.selectedJob.applicants
   }
 }

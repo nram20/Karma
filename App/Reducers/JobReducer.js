@@ -38,8 +38,7 @@ const postedDetailsSetFailure = (state, action) =>
   })
 
 const appliedDetailsSet = (state, action) => {
-  console.log('applydetails',action)
- return state.merge({
+  return state.merge({
     appliedJobs: action.appliedJobs,
     error: false
   })
@@ -49,6 +48,19 @@ const appliedDetailsSetFailure = (state, action) =>
   state.merge({
     error: true
   })
+
+const workingDetailsSet = (state, action) => {
+  return state.merge({
+    workingJobs: action.workingJobs,
+    error: false
+  })
+}
+
+const workingDetailsSetFailure = (state, action) => {
+  return state.merge({
+    error: true
+  })
+}
 
 const appliedFailure = (state, action) =>
   state.merge({
@@ -94,6 +106,8 @@ const ACTION_HANDLERS = {
   [Types.POSTED_JOBS_DETAILS_SET_FAILURE]: postedDetailsSetFailure,
   [Types.APPLIED_JOBS_DETAILS_SET]: appliedDetailsSet,
   [Types.APPLIED_JOBS_DETAILS_SET_FAILURE]: appliedDetailsSetFailure,
+  [Types.WORKING_JOBS_DETAILS_SET]: workingDetailsSet,
+  [Types.WORKING_JOBS_DETAILS_SET_FAILURE]: workingDetailsSetFailure,
   [Types.SELECT_JOB_FOR_DETAILS]: selectJob,
   [Types.APPLY_TO_JOB]: applyToJob,
   [Types.UNAPPLY_TO_JOB]: unapplyToJob,
