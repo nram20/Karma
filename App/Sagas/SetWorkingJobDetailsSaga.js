@@ -27,6 +27,7 @@ export default () => {
       })
       return workingJobsObject
     }
+    console.log('workingObj',workingObj)
     yield put(Actions.workingDetailsSet(workingObj))
   }
 

@@ -58,6 +58,7 @@ const appliedDetailsSetFailure = (state, action) =>
   })
 
 const workingDetailsSet = (state, action) => {
+  console.log('workingjobs',action)
   return state.merge({
     workingJobs: action.workingJobs,
     error: false
