@@ -1,9 +1,10 @@
 import React from 'react'
-import { Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { Text, View, ReactNative, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { db, geoFire } from '../Config/FirebaseConfig'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Container, Card, CardItem, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
 
 // Styles
 import styles from './Styles/PostScreenStyle'
@@ -20,6 +21,24 @@ class PostScreen extends React.Component {
     this.changeCost = this.changeCost.bind(this)
     this.post = this.post.bind(this)
   }
+
+
+  componentDidMount () {
+
+    console.log('postmounted');
+  }
+
+//   inputFocused (refName) {
+//   setTimeout(() => {
+//     let scrollResponder = this.refs.scrollView.getScrollResponder();
+//     scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+//       React.findNodeHandle(this.refs[refName]),
+//       110, //additionalOffset
+//       true
+//     );
+//   }, 50);
+// }
+
 
   post () {
     let jobRef = db.ref('jobs')
@@ -55,38 +74,72 @@ class PostScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.mainContainer}>
-        <Text>Post a Job</Text>
-        <View style={styles.container}>
-          <Text style={styles.feedback} />
-          <TextInput
-            onChangeText={this.changeTitle}
-            placeholder='Title'
-            style={styles.input}
-            value={this.state.title}
-          />
-          <TextInput
-            onChangeText={this.changeDescription}
-            placeholder='Description'
-            style={styles.input}
-            value={this.state.description}
-          />
-          <TextInput
-            onChangeText={this.changeCost}
-            placeholder='Cost'
-            style={styles.input}
-            value={this.state.cost}
-          />
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={this.post}
-          >
-            <Text style={styles.button}>
-              Post Job
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+
+        <Container style={styles.mainContainer}>
+          <Content>
+            <Card>
+              <CardItem header>
+                <Text style={styles.cardHeader}>Job Title</Text>
+              </CardItem>
+                <InputGroup 
+                  iconLeft
+                  style={styles.input}
+                >
+                  <Icon name='ios-globe' />
+                  <Input
+                    iconLeft
+                    onChangeText={this.changeTitle}
+                    placeholder='What do you need help with?'
+                    value={this.state.title}
+                  />
+                </InputGroup>
+            </Card>         
+            
+            <Card>
+              <CardItem header>
+                <Text style={styles.cardHeader}>Description</Text>
+              </CardItem>
+                <InputGroup 
+                  iconLeft
+                  style={styles.input}
+                >
+                  <Icon name='ios-paper' />
+                  <Input
+                    iconLeft
+                    onChangeText={this.changeDescription}
+                    placeholder='Enter a Short Description'
+                    value={this.state.description}
+                  />
+                </InputGroup>
+            </Card> 
+            <Card>
+              <CardItem header>
+                <Text style={styles.cardHeader}>Karma Offered</Text>
+              </CardItem>
+                <InputGroup 
+                  iconLeft
+                  style={styles.input}
+                >
+                  <Icon name='ios-heart' />
+                  <Input
+                    keyboardType='numeric'
+                    iconLeft
+                    onChangeText={this.changeCost}
+                    placeholder='How much Karma do you want to give?'
+                    value={this.state.cost}
+                  />
+                </InputGroup>
+            </Card>             
+
+            <Button block success iconRight onPress={this.post}>
+              <Text style={styles.buttonText}>Post Job</Text> <Icon name='ios-arrow-forward' style={{color: '#9b2915'}}/>
+            </Button>        
+
+            
+            
+          </Content>
+        </Container>
+
     )
   }
 }

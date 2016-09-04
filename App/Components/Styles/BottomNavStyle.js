@@ -1,9 +1,12 @@
 export default {
   bottomNav: {
     flexDirection: 'row',
-    height: 44
+    height: 44,
+    backgroundColor: '#e9b44c'
+
   },
-  button: {
-    flex: 1
+  buttonText: {
+    flex: 1,
+    backgroundColor: '#e9b44c'
   }
 }
