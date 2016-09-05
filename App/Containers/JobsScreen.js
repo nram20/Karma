@@ -1,6 +1,6 @@
 import React from 'react'
 import { ListView } from 'react-native'
-import { Container, Content, Tabs, View } from 'native-base'
+import { Container, Content, Tabs, View, Header, Text } from 'native-base'
 import { connect } from 'react-redux'
 import JobCard from '../Components/JobCard'
 import Actions from '../Actions/Creators'
@@ -47,7 +47,7 @@ class JobsScreen extends React.Component {
     return (
       <Container style={{ paddingTop: 20 }}>
 
-        <View theme={karmaTheme}>
+        <View theme={karmaTheme} style={{marginTop: 44}}>
 
           <Tabs style={styles.tabs}>
             <ListView

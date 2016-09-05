@@ -138,6 +138,7 @@ class MapView2 extends Component {
   }
 
   _onRegionChangeComplete = (region) => {
+    this.setState({ mapRegion: region })
     this.props.newMapRegion(region)
     if (this.state.isFirstLoad) {
       this.setState({
@@ -151,9 +152,7 @@ class MapView2 extends Component {
 
 var styles = StyleSheet.create({
   map: {
-    borderWidth: 1,
-    borderColor: '#000000',
-    height: Dimensions.get('window').height - Metrics.navBarHeight - 50 - 1,
+    height: Dimensions.get('window').height - Metrics.navBarHeight - 50,
     width: Dimensions.get('window').width
   },
   row: {
