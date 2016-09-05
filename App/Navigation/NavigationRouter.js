@@ -75,6 +75,9 @@ class JobIcon extends React.Component {
 }
 
 class NavigationRouter extends Component {
+  getRightTitle() {
+    return 10
+  }
   render () {
     return (
       <Router>
@@ -84,7 +87,7 @@ class NavigationRouter extends Component {
           <Scene key='jobDetails' component={JobDetailsView} title='Job' navigationBarStyle={{backgroundColor: 'red'}} titleStyle={{color: 'black'}} />
           <Scene key='settings' component={Settings} />
           <Scene tabs key='tabbar' type='reset' tabBarIconContainerStyle={styles.container} tabBarStyle={styles.tabbar} animated direction='vertical' duration={300} >
-            <Scene key='dashboard' leftButtonImage={require('../Themes/Images/gear.png')} leftButtonIconStyle={{width: 24, height:24}} onLeft={() => NavigationActions.settings()} icon={DashIcon} component={DashboardScreen} title='Dashboard' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
+            <Scene key='dashboard' onRight={()=>0} getRightTitle={this.getRightTitle} leftButtonImage={require('../Themes/Images/gear.png')} leftButtonIconStyle={{width: 24, height:24}} onLeft={() => NavigationActions.settings()} icon={DashIcon} component={DashboardScreen} title='Dashboard' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
             <Scene key='post' icon={PostIcon} component={PostScreen} title='Post a Job!' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
             <Scene key='jobs' icon={JobIcon} component={JobsScreen} title='Jobs' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} hideNavBar />
           </Scene>

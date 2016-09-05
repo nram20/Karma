@@ -67,6 +67,7 @@ class PostScreen extends React.Component {
           Alert.alert('One small problem...', 'You don\'t have that much karma. Help yourself by helping others!')
         }
       })
+       NavigationActions.dashboard()
   }
 
   changeTitle (title) {
