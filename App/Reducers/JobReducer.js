@@ -5,6 +5,8 @@ import { createReducer } from 'reduxsauce'
 export const INITIAL_STATE = Immutable({
   localJobs: [],
   postedJobs: {},
+  workingJobs: {},
+  selectedJob: {},
   appliedJobs: {}
 })
 

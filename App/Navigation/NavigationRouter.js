@@ -3,7 +3,7 @@ import { Text, StyleSheet } from 'react-native'
 import { Scene, Router } from 'react-native-router-flux'
 import { Container, Content, Icon } from 'native-base'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-
+import { connect } from 'react-redux'
 
 // screens identified by the router
 import RegisterScreen from '../Containers/RegisterScreen'
@@ -97,4 +97,11 @@ class NavigationRouter extends Component {
   }
 }
 
-export default NavigationRouter
+const mapStateToProps = (state) => {
+  console.log('state',state)
+  return {
+    currentKarma: state.user.userInfo || 0
+  }
+}
+
+export default connect(mapStateToProps)(NavigationRouter)

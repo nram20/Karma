@@ -89,7 +89,7 @@ class PostScreen extends React.Component {
         <Container style={styles.mainContainer} theme={karmaTheme}>
           <View>
             <Card style={styles.card}>
-              <CardItem header >
+              <CardItem header>
                 <Text style={styles.cardHeader}>Job Title</Text>
               </CardItem>
               <View style={styles.inputGroup}>
