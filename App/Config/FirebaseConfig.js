@@ -29,10 +29,10 @@ let geoFire = new GeoFire(firebaseRef)
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     NavigationActions.tabbar()
-
     setPostedJobsListener(user)
     setAppliedJobsListener(user)
     setWorkingJobsListener(user)
+    setUserDetailsListener(user)
   } else {
     NavigationActions.loginScreen()
   }
@@ -72,6 +72,13 @@ function setWorkingJobsListener (user) {
   let jobsRef = db.ref(`jobsWorking/${user.uid}`)
   jobsRef.on('value', snapshot => {
     dispatch({type: Types.WORKING_JOBS_RECEIVE, workingJobs: snapshot.val()})
+  })
+}
+
+function setUserDetailsListener (user) {
+  let jobsRef = db.ref(`users/${user.uid}`)
+  jobsRef.on('value', snapshot => {
+    dispatch({type: Types.USER_INFO_RECEIVE, userInfo: snapshot.val()})
   })
 }
 
