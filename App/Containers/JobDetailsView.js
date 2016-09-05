@@ -29,6 +29,7 @@ class JobDetailsView extends React.Component {
     this._renderItem = this._renderItem.bind(this)
     this.clearApplicantsListInFirebase = this.clearApplicantsListInFirebase.bind(this)
     this.applyToJob = this.applyToJob.bind(this)
+    this.changeMessage = this.changeMessage.bind(this)
     this.unapplyToJob = this.unapplyToJob.bind(this)
     this.hireApplicant = this.hireApplicant.bind(this)
     this.markCompleted = this.markCompleted.bind(this)
@@ -42,10 +43,13 @@ class JobDetailsView extends React.Component {
   }
 
   applyToJob () {
+    if (!this.state.message) {
+      return Alert.alert('Are you sure?', 'Continue without leaving a message?(PUT BUTTON HERE\)')
+    }
     let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
     let applicantsRef = db.ref(`applicants/${jobKey}/${currUser}`)
-    applicantsRef.set(true)
+    applicantsRef.set(this.state.message || true)
     let appliedRef = db.ref(`jobsAppliedFor/${currUser}/${jobKey}`)
     appliedRef.set(true)
     NavigationActions.pop()
@@ -136,6 +140,10 @@ class JobDetailsView extends React.Component {
       .catch(console.log)
   }
 
+  changeMessage (message) {
+    this.setState({message})
+  }
+
   render () {
     const {
       title,
@@ -156,6 +164,7 @@ class JobDetailsView extends React.Component {
           <Button onPress={this.markCompleted}>Job Completed</Button>
           <Text style={{color: 'grey'}}>Hired Applicant:</Text>
           <Text>{this.props.job.hired.displayName}</Text>
+          <Text style={{color: 'white'}}>{this.props.job.hired.message}</Text>
         </View>
       )
     } else {
@@ -184,12 +193,27 @@ class JobDetailsView extends React.Component {
     } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.key)) {
       controls = <Button onPress={this.unapplyToJob}>unApply</Button>
     } else {
-      controls = <Button onPress={this.applyToJob}>Apply</Button>
+      controls = (
+        <View>
+          <Button onPress={this.applyToJob}>Apply</Button>
+          <InputGroup
+            iconLeft
+            style={styles.input}
+          >
+            <Icon name='ios-globe' />
+            <Input
+              style={styles.innerInput}
+              iconLeft
+              onChangeText={this.changeMessage}
+              placeholder='Include a message with your application'
+              value={this.state.title}
+            />
+          </InputGroup>
+        </View>
+      )
     }
 
     return (
-
-
       <View style={styles.container}>
         <ScrollView>
           <Text style={styles.text}>{title}</Text>
@@ -214,15 +238,16 @@ class JobDetailsView extends React.Component {
     this.getUsersData(this.props.applicants || [])
   }
 
-  getUsersData (usersArray) {
+  getUsersData (usersObj) {
     let applicantPromiseArray = []
-    usersArray.forEach(userId => {
+    Object.keys(usersObj).forEach(userId => {
       let applicantRef = db.ref(`users/${userId}`)
       applicantPromiseArray.push(
         applicantRef.once('value')
           .then(userData => {
             let dataObj = userData.val()
             dataObj.id = userId
+            dataObj.message = usersObj[userId]
             return dataObj
           })
       )
@@ -240,6 +265,7 @@ class JobDetailsView extends React.Component {
     return (
       <TouchableOpacity onPress={() => this.hireApplicant(applicant)} >
         <Text style={{color: 'white'}}>{applicant.displayName}</Text>
+        <Text style={{color: 'white'}}>{applicant.message}</Text>
       </TouchableOpacity>
     )
   }

@@ -16,8 +16,11 @@ export default () => {
             .then(applicants => {
               let jobData = data.val()
               if (applicants.val()) {
-                jobData.applicants = Object.keys(applicants.val())
+                for (let applicantId in applicants.val()) {
+                  jobData.applicants = {[applicantId]: applicants.val()[applicantId]}
+                }
               }
+              console.log('jobdata',jobData)
               return jobData
             })
         })

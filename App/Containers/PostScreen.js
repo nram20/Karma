@@ -38,7 +38,7 @@ class PostScreen extends React.Component {
 
   post () {
     if (!this.state.title || !this.state.description || !this.state.cost) {
-      Alert.alert('One small problem...', 'Looks like you missed a field.')
+      return Alert.alert('One small problem...', 'Looks like you missed a field.')
     }
     let jobRef = db.ref('jobs')
     let currUser = firebase.auth().currentUser

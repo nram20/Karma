@@ -10,7 +10,7 @@ export default () => {
 
     let appliedPromiseArray = appliedJobIdArray.map(el => {
       let ref = db.ref(`jobs/${el}`)
-      return ref.once('value', data => data)
+      return ref.once('value')
     })
 
     let appliedObj = yield Promise.all(appliedPromiseArray)
