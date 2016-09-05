@@ -7,8 +7,8 @@ import { db } from '../Config/FirebaseConfig'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Container, Card, CardItem, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
-
-
+import Types from '../Actions/Types'
+import { dispatch } from '../../index.ios'
 // Styles
 import styles from './Styles/JobDetailsViewStyle'
 
@@ -66,7 +66,9 @@ class JobDetailsView extends React.Component {
     jobRef.set(applicant)
     let workingRef = db.ref(`jobsWorking/${applicant.id}/${jobKey}`)
     workingRef.set(true)
+    this.setState({ hired: applicant })
     this.clearApplicantsListInFirebase()
+    dispatch({ type: Types.HIRE_WORKER, jobKey, applicant })
   }
 
   cancelJob () {
@@ -153,8 +155,7 @@ class JobDetailsView extends React.Component {
         <View>
           <Button onPress={this.markCompleted}>Job Completed</Button>
           <Text style={{color: 'grey'}}>Hired Applicant:</Text>
-          <Text>{this.props.job.hired.id}</Text>
-          {/* <Text>{this.props.job.hired.id}</Text> */}
+          <Text>{this.props.job.hired.displayName}</Text>
         </View>
       )
     } else {
@@ -238,7 +239,7 @@ class JobDetailsView extends React.Component {
   _renderItem (applicant) {
     return (
       <TouchableOpacity onPress={() => this.hireApplicant(applicant)} >
-        <Text style={{color: 'white'}}>{applicant.id}</Text>
+        <Text style={{color: 'white'}}>{applicant.displayName}</Text>
       </TouchableOpacity>
     )
   }
