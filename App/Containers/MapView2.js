@@ -5,28 +5,38 @@ import {
   View,
   Dimensions
 } from 'react-native'
-import { Button, Icon } from 'native-base'
+import { Button, Icon, Container, Text } from 'native-base'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Metrics from '../Themes/Metrics'
+import Colors from '../Themes/Colors'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
-const calloutStyles = {
+const mapStyles = StyleSheet.create({
   content: {
     borderColor: 'black',
     width: 100
   },
   buttonView: {
     flex: 1
+  },
+  homeButton: {
+    height: 32,
+    width: 32,
+    backgroundColor: Colors.cyan,
+    position: 'absolute',
+    top: 10,
+    right: 7,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
-}
+})
 
 // Detail callout for map pins
 const DetailCallout = (props) => {
-  console.log('detailCalloutProps', props)
   return (
-    <View style={calloutStyles.content}>
-      <View style={calloutStyles.buttonView}>
+    <View style={mapStyles.content}>
+      <View style={mapStyles.buttonView}>
         <Button block onPress={() => props.viewDetails(props.job)} style={{ backgroundColor: '#384850', marginLeft: -10, marginRight: -10 }} >
           <Icon name='ios-search' style={{ color: '#00c497' }} />
         </Button>
@@ -35,17 +45,35 @@ const DetailCallout = (props) => {
   )
 }
 
+// Button component to return to your location on the map
+const MyLocationButton = props => {
+  return (
+    <Button style={mapStyles.homeButton} onPress={() => props.onPress()}>
+      <Icon name="ios-home" style={{ color: '#eee' }}/>
+    </Button>
+  )
+}
+
 class MapView2 extends Component {
   constructor (props) {
     super(props)
+
+    const { currLocation } = this.props
+
+    this.initialRegion = {
+      latitude: currLocation.latitude,
+      longitude: currLocation.longitude,
+      latitudeDelta: 2,
+      longitudeDelta: 2
+    }
+
     this.state = {
       isFirstLoad: true,
-      mapRegion: undefined,
-      mapRegionInput: undefined,
-      jobs: this.props.jobs,
-      showUserLocation: true
+      mapRegion: this.initialRegion,
+      jobs: this.props.jobs
     }
     this.mapAnnotations = this.mapAnnotations.bind(this)
+    this.goToMyLocation = this.goToMyLocation.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -57,22 +85,29 @@ class MapView2 extends Component {
     }
   }
 
+  goToMyLocation() {
+    this.setState({ mapRegion: this.initialRegion })
+  }
+
   render () {
     return (
-      <MapView
-        style={styles.map}
-        onRegionChange={this._onRegionChange}
-        onRegionChangeComplete={this._onRegionChangeComplete}
-        region={this.state.mapRegion}
-        annotations={this.state.annotations}
-      />
+      <View>
+        <MapView
+          style={styles.map}
+          onRegionChange={this._onRegionChange}
+          onRegionChangeComplete={this._onRegionChangeComplete}
+          region={this.state.mapRegion}
+          annotations={this.state.annotations}
+          rotateEnabled={false}
+        />
+      <MyLocationButton onPress={this.goToMyLocation}/>
+      </View>
     )
   }
 
   mapAnnotations (jobs) {
     const annots = []
     jobs.forEach(job => {
-      console.log('-------- job', job)
       const annot = {
         longitude: job.location[1],
         latitude: job.location[0],
@@ -96,33 +131,14 @@ class MapView2 extends Component {
     return this.mapAnnotations(this.state.jobs)
   }
 
-  // console.log('region', region)
-  // return [
-  //   {
-  //     longitude: region.longitude,
-  //     latitude: region.latitude,
-  //     title: 'You Are Here'
-  //   },
-  //   {
-  //     longitude: -90,
-  //     latitude: 40,
-  //     title: ' ',
-  //     tintColor: 'blue',
-  //     onFocus: () => console.log('hey yo!'),
-  //     // rightCalloutView: <View style={{height: 100, width: 100, backgroundColor: 'blue'}} />,
-  //     // leftCalloutView: <View style={{height: 100, width: 100, backgroundColor: 'blue'}} />,
-  //     detailCalloutView: <View style={{height: 100, width: 100, backgroundColor: 'blue', borderRadius: 5}} />
-  //   }
-  // ]
-
   _onRegionChange = (region) => {
-    console.log('onRegionChange', this.props)
     this.setState({
       mapRegionInput: region
     })
   }
 
   _onRegionChangeComplete = (region) => {
+    this.setState({ mapRegion: region })
     this.props.newMapRegion(region)
     if (this.state.isFirstLoad) {
       this.setState({
@@ -132,21 +148,11 @@ class MapView2 extends Component {
       })
     }
   }
-
-  // _onRegionInputChanged = (region) => {
-  //   this.setState({
-  //     mapRegion: region,
-  //     mapRegionInput: region,
-  //     annotations: this._getAnnotations(region)
-  //   })
-  // }
 }
 
 var styles = StyleSheet.create({
   map: {
-    borderWidth: 1,
-    borderColor: '#000000',
-    height: Dimensions.get('window').height - Metrics.navBarHeight - 50 - 1,
+    height: Dimensions.get('window').height - Metrics.navBarHeight - 50,
     width: Dimensions.get('window').width
   },
   row: {

@@ -11,7 +11,6 @@ export default StyleSheet.create({
     width: Metrics.images.logo,
     resizeMode: 'contain'
   },
-
   centered: {
     alignItems: 'center'
   },
@@ -26,30 +25,39 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between'
-
   },
-
   buttonText: {
     color: '#9b2915',
     fontWeight: 'bold'
   },
-
   body: {
     flex: 24
+  },
+  card: {
+    margin: 4
+  },
+  innerInput: {
+    marginTop: 15,
   },
   input: {
     backgroundColor: white,
     height: 50,
-    borderColor: black,
-    borderWidth: 1,
-    borderRadius: 5,
-    margin: 2
+    marginBottom: 2,
+  },
+  inputGroup : {
+    borderColor: 'grey',
+    flex: 1,
+    borderBottomWidth: 2,
+    marginBottom: 4,
+    marginRight: 5,
+    marginLeft: 5
   },
   cardHeader: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    textAlign: 'center'
+    justifyContent: 'flex-start',
+    textAlign: 'left',
+    marginBottom: -7
   },
   buttonContainer: {
     backgroundColor: white,

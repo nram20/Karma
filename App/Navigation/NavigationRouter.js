@@ -89,7 +89,7 @@ class NavigationRouter extends Component {
           <Scene tabs key='tabbar' type='reset' tabBarIconContainerStyle={styles.container} tabBarStyle={styles.tabbar} animated direction='vertical' duration={300} >
             <Scene key='dashboard' onRight={()=>0} getRightTitle={this.getRightTitle} leftButtonImage={require('../Themes/Images/gear.png')} leftButtonIconStyle={{width: 24, height:24}} onLeft={() => NavigationActions.settings()} icon={DashIcon} component={DashboardScreen} title='Dashboard' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
             <Scene key='post' icon={PostIcon} component={PostScreen} title='Post a Job!' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
-            <Scene key='jobs' icon={JobIcon} component={JobsScreen} title='Jobs' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} hideNavBar />
+            <Scene key='jobs' icon={JobIcon} component={JobsScreen} title='Jobs Near You' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
           </Scene>
         </Scene>
       </Router>
