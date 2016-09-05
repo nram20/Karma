@@ -2,10 +2,12 @@ import { combineReducers } from 'redux'
 import jobs from './JobReducer'
 import location from './LocationReducer'
 import map from './MapReducer'
+import user from './UserReducer'
 // glue all the reducers together into 1 root reducer
 export default combineReducers({
   jobs,
   location,
+  user,
   map
 })
 
