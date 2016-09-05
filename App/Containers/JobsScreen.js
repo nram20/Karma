@@ -47,7 +47,7 @@ class JobsScreen extends React.Component {
     return (
       <Container style={{ paddingTop: 20 }}>
 
-        <Content theme={karmaTheme}>
+        <View theme={karmaTheme}>
 
           <Tabs style={styles.tabs}>
             <ListView
@@ -59,7 +59,7 @@ class JobsScreen extends React.Component {
             />
             <MapView tabLabel={'Map'} />
           </Tabs>
-        </Content>
+        </View>
       </Container>
     )
   }

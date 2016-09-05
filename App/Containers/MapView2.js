@@ -5,32 +5,52 @@ import {
   View,
   Dimensions
 } from 'react-native'
-import { Button, Icon } from 'native-base'
+import { Button, Icon, Container, Text } from 'native-base'
 import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Metrics from '../Themes/Metrics'
+import Colors from '../Themes/Colors'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
-const calloutStyles = {
+const mapStyles = StyleSheet.create({
   content: {
     borderColor: 'black',
     width: 100
   },
   buttonView: {
     flex: 1
+  },
+  homeButton: {
+    height: 32,
+    width: 32,
+    backgroundColor: Colors.cyan,
+    position: 'absolute',
+    top: 10,
+    right: 7,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
-}
+})
 
 // Detail callout for map pins
 const DetailCallout = (props) => {
   return (
-    <View style={calloutStyles.content}>
-      <View style={calloutStyles.buttonView}>
+    <View style={mapStyles.content}>
+      <View style={mapStyles.buttonView}>
         <Button block onPress={() => props.viewDetails(props.job)} style={{ backgroundColor: '#384850', marginLeft: -10, marginRight: -10 }} >
           <Icon name='ios-search' style={{ color: '#00c497' }} />
         </Button>
       </View>
     </View>
+  )
+}
+
+// Button component to return to your location on the map
+const MyLocationButton = props => {
+  return (
+    <Button style={mapStyles.homeButton} onPress={() => props.onPress()}>
+      <Icon name="ios-home" style={{ color: '#eee' }}/>
+    </Button>
   )
 }
 
@@ -40,7 +60,7 @@ class MapView2 extends Component {
 
     const { currLocation } = this.props
 
-    const initialRegion = {
+    this.initialRegion = {
       latitude: currLocation.latitude,
       longitude: currLocation.longitude,
       latitudeDelta: 2,
@@ -49,10 +69,11 @@ class MapView2 extends Component {
 
     this.state = {
       isFirstLoad: true,
-      mapRegion: initialRegion,
-      jobs: this.props.jobs,
+      mapRegion: this.initialRegion,
+      jobs: this.props.jobs
     }
     this.mapAnnotations = this.mapAnnotations.bind(this)
+    this.goToMyLocation = this.goToMyLocation.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -64,15 +85,23 @@ class MapView2 extends Component {
     }
   }
 
+  goToMyLocation() {
+    this.setState({ mapRegion: this.initialRegion })
+  }
+
   render () {
     return (
-      <MapView
-        style={styles.map}
-        onRegionChange={this._onRegionChange}
-        onRegionChangeComplete={this._onRegionChangeComplete}
-        region={this.state.mapRegion}
-        annotations={this.state.annotations}
-      />
+      <View>
+        <MapView
+          style={styles.map}
+          onRegionChange={this._onRegionChange}
+          onRegionChangeComplete={this._onRegionChangeComplete}
+          region={this.state.mapRegion}
+          annotations={this.state.annotations}
+          rotateEnabled={false}
+        />
+      <MyLocationButton onPress={this.goToMyLocation}/>
+      </View>
     )
   }
 
@@ -102,27 +131,7 @@ class MapView2 extends Component {
     return this.mapAnnotations(this.state.jobs)
   }
 
-  // console.log('region', region)
-  // return [
-  //   {
-  //     longitude: region.longitude,
-  //     latitude: region.latitude,
-  //     title: 'You Are Here'
-  //   },
-  //   {
-  //     longitude: -90,
-  //     latitude: 40,
-  //     title: ' ',
-  //     tintColor: 'blue',
-  //     onFocus: () => console.log('hey yo!'),
-  //     // rightCalloutView: <View style={{height: 100, width: 100, backgroundColor: 'blue'}} />,
-  //     // leftCalloutView: <View style={{height: 100, width: 100, backgroundColor: 'blue'}} />,
-  //     detailCalloutView: <View style={{height: 100, width: 100, backgroundColor: 'blue', borderRadius: 5}} />
-  //   }
-  // ]
-
   _onRegionChange = (region) => {
-    console.log('region', region)
     this.setState({
       mapRegionInput: region
     })
@@ -138,14 +147,6 @@ class MapView2 extends Component {
       })
     }
   }
-
-  // _onRegionInputChanged = (region) => {
-  //   this.setState({
-  //     mapRegion: region,
-  //     mapRegionInput: region,
-  //     annotations: this._getAnnotations(region)
-  //   })
-  // }
 }
 
 var styles = StyleSheet.create({
