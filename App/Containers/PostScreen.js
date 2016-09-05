@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Alert } from 'react-native'
+import { Text, Alert, View } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { db, geoFire } from '../Config/FirebaseConfig'
@@ -86,68 +86,74 @@ class PostScreen extends React.Component {
 
 
         <Container style={styles.mainContainer} theme={karmaTheme}>
-          <Content>
-            <Card>
+          <View>
+            <Card style={styles.card}>
               <CardItem header>
                 <Text style={styles.cardHeader}>Job Title</Text>
               </CardItem>
-                <InputGroup 
+              <View style={styles.inputGroup}>
+                <InputGroup
                   iconLeft
                   style={styles.input}
                 >
                   <Icon name='ios-globe' />
                   <Input
+                    style={styles.innerInput}
                     iconLeft
                     onChangeText={this.changeTitle}
                     placeholder='What do you need help with?'
                     value={this.state.title}
                   />
                 </InputGroup>
-            </Card>         
-            
-            <Card>
+              </View>
+            </Card>
+
+            <Card style={styles.card}>
               <CardItem header>
                 <Text style={styles.cardHeader}>Description</Text>
               </CardItem>
-                <InputGroup 
+              <View style={styles.inputGroup}>
+                <InputGroup
                   iconLeft
                   style={styles.input}
                 >
-                  <Icon name='ios-paper' />
+                <Icon name='ios-paper' />
                   <Input
+                    style={styles.innerInput}
                     iconLeft
                     onChangeText={this.changeDescription}
                     placeholder='Enter a Short Description'
                     value={this.state.description}
                   />
                 </InputGroup>
-            </Card> 
-            <Card>
+              </View>
+            </Card>
+            <Card style={styles.card}>
               <CardItem header>
                 <Text style={styles.cardHeader}>Karma Offered</Text>
               </CardItem>
-                <InputGroup 
+              <View style={styles.inputGroup}>
+                <InputGroup
                   iconLeft
                   style={styles.input}
                 >
                   <Icon name='ios-heart' />
-                  <Input
-                    keyboardType='numeric'
-                    iconLeft
-                    onChangeText={this.changeCost}
-                    placeholder='How much Karma do you want to give?'
-                    value={this.state.cost}
-                  />
+                    <Input
+                      style={styles.innerInput}
+                      keyboardType='numeric'
+                      iconLeft
+                      onChangeText={this.changeCost}
+                      placeholder='How much Karma do you want to give?'
+                      value={this.state.cost}
+                    />
                 </InputGroup>
-            </Card>             
+              </View>
+            </Card>
 
-            <Button block success iconRight onPress={this.post}>
+            <Button style={{marginTop: 15, marginLeft: 10, marginRight: 10}} block success iconRight onPress={this.post}>
               <Text style={styles.buttonText}>Post Job</Text> <Icon name='ios-arrow-forward' style={{color: '#9b2915'}}/>
-            </Button>        
-
-            
-            
-          </Content>
+            </Button>
+          </View>
         </Container>
     )
   }
