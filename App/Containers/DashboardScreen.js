@@ -20,10 +20,12 @@ class DashboardScreen extends React.Component {
     const rowHasChanged = (r1, r2) => r1 !== r2
     const ds = new ListView.DataSource({rowHasChanged})
     const ds2 = new ListView.DataSource({rowHasChanged})
+    const ds3 = new ListView.DataSource({rowHasChanged})
 
     this.state = {
       postedDataSource: ds,
-      appliedDataSource: ds2
+      appliedDataSource: ds2,
+      workingDataSource: ds3
     }
 
     this._renderItem = this._renderItem.bind(this)
@@ -34,7 +36,8 @@ class DashboardScreen extends React.Component {
   componentWillReceiveProps (nextProps) {
     this.setState({
       postedDataSource: this.state.postedDataSource.cloneWithRows(nextProps.postedJobs || {}),
-      appliedDataSource: this.state.appliedDataSource.cloneWithRows(nextProps.appliedJobs || {})
+      appliedDataSource: this.state.appliedDataSource.cloneWithRows(nextProps.appliedJobs || {}),
+      workingDataSource: this.state.workingDataSource.cloneWithRows(nextProps.workingJobs || {})
     })
   }
 
@@ -63,7 +66,7 @@ class DashboardScreen extends React.Component {
           <Tabs>
 
             <ListView
-              tabLabel="Jobs I've Posted"
+              tabLabel="I Posted"
               dataSource={this.state.postedDataSource}
               removeClippedSubviews={false}
               renderRow={this._renderItem}
@@ -71,12 +74,21 @@ class DashboardScreen extends React.Component {
             />
 
             <ListView
-              tabLabel="Jobs I've Applied For"
+              tabLabel="I Applied"
               dataSource={this.state.appliedDataSource}
               removeClippedSubviews={false}
               renderRow={this._renderItem}
               enableEmptySections
             />
+
+            <ListView
+              tabLabel="I'm Working"
+              dataSource={this.state.workingDataSource}
+              removeClippedSubviews={false}
+              renderRow={this._renderItem}
+              enableEmptySections
+            />
+
           </Tabs>
         </Content>
       </Container>
@@ -103,6 +115,7 @@ const mapStateToProps = (state) => {
   return {
     postedJobs: state.jobs.postedJobs,
     appliedJobs: state.jobs.appliedJobs,
+    workingJobs: state.jobs.workingJobs,
     currLocation: state.location.currLocation
   }
 }

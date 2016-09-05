@@ -30,7 +30,6 @@ firebase.auth().onAuthStateChanged(user => {
   if (user) {
     NavigationActions.tabbar()
 
-    // setLocalJobsListener()
     setPostedJobsListener(user)
     setAppliedJobsListener(user)
     setWorkingJobsListener(user)
@@ -70,7 +69,7 @@ function setAppliedJobsListener (user) {
 }
 
 function setWorkingJobsListener (user) {
-  let jobsRef = db.ref(`working/${user.uid}`)
+  let jobsRef = db.ref(`jobsWorking/${user.uid}`)
   jobsRef.on('value', snapshot => {
     dispatch({type: Types.WORKING_JOBS_RECEIVE, workingJobs: snapshot.val()})
   })

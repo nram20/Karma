@@ -25,11 +25,20 @@ const failure = (state, action) =>
     error: true
   })
 
-const postedDetailsSet = (state, action) =>
-  state.merge({
+const postedDetailsSet = (state, action) => {
+  console.log('action',action.postedJobs)
+  let updatedSelected
+  for (let job in action.postedJobs) {
+    if (state.selectedJob.key == job) {
+      updatedSelected = action.postedJobs[job]
+      updatedSelected.key = job
+    }
+  }
+  return state.merge({
     postedJobs: action.postedJobs,
-    error: false
+    selectedJob: updatedSelected || state.selectedJob
   })
+}
 
 const postedDetailsSetFailure = (state, action) =>
   state.merge({
@@ -49,6 +58,7 @@ const appliedDetailsSetFailure = (state, action) =>
   })
 
 const workingDetailsSet = (state, action) => {
+  console.log('workingjobs',action)
   return state.merge({
     workingJobs: action.workingJobs,
     error: false
@@ -95,6 +105,22 @@ const unapplyToJob = (state, action) => {
   })
 }
 
+const hireWorker = (state, action) => {
+  console.log('jobKey',action.jobKey)
+  console.log('statedot',state.postedJobs)
+  let updatedReturnJob = Object.assign({},state.postedJobs[action.jobKey], { hired: action.applicant })
+  console.log('updatedReturnJob',updatedReturnJob)
+  let updatedJobs = Object.assign({}, state.postedJobs, {[action.jobKey]: updatedReturnJob})
+  let updatedSelected
+  if (state.selectedJob && state.selectedJob.key == action.jobKey) {
+    updatedSelected = Object.assign({}, state.selectedJob, { hired: action.applicant })
+  }
+  return state.merge({
+    postedJobs: updatedJobs,
+    selectedJob: updatedSelected || state.selectedJob
+  })
+}
+
 // map our types to our handlers
 const ACTION_HANDLERS = {
   [Types.JOB_RECEIVE]: receiveJob,
@@ -109,6 +135,7 @@ const ACTION_HANDLERS = {
   [Types.SELECT_JOB_FOR_DETAILS]: selectJob,
   [Types.APPLY_TO_JOB]: applyToJob,
   [Types.UNAPPLY_TO_JOB]: unapplyToJob,
+  [Types.HIRE_WORKER]: hireWorker,
   [Types.CLEAR_LOCAL_JOBS]: clearLocalJobs
 }
 

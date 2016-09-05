@@ -18,8 +18,8 @@ const appliedDetailsSet = appliedJobs =>
 const appliedDetailsSetFailure = error =>
   ({ type: Types.APPLIED_JOBS_DETAILS_SET_FAILURE, error })
 
-const workingDetailsSet = appliedJobs =>
-  ({ type: Types.WORKING_JOBS_DETAILS_SET, appliedJobs })
+const workingDetailsSet = workingJobs =>
+  ({ type: Types.WORKING_JOBS_DETAILS_SET, workingJobs })
 
 const workingDetailsSetFailure = error =>
   ({ type: Types.WORKING_JOBS_DETAILS_SET_FAILURE, error })
