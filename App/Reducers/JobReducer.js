@@ -31,7 +31,7 @@ const postedDetailsSet = (state, action) => {
   console.log('action',action.postedJobs)
   let updatedSelected
   for (let job in action.postedJobs) {
-    if (state.selectedJob.key == job) {
+    if (state.selectedJob && state.selectedJob.key == job) {
       updatedSelected = action.postedJobs[job]
       updatedSelected.key = job
     }
