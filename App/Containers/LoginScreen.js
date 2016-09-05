@@ -32,6 +32,7 @@ class LoginScreen extends React.Component {
   }
 
   login () {
+    NavigationActions.tabbar()
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .catch(error => {
         Alert.alert('One small problem...', error.message)

@@ -28,11 +28,11 @@ let geoFire = new GeoFire(firebaseRef)
 //  briefly show login screen before auth state is verified
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
-    NavigationActions.tabbar()
     setPostedJobsListener(user)
     setAppliedJobsListener(user)
     setWorkingJobsListener(user)
     setUserDetailsListener(user)
+    NavigationActions.tabbar()
   } else {
     NavigationActions.loginScreen()
   }
@@ -78,7 +78,9 @@ function setWorkingJobsListener (user) {
 function setUserDetailsListener (user) {
   let jobsRef = db.ref(`users/${user.uid}`)
   jobsRef.on('value', snapshot => {
-    dispatch({type: Types.USER_INFO_RECEIVE, userInfo: snapshot.val()})
+    let userInfo = snapshot.val()
+    userInfo.uid = user.uid
+    dispatch({type: Types.USER_INFO_RECEIVE, userInfo})
   })
 }
 

@@ -7,10 +7,8 @@ export const INITIAL_STATE = Immutable({
 })
 
 const receiveUserInfo = (state, action) => {
-  console.log('action.userInfo',action.userInfo)
-  let currUser = firebase.auth().currentUser.uid
   return state.merge({
-    [currUser]: action.userInfo
+    currUser: action.userInfo
   })
 }
 
