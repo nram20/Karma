@@ -55,9 +55,11 @@ export default StyleSheet.create({
   cardHeader: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     textAlign: 'left',
-    marginBottom: -7
+    marginBottom: -7,
+    justifyContent: 'space-between',
+    color: 'white',
+    fontWeight: '700'
   },
   buttonContainer: {
     backgroundColor: white,

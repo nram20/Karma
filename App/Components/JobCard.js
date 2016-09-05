@@ -1,7 +1,7 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
 import styles from './Styles/JobCardStyle'
-import { Container, Content, Card, CardItem, Text } from 'native-base'
+import { View, Text, TouchableOpacity } from 'react-native'
+import { Container, Content, Card, CardItem } from 'native-base'
 
 export default class JobCard extends React.Component {
 
