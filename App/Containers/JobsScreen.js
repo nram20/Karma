@@ -16,6 +16,9 @@ import MapView from './MapView2'
 // Styles
 import styles from './Styles/JobsScreenStyle'
 // import AlertMessage from '../Components/AlertMessageComponent'
+const burntRed = '#9b2915'
+const gold = '#e9b44c'
+const cyan = '#50a2a7'
 
 class JobsScreen extends React.Component {
   constructor (props) {
@@ -45,7 +48,7 @@ class JobsScreen extends React.Component {
 
   render () {
     return (
-      <Container style={{ paddingTop: 20 }}>
+      <Container style={{ paddingTop: 20, backgroundColor: cyan}}>
 
         <View theme={karmaTheme} style={{marginTop: 44}}>
 
@@ -74,12 +77,12 @@ class JobsScreen extends React.Component {
   _renderItem (item, version, id) {
     const job = Object.assign({}, item, { id })
     return (
-      <View>
+      
         <JobCard
           handleClick={this.props.viewDetails}
           item={job}
         />
-      </View>
+      
     )
   }
 }
