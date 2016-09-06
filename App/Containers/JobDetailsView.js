@@ -44,7 +44,7 @@ class JobDetailsView extends React.Component {
 
   applyToJob () {
     if (!this.state.message) {
-      return Alert.alert('Are you sure?', 'Continue without leaving a message?(PUT BUTTON HERE\)')
+      return Alert.alert('Are you sure?', 'You applied without leaving a message to the job poster.')
     }
     let jobKey = this.props.job.key
     let currUser = firebase.auth().currentUser.uid
@@ -108,7 +108,6 @@ class JobDetailsView extends React.Component {
     db.ref(`jobs/${jobKey}`).remove()
     db.ref(`jobsPosted/${currUser}/${jobKey}`).remove()
     db.ref(`jobsWorking/${hiredUser}/${jobKey}`).remove()
-    db.ref(`locations/${jobKey}`).remove()
     db.ref(`locations/${jobKey}`).remove()
 
     let userRef = db.ref(`users/${hiredUser}`)
@@ -240,15 +239,20 @@ class JobDetailsView extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log('infogotten')
-    this.getUsersData(nextProps.job.applicants || [])
+    this.getUsersData(nextProps.job.applicants || null)
   }
 
   componentDidMount () {
-    this.getUsersData(this.props.job.applicants || [])
+    this.getUsersData(this.props.job.applicants || null)
   }
 
   getUsersData (usersObj) {
+    if (!usersObj) {
+      this.setState({
+        applicantDataSource: this.state.applicantDataSource.cloneWithRows({})
+      })
+      return
+    }
     let applicantPromiseArray = []
     Object.keys(usersObj).forEach(userId => {
       let applicantRef = db.ref(`users/${userId}`)
@@ -262,7 +266,7 @@ class JobDetailsView extends React.Component {
           })
       )
     })
-
+    console.log('usersObj',usersObj)
     Promise.all(applicantPromiseArray)
       .then(usersData => {
         this.setState({
@@ -280,6 +284,7 @@ class JobDetailsView extends React.Component {
     )
   }
 }
+
 
 const mapStateToProps = (state) => {
   return {

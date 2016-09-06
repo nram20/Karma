@@ -10,7 +10,6 @@ export default () => {
     let applicantsSnap = yield applicantsRef.once('value')
     let applicants = applicantsSnap.val() 
     let job = Object.assign({}, selectedJob, {applicants})
-    console.log('jobToReturn',job)
     yield put(Actions.selectJobDetailsSet(job))
   }
 
