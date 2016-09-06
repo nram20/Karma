@@ -19,7 +19,7 @@ class JobDetailsView extends React.Component {
 
     const rowHasChanged = (r1, r2) => r1 !== r2
     const ds = new ListView.DataSource({rowHasChanged})
-    let applicantDataSource = ds.cloneWithRows(this.props.applicants || {})
+    let applicantDataSource = ds.cloneWithRows(this.props.job.applicants || {})
 
     this.state = {
       applicantDataSource,
@@ -242,10 +242,6 @@ class JobDetailsView extends React.Component {
     this.getUsersData(nextProps.job.applicants || null)
   }
 
-  componentDidMount () {
-    this.getUsersData(this.props.job.applicants || null)
-  }
-
   getUsersData (usersObj) {
     if (!usersObj) {
       this.setState({
@@ -284,7 +280,6 @@ class JobDetailsView extends React.Component {
     )
   }
 }
-
 
 const mapStateToProps = (state) => {
   return {
