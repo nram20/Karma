@@ -20,6 +20,17 @@ export default StyleSheet.create({
   },
   button: {
     marginBottom: 1,
+    backgroundColor: burntRed,
+  },
+  buttonSuccess: {
+    marginBottom: 1,
     backgroundColor: gold
-  }
+  },
+  applicantsArea: {
+
+  },
+  applicantsTitle: {
+
+  },
+
 })

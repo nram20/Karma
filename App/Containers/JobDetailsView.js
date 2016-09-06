@@ -182,7 +182,7 @@ class JobDetailsView extends React.Component {
     } else {
       applicants = (
         <View>
-          <Text style={{color: 'grey'}}>Applicants:</Text>
+          <Text style={{color: 'white', }}>Applicants:</Text>
           <ListView
             dataSource={this.state.applicantDataSource}
             removeClippedSubviews={false}
@@ -237,7 +237,7 @@ class JobDetailsView extends React.Component {
         <ScrollView>
           <DetailedJobCard currLocation={this.props.currLocation} item={this.props.job}/>
           <View style={{margin: 20}}>
-            <Button block style={styles.button} onPress={() => this.getDirections(location)}>Get Directions</Button>
+            <Button block style={styles.buttonSuccess} onPress={() => this.getDirections(location)}>Get Directions</Button>
             {controls}
           </View>
         </ScrollView>
