@@ -121,7 +121,7 @@ class NavigationRouter extends Component {
               titleStyle={{color: '#9b2915', fontWeight: 'bold'}}
             />
             <Scene key='post' icon={PostIcon} component={PostScreen} title='Post a Job!' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
-            <Scene key='jobs' icon={JobIcon} component={JobsScreen} title='Jobs Near You' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
+            <Scene key='jobs' getRightTitle={this.getCurrentKarma} onRight={this.onRight} icon={JobIcon} component={JobsScreen} title='Jobs Near You' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
           </Scene>
         </Scene>
       </Router>

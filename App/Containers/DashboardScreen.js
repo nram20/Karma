@@ -64,7 +64,6 @@ class DashboardScreen extends React.Component {
         <Content>
           <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
           <Tabs>
-
             <ListView
               tabLabel="I Posted"
               dataSource={this.state.postedDataSource}
@@ -105,6 +104,7 @@ class DashboardScreen extends React.Component {
       <JobCard
         handleClick={this.props.viewDetails}
         item={job}
+        currLocation={this.props.currLocation}
       />
     )
   }

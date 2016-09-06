@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, ListView, View, ScrollView, Text, Alert } from 'react-native'
+import { TouchableOpacity, ListView, View, ScrollView, Text, Alert, Linking } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import firebase from 'firebase'
@@ -35,11 +35,18 @@ class JobDetailsView extends React.Component {
     this.markCompleted = this.markCompleted.bind(this)
     this.cancelJob = this.cancelJob.bind(this)
     this.logOut = this.logOut.bind(this)
+    this.getDirections = this.getDirections.bind(this)
     this.getUsersData = this.getUsersData.bind(this)
   }
 
   logOut () {
     firebase.auth().signOut()
+  }
+  getDirections (jobLocation) {
+    let currLat = this.props.currLocation.latitude
+    let currLong = this.props.currLocation.longitude
+    let url = `http://maps.apple.com/?saddr=${currLat}, ${currLong}&daddr=${jobLocation[0]}, ${jobLocation[1]}`
+    Linking.openURL(url)
   }
 
   applyToJob () {
@@ -232,6 +239,7 @@ class JobDetailsView extends React.Component {
           <Text style={styles.text}>Poster : {posterName}</Text>
           <Text style={styles.text}>Key: {key}</Text>
           {controls}
+          <Button onPress={() => this.getDirections(location)}>Get Directions</Button>
           <Button onPress={this.logOut}>Log Out (development only)</Button>
         </ScrollView>
       </View>

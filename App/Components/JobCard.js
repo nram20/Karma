@@ -2,6 +2,9 @@ import React from 'react'
 import styles from './Styles/JobCardStyle'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { Container, Content, Card, Button, CardItem, Icon, List, ListItem } from 'native-base'
+import GeoFire from 'geofire'
+
+
 
 const burntRed = '#9b2915'
 const gold = '#e9b44c'
@@ -28,9 +31,12 @@ export default class JobCard extends React.Component {
       title,
       location,
       cost,
-      poster
+      poster,
+      posterName
     } = this.props.item
-    const { item, handleClick } = this.props
+    const { item, handleClick, currLocation } = this.props
+    let currLocationLatLong = [currLocation.latitude, currLocation.longitude]
+    let distance = (GeoFire.distance(location, currLocationLatLong)/1.609344).toFixed(1)
     return (
       
         
@@ -44,10 +50,10 @@ export default class JobCard extends React.Component {
 
             <CardItem cardBody style={{backgroundColor: 'white'}}>
                 <Text style={styles.text}>
-                  Job Posted By:  {poster}
+                  Poster:  {posterName}
                 </Text>
                 <Text style={styles.text}>Karma Offered: {cost}</Text>
-                <Text style={styles.text}>Where: {location}</Text>
+                <Text style={styles.text}>{distance} miles away</Text>
             </CardItem>
         
               <Button block success iconRight onPress={() => handleClick(item)}>
