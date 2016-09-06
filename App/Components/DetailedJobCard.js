@@ -35,6 +35,7 @@ export default class JobCard extends React.Component {
       poster,
       posterName
     } = this.props.item
+    console.log(location)
     const { item, handleClick, currLocation } = this.props
     let currLocationLatLong = [currLocation.latitude, currLocation.longitude]
     let distance = (GeoFire.distance(location, currLocationLatLong)/1.609344).toFixed(1)

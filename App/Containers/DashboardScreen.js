@@ -121,7 +121,6 @@ class DashboardScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('dashstate', state)
   return {
     postedJobs: state.jobs.postedJobs,
     appliedJobs: state.jobs.appliedJobs,
