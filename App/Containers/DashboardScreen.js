@@ -114,6 +114,7 @@ class DashboardScreen extends React.Component {
       <JobCard
         handleClick={this.props.viewDetails}
         item={job}
+        currLocation={this.props.currLocation}
       />
     )
   }
