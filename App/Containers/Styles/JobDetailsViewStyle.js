@@ -8,6 +8,10 @@ export default StyleSheet.create({
     backgroundColor: '#50a2a7'
   },
   text: {
-    color: 'blue'
+    color: 'blue',
+    textAlign: 'center'
+  },
+  controls: {
+    alignItems: 'center'
   }
 })

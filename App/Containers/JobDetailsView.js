@@ -181,11 +181,10 @@ class JobDetailsView extends React.Component {
       )
     }
 
-    console.log('poster,currUser',poster,currUser)
     let controls
     if (poster === currUser) {
       controls = (
-        <View>
+        <View style={styles.controls}>
           <Button onPress={this.cancelJob}>Cancel Job</Button>
           {applicants}
         </View>
@@ -194,15 +193,15 @@ class JobDetailsView extends React.Component {
       controls = <Button onPress={this.unapplyToJob}>unApply</Button>
     } else if (this.props.job.hired && this.props.job.hired.id === currUser) {
       controls = (
-        <View>
+        <View style={styles.controls}>
           <Text>
-            You are working this job. 
+            You are working this job.
           </Text>
         </View>
       )
     } else {
       controls = (
-        <View>
+        <View style={styles.controls}>
           <Button onPress={this.applyToJob}>Apply</Button>
           <InputGroup
             iconLeft
@@ -226,13 +225,10 @@ class JobDetailsView extends React.Component {
         <ScrollView>
           <Text style={styles.text}>{title}</Text>
           <Text style={styles.text}>{description}</Text>
-          <Text style={styles.text}>Where: {location}</Text>
           <Text style={styles.text}>Karma: {cost}</Text>
-          <Text style={styles.text}>Poster : {poster}</Text>
+          <Text style={styles.text}>Where: {location}</Text>
           <Text style={styles.text}>Poster : {posterName}</Text>
-          <Text style={styles.text}>Key: {key}</Text>
           {controls}
-          <Button onPress={this.logOut}>Log Out (development only)</Button>
         </ScrollView>
       </View>
     )
