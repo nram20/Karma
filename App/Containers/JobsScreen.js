@@ -48,22 +48,23 @@ class JobsScreen extends React.Component {
 
   render () {
     return (
-      <Container style={{ paddingTop: 20, backgroundColor: cyan}}>
+      
 
-        <View theme={karmaTheme} style={{marginTop: 44}}>
-
-          <Tabs style={styles.tabs}>
-            <ListView
-              tabLabel={'List'}
-              removeClippedSubviews={false}
-              dataSource={this.state.dataSource}
-              renderRow={this._renderItem}
-              enableEmptySections
-            />
-            <MapView tabLabel={'Map'} />
+        <Container theme={karmaTheme} style={{ marginTop: 64, backgroundColor: cyan }}>
+          <Content>
+            <Tabs>
+              <ListView
+                tabLabel={'List'}
+                removeClippedSubviews={false}
+                dataSource={this.state.dataSource}
+                renderRow={this._renderItem}
+                enableEmptySections
+              />
+              <MapView tabLabel={'Map'} />
           </Tabs>
-        </View>
-      </Container>
+          </Content>
+        </Container>
+      
     )
   }
   // <View style={styles.container}>

@@ -36,8 +36,8 @@ export default class JobCard extends React.Component {
         
           <Card style={{margin: 20, backgroundColor: cyan}}>
             
-            <CardItem header style={{backgroundColor: gold}}>
-                <Text style={{color: burntRed, fontWeight: '700', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <CardItem header style={{backgroundColor: gold, flex: 1, justifyContent: 'center'}}>
+                <Text style={{ color: burntRed, fontWeight: '700', fontSize: 16 }}>
                   {title}
                 </Text>  
             </CardItem>

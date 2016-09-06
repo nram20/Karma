@@ -67,7 +67,7 @@ class JobIcon extends React.Component {
     return (
       <Container>
         <Content>
-          <Icon name='ios-globe' style={{ color: this.props.selected ? 'white' : '#9b2915', marginLeft: 30, marginRight: 30, marginTop: 2 }} />
+          <Icon name='ios-globe' style={{ color: this.props.selected ? 'white' : '#9b2915', marginLeft: 45, marginRight: 30, marginTop: 2 }} />
           <Text style={{color: this.props.selected ? 'white' : '#9b2915', fontWeight: this.props.selected ? '800' : '600', marginLeft: 25, marginRight: 25 }}>{this.props.title}</Text>
         </Content>
       </Container>
@@ -110,6 +110,7 @@ class NavigationRouter extends Component {
             <Scene key='dashboard'
               onRight={this.onRight}
               getRightTitle={this.getCurrentKarma}
+              rightTitleStyle={{ color: '#9b2915', fontWeight: 'bold' }}
               leftButtonImage={require('../Themes/Images/gear.png')}
               leftButtonIconStyle={{width: 24, height:24}}
               onLeft={() => NavigationActions.settings()}
