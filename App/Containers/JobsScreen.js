@@ -78,11 +78,11 @@ class JobsScreen extends React.Component {
     const job = Object.assign({}, item, { id })
     return (
       
-        <JobCard
-          handleClick={this.props.viewDetails}
-          item={job}
-        />
-      
+      <JobCard
+        handleClick={this.props.viewDetails}
+        item={job}
+      />
+
     )
   }
 }
