@@ -70,14 +70,15 @@ class MapView2 extends Component {
 
     this.state = {
       isFirstLoad: true,
-      mapRegion: this.initialRegion
+      mapRegion: this.initialRegion,
+      initialHome: false,
+      tempHome: Object.assign({}, this.initialRegion, {latitude: this.initialRegion.latitude + .00000000001})
     }
     this.mapAnnotations = this.mapAnnotations.bind(this)
     this.goToMyLocation = this.goToMyLocation.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log('***map nextProps', nextProps)
     if (this.props !== nextProps) {
       this.setState({
         annotations: this.mapAnnotations(nextProps.jobs)
@@ -86,8 +87,9 @@ class MapView2 extends Component {
   }
 
   goToMyLocation() {
-    let temp = Object.assign({}, this.initialRegion, {latitude: this.initialRegion.latitude + .00000000001})
-    this.setState({ mapRegion: temp })
+    const { initialHome, tempHome } = this.state
+    const mapRegion = initialHome ? this.initialRegion : tempHome
+    this.setState({ initialHome: !initialHome, mapRegion: mapRegion })
   }
 
   render () {
@@ -107,10 +109,8 @@ class MapView2 extends Component {
   }
 
   mapAnnotations (jobs) {
-    console.log('jobs', jobs)
     const annots = []
     jobs.forEach(job => {
-      console.log('***job***', job);
       const annot = {
         longitude: job.location[1],
         latitude: job.location[0],

@@ -22,7 +22,8 @@ class RegisterScreen extends React.Component {
       email: '',
       displayName: '',
       password: '',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      submitted: false
     }
 
     this.changeEmail = this.changeEmail.bind(this)
@@ -33,6 +34,7 @@ class RegisterScreen extends React.Component {
   }
 
   register () {
+    this.setState({ submitted: true })
     if (this.state.password === this.state.passwordConfirmation) {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(user => {
@@ -45,9 +47,11 @@ class RegisterScreen extends React.Component {
           ref.set(userToAdd)
         })
         .catch(error => {
+          this.setState({ submitted: false })
           Alert.alert('One small problem...', error.message)
         })
     } else {
+      this.setState({ submitted: false })
       Alert.alert('Error', 'Passwords don\'t match')
     }
   }
@@ -110,7 +114,7 @@ class RegisterScreen extends React.Component {
             />
           </InputGroup>
 
-          <Button block success iconRight onPress={this.register}>
+          <Button block success disabled={this.state.submitted} iconRight onPress={this.register}>
             Sign Up for Karma! <Icon name='ios-arrow-forward' />
           </Button>
           <Button small block iconLeft onPress={this.props.loginScreen}>
