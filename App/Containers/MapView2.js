@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import Metrics from '../Themes/Metrics'
 import Colors from '../Themes/Colors'
+
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 const mapStyles = StyleSheet.create({
@@ -69,8 +70,7 @@ class MapView2 extends Component {
 
     this.state = {
       isFirstLoad: true,
-      mapRegion: this.initialRegion,
-      jobs: this.props.jobs
+      mapRegion: this.initialRegion
     }
     this.mapAnnotations = this.mapAnnotations.bind(this)
     this.goToMyLocation = this.goToMyLocation.bind(this)
@@ -79,14 +79,14 @@ class MapView2 extends Component {
   componentWillReceiveProps (nextProps) {
     if (this.props !== nextProps) {
       this.setState({
-        jobs: nextProps.jobs,
         annotations: this._getAnnotations(nextProps.jobs)
       })
     }
   }
 
   goToMyLocation() {
-    this.setState({ mapRegion: this.initialRegion })
+    let temp = Object.assign({}, this.initialRegion, {latitude: this.initialRegion.latitude + .00000000001})
+    this.setState({ mapRegion: temp })
   }
 
   render () {
@@ -94,11 +94,11 @@ class MapView2 extends Component {
       <View>
         <MapView
           style={styles.map}
-          onRegionChange={this._onRegionChange}
           onRegionChangeComplete={this._onRegionChangeComplete}
           region={this.state.mapRegion}
           annotations={this.state.annotations}
           rotateEnabled={false}
+          showsUserLocation={true}
         />
       <MyLocationButton onPress={this.goToMyLocation}/>
       </View>
@@ -106,8 +106,10 @@ class MapView2 extends Component {
   }
 
   mapAnnotations (jobs) {
+    console.log('jobs', jobs)
     const annots = []
     jobs.forEach(job => {
+      console.log('***job***', job);
       const annot = {
         longitude: job.location[1],
         latitude: job.location[0],
@@ -123,26 +125,19 @@ class MapView2 extends Component {
       title: 'You Are Here',
       tintColor: 'blue'
     }
-    annots.push(myLocation)
+    // annots.push(myLocation)
     return annots
   }
 
   _getAnnotations = (region) => {
-    return this.mapAnnotations(this.state.jobs)
-  }
-
-  _onRegionChange = (region) => {
-    this.setState({
-      mapRegionInput: region
-    })
+    return this.mapAnnotations(this.props.jobs)
   }
 
   _onRegionChangeComplete = (region) => {
-    this.setState({ mapRegion: region })
-    this.props.newMapRegion(region)
+    // this.setState({ mapRegion: region })
+    // this.props.newMapRegion(region)
     if (this.state.isFirstLoad) {
       this.setState({
-        mapRegionInput: region,
         annotations: this._getAnnotations(region),
         isFirstLoad: false
       })
