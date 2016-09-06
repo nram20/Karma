@@ -66,6 +66,11 @@ const receiveJob = (job) => ({
   job
 })
 
+const removeJob = (key) => ({
+  type: Types.JOB_REMOVE,
+  key
+})
+
 const localJobsRequest = (latitude, longitude, currUser) => {
   return ({
     latitude,
@@ -102,5 +107,6 @@ export default {
   localJobsRequest,
   newMapRegion,
   workingDetailsSet,
-  workingDetailsSetFailure
+  workingDetailsSetFailure,
+  removeJob
 }

@@ -77,9 +77,10 @@ class MapView2 extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    console.log('***map nextProps', nextProps)
     if (this.props !== nextProps) {
       this.setState({
-        annotations: this._getAnnotations(nextProps.jobs)
+        annotations: this.mapAnnotations(nextProps.jobs)
       })
     }
   }

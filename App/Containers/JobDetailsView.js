@@ -284,7 +284,8 @@ class JobDetailsView extends React.Component {
 const mapStateToProps = (state) => {
   return {
     job: state.jobs.selectedJob,
-    appliedJobs: state.jobs.appliedJobs
+    appliedJobs: state.jobs.appliedJobs,
+    currLocation: state.location.currLocation
   }
 }
 
