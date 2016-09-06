@@ -10,20 +10,6 @@ export default () => {
     let postedPromiseArray = postedJobIdArray.map(el => {
       let ref = db.ref(`jobs/${el}`)
       return ref.once('value')
-        .then(data => {
-          let applicantRef = db.ref(`applicants/${el}`)
-          return applicantRef.once('value', applicants => applicants)
-            .then(applicants => {
-              let jobData = data.val()
-              if (applicants.val()) {
-                for (let applicantId in applicants.val()) {
-                  jobData.applicants = {[applicantId]: applicants.val()[applicantId]}
-                }
-              }
-              console.log('jobdata',jobData)
-              return jobData
-            })
-        })
     })
 
     let postedObj = yield Promise.all(postedPromiseArray)
@@ -35,7 +21,7 @@ export default () => {
       let postedJobsObject = {}
       jobs.forEach((job, ind) => {
         let jobId = ids[ind]
-        postedJobsObject[jobId] = job
+        postedJobsObject[jobId] = job.val()
       })
       return postedJobsObject
     }
