@@ -193,6 +193,14 @@ class JobDetailsView extends React.Component {
       )
     } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.key)) {
       controls = <Button onPress={this.unapplyToJob}>unApply</Button>
+    } else if (this.props.job.hired && this.props.job.hired.id === currUser) {
+      controls = (
+        <View>
+          <Text>
+            You are working this job. 
+          </Text>
+        </View>
+      )
     } else {
       controls = (
         <View>

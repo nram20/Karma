@@ -34,6 +34,7 @@ firebase.auth().onAuthStateChanged(user => {
     setUserDetailsListener(user)
     NavigationActions.tabbar()
   } else {
+    dispatch({type: Types.LOGOUT})
     NavigationActions.loginScreen()
   }
 })
