@@ -182,6 +182,7 @@ class JobDetailsView extends React.Component {
       )
     }
 
+    console.log('poster,currUser',poster,currUser)
     let controls
     if (poster === currUser) {
       controls = (
@@ -231,11 +232,12 @@ class JobDetailsView extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.getUsersData(nextProps.applicants || [])
+    console.log('infogotten')
+    this.getUsersData(nextProps.job.applicants || [])
   }
 
   componentDidMount () {
-    this.getUsersData(this.props.applicants || [])
+    this.getUsersData(this.props.job.applicants || [])
   }
 
   getUsersData (usersObj) {
@@ -274,8 +276,7 @@ class JobDetailsView extends React.Component {
 const mapStateToProps = (state) => {
   return {
     job: state.jobs.selectedJob,
-    appliedJobs: state.jobs.appliedJobs,
-    applicants: state.jobs.selectedJob.applicants
+    appliedJobs: state.jobs.appliedJobs
   }
 }
 

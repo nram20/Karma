@@ -33,6 +33,11 @@ const selectJob = (job) => ({
   type: Types.SELECT_JOB_FOR_DETAILS
 })
 
+const selectJobDetailsSet = (job) => ({
+  job,
+  type: Types.SELECT_JOB_DETAILS_SET
+})
+
 const applyToJob = (job) => ({
   job,
   type: Types.APPLY_TO_JOB
@@ -87,6 +92,7 @@ export default {
   logout,
   startup,
   selectJob,
+  selectJobDetailsSet,
   applyToJob,
   unapplyToJob,
   getLocation,
