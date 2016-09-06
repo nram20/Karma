@@ -6,6 +6,7 @@ import JobCard from '../Components/JobCard'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
+import AlertMessage from '../Components/AlertMessageComponent'
 import Metrics from '../Themes/Metrics'
 import karmaTheme from '../NativeBase/karmaTheme'
 
@@ -53,13 +54,16 @@ class JobsScreen extends React.Component {
         <View theme={karmaTheme} style={{marginTop: 44}}>
 
           <Tabs style={styles.tabs}>
-            <ListView
-              tabLabel={'List'}
-              removeClippedSubviews={false}
-              dataSource={this.state.dataSource}
-              renderRow={this._renderItem}
-              enableEmptySections
-            />
+            <Content tabLabel={'List'}>
+              <AlertMessage title="There are no jobs in your area" show={this._noRowData()} />
+              <ListView
+                tabLabel={'List'}
+                removeClippedSubviews={false}
+                dataSource={this.state.dataSource}
+                renderRow={this._renderItem}
+                enableEmptySections
+                />
+            </Content>
             <MapView tabLabel={'Map'} />
           </Tabs>
         </View>
@@ -77,7 +81,7 @@ class JobsScreen extends React.Component {
   _renderItem (item, version, id) {
     const job = Object.assign({}, item, { id })
     return (
-      
+
       <JobCard
         handleClick={this.props.viewDetails}
         item={job}

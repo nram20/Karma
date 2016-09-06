@@ -9,6 +9,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import { Container, Card, CardItem, Header, Button, Title, Content, Input, InputGroup, Icon } from 'native-base'
 import Types from '../Actions/Types'
 import { dispatch } from '../../index.ios'
+import DetailedJobCard from '../Components/DetailedJobCard'
 // Styles
 import styles from './Styles/JobDetailsViewStyle'
 
@@ -151,6 +152,11 @@ class JobDetailsView extends React.Component {
   }
 
   render () {
+
+    const burntRed = '#9b2915'
+    const gold = '#e9b44c'
+    const cyan = '#50a2a7'
+
     const {
       title,
       description,
@@ -166,8 +172,8 @@ class JobDetailsView extends React.Component {
     let applicants
     if (this.props.job.hired) {
       applicants = (
-        <View>
-          <Button onPress={this.markCompleted}>Job Completed</Button>
+        <View style={{margin: 20}}>
+          <Button block style={styles.button} onPress={this.markCompleted}>Job Completed</Button>
           <Text style={{color: 'grey'}}>Hired Applicant:</Text>
           <Text>{this.props.job.hired.displayName}</Text>
           <Text style={{color: 'white'}}>{this.props.job.hired.message}</Text>
@@ -178,7 +184,6 @@ class JobDetailsView extends React.Component {
         <View>
           <Text style={{color: 'grey'}}>Applicants:</Text>
           <ListView
-            tabLabel="Jobs I've Posted"
             dataSource={this.state.applicantDataSource}
             removeClippedSubviews={false}
             renderRow={this._renderItem}
@@ -192,12 +197,12 @@ class JobDetailsView extends React.Component {
     if (poster === currUser) {
       controls = (
         <View style={styles.controls}>
-          <Button onPress={this.cancelJob}>Cancel Job</Button>
+          <Button block style={styles.button} onPress={this.cancelJob}>Cancel Job</Button>
           {applicants}
         </View>
       )
     } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.key)) {
-      controls = <Button onPress={this.unapplyToJob}>unApply</Button>
+      controls = <Button block style={styles.button} onPress={this.unapplyToJob}>unApply</Button>
     } else if (this.props.job.hired && this.props.job.hired.id === currUser) {
       controls = (
         <View style={styles.controls}>
@@ -209,7 +214,7 @@ class JobDetailsView extends React.Component {
     } else {
       controls = (
         <View style={styles.controls}>
-          <Button onPress={this.applyToJob}>Apply</Button>
+          <Button block style={styles.button} onPress={this.applyToJob}>Apply</Button>
           <InputGroup
             iconLeft
             style={styles.input}
@@ -230,13 +235,11 @@ class JobDetailsView extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.text}>{title}</Text>
-          <Text style={styles.text}>{description}</Text>
-          <Text style={styles.text}>Karma: {cost}</Text>
-          <Text style={styles.text}>Where: {location}</Text>
-          <Text style={styles.text}>Poster : {posterName}</Text>
-          {controls}
-          <Button onPress={() => this.getDirections(location)}>Get Directions</Button>
+          <DetailedJobCard currLocation={this.props.currLocation} item={this.props.job}/>
+          <View style={{margin: 20}}>
+            <Button block style={styles.button} onPress={() => this.getDirections(location)}>Get Directions</Button>
+            {controls}
+          </View>
         </ScrollView>
       </View>
     )
