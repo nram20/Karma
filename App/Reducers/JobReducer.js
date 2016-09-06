@@ -16,6 +16,12 @@ const receiveJob = (state, action) =>
     error: false
   })
 
+const removeJob = (state, action) => 
+  state.merge({
+    localJobs: state.localJobs.filter(job => job.key !== action.key),
+    error: false
+  })
+
 const clearLocalJobs = (state, action) =>
   state.merge({
     localJobs: [],
@@ -134,7 +140,8 @@ const ACTION_HANDLERS = {
   [Types.APPLY_TO_JOB]: applyToJob,
   [Types.UNAPPLY_TO_JOB]: unapplyToJob,
   [Types.HIRE_WORKER]: hireWorker,
-  [Types.CLEAR_LOCAL_JOBS]: clearLocalJobs
+  [Types.CLEAR_LOCAL_JOBS]: clearLocalJobs,
+  [Types.JOB_REMOVE]: removeJob
 }
 
 export default createReducer(INITIAL_STATE, ACTION_HANDLERS)

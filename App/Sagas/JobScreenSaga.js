@@ -29,6 +29,10 @@ export default () => {
         }
       })
     })
+
+    geoQuery.on('key_exited', (key, location, distance) => {
+      dispatch(Actions.removeJob(key))
+    })
   }
 
   function * watcher () {
