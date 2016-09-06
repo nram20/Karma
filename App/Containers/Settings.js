@@ -25,7 +25,7 @@ class Settings extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <Text>Settings Container</Text>
-        <Button onPress={this.logOut}>Log Out</Button>
+        <Button block onPress={this.logOut}>Log Out</Button>
       </ScrollView>
     )
   }
