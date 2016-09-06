@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, ListView, View, ScrollView, Text } from 'react-native'
+import { TouchableOpacity, ListView, View, ScrollView, Text, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import firebase from 'firebase'
