@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import JobCard from '../Components/JobCard'
-import { Container, Content, Tabs } from 'native-base'
+import { Container, Content, Tabs, View } from 'native-base'
 import karmaTheme from '../NativeBase/karmaTheme'
 
 // Styles
@@ -47,11 +47,11 @@ class DashboardScreen extends React.Component {
         this.props.getLocation(position)
       },
       (error) => Alert.alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      {enableHighAccuracy: false, timeout: 20000, maximumAge: 20000}
     )
     this.watchID = navigator.geolocation.watchPosition(position => {
       this.props.getLocation(position)
-    }, error => Alert.alert(error.message), {enableHighAccuracy: true, timeout: 200000, maximumAge: 20000})
+    }, error => Alert.alert(error.message), {enableHighAccuracy: false, timeout: 200000, maximumAge: 20000})
   }
 
   componentWillUnmount () {
@@ -61,42 +61,51 @@ class DashboardScreen extends React.Component {
   render () {
     return (
       <Container style={styles.container} theme={karmaTheme}>
-        <Content>
-          <AlertMessage title='No Jobs in your area' show={this._noRowData()} />
+        <View>
           <Tabs>
-
-            <ListView
-              tabLabel="I Posted"
-              dataSource={this.state.postedDataSource}
-              removeClippedSubviews={false}
-              renderRow={this._renderItem}
-              enableEmptySections
-            />
-
-            <ListView
-              tabLabel="I Applied"
-              dataSource={this.state.appliedDataSource}
-              removeClippedSubviews={false}
-              renderRow={this._renderItem}
-              enableEmptySections
-            />
-
-            <ListView
-              tabLabel="I'm Working"
-              dataSource={this.state.workingDataSource}
-              removeClippedSubviews={false}
-              renderRow={this._renderItem}
-              enableEmptySections
-            />
-
+            <Content tabLabel="I Posted">
+              <AlertMessage title="You haven't posted any jobs yet" show={this._noPostedData()} />
+              <ListView
+                dataSource={this.state.postedDataSource}
+                removeClippedSubviews={false}
+                renderRow={this._renderItem}
+                enableEmptySections
+              />
+            </Content>
+            <Content tabLabel="I Applied">
+              <AlertMessage title="You haven't applied to any jobs yet" show={this._noAppliedData()} />
+              <ListView
+                dataSource={this.state.appliedDataSource}
+                removeClippedSubviews={false}
+                renderRow={this._renderItem}
+                enableEmptySections
+              />
+            </Content>
+            <Content tabLabel="I'm Working">
+              <AlertMessage title="You don't have any jobs you are working right now" show={this._noWorkingData()} />
+              <ListView
+                dataSource={this.state.workingDataSource}
+                removeClippedSubviews={false}
+                renderRow={this._renderItem}
+                enableEmptySections
+              />
+            </Content>
           </Tabs>
-        </Content>
+        </View>
       </Container>
     )
   }
 
-  _noRowData () {
+  _noPostedData () {
     return this.state.postedDataSource.getRowCount() === 0
+  }
+
+  _noAppliedData () {
+    return this.state.appliedDataSource.getRowCount() === 0
+  }
+
+  _noWorkingData () {
+    return this.state.workingDataSource.getRowCount() === 0
   }
 
   _renderItem (item, version, key) {
@@ -105,13 +114,13 @@ class DashboardScreen extends React.Component {
       <JobCard
         handleClick={this.props.viewDetails}
         item={job}
+        currLocation={this.props.currLocation}
       />
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('dashstate', state)
   return {
     postedJobs: state.jobs.postedJobs,
     appliedJobs: state.jobs.appliedJobs,

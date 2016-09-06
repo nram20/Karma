@@ -6,6 +6,7 @@ import JobCard from '../Components/JobCard'
 import Actions from '../Actions/Creators'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
+import AlertMessage from '../Components/AlertMessageComponent'
 import Metrics from '../Themes/Metrics'
 import karmaTheme from '../NativeBase/karmaTheme'
 
@@ -48,7 +49,6 @@ class JobsScreen extends React.Component {
 
   render () {
     return (
-      
 
         <Container theme={karmaTheme} style={{ marginTop: 64, backgroundColor: cyan }}>
           <Content>
@@ -78,12 +78,13 @@ class JobsScreen extends React.Component {
   _renderItem (item, version, id) {
     const job = Object.assign({}, item, { id })
     return (
-      
-        <JobCard
-          handleClick={this.props.viewDetails}
-          item={job}
-        />
-      
+
+      <JobCard
+        handleClick={this.props.viewDetails}
+        item={job}
+        currLocation={this.props.currLocation}
+      />
+
     )
   }
 }

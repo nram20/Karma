@@ -105,7 +105,7 @@ class NavigationRouter extends Component {
           <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} hideBackImage title='Login' navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
           <Scene key='register' component={RegisterScreen} title='Register' navigationBarStyle={{ backgroundColor: '#e9b44c' }} titleStyle={{ color: '#9b2915', fontWeight: 'bold' }} />
           <Scene key='jobDetails' component={JobDetailsView} title='Job' navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
-          <Scene key='settings' component={Settings} />
+          <Scene key='settings' component={Settings} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} navigationBarStyle={{backgroundColor: '#e9b44c'}} title='Settings'/>
           <Scene tabs key='tabbar' type='reset' tabBarIconContainerStyle={styles.container} tabBarStyle={styles.tabbar} animated direction='vertical' duration={300} >
             <Scene key='dashboard'
               onRight={this.onRight}
@@ -122,7 +122,7 @@ class NavigationRouter extends Component {
               titleStyle={{color: '#9b2915', fontWeight: 'bold'}}
             />
             <Scene key='post' icon={PostIcon} component={PostScreen} title='Post a Job!' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
-            <Scene key='jobs' icon={JobIcon} component={JobsScreen} title='Jobs Near You' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
+            <Scene key='jobs' getRightTitle={this.getCurrentKarma} onRight={this.onRight} icon={JobIcon} component={JobsScreen} title='Jobs Near You' panHandlers={null} navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
           </Scene>
         </Scene>
       </Router>
