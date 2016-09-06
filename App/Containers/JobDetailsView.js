@@ -197,12 +197,12 @@ class JobDetailsView extends React.Component {
     if (poster === currUser) {
       controls = (
         <View style={styles.controls}>
-          <Button block style={styles.button} onPress={this.cancelJob}>Cancel Job</Button>
+          <Button block style={styles.button} onPress={this.cancelJob}> Cancel Job</Button>
           {applicants}
         </View>
       )
     } else if (this.props.appliedJobs && Object.keys(this.props.appliedJobs).includes(this.props.job.key)) {
-      controls = <Button block style={styles.button} onPress={this.unapplyToJob}>unApply</Button>
+      controls = <Button block style={styles.button} onPress={this.unapplyToJob}> unApply </Button>
     } else if (this.props.job.hired && this.props.job.hired.id === currUser) {
       controls = (
         <View style={styles.controls}>
@@ -237,7 +237,7 @@ class JobDetailsView extends React.Component {
         <ScrollView>
           <DetailedJobCard currLocation={this.props.currLocation} item={this.props.job}/>
           <View style={{margin: 20}}>
-            <Button block style={styles.buttonSuccess} onPress={() => this.getDirections(location)}>Get Directions</Button>
+            <Button block success onPress={() => this.getDirections(location)}><Text style={{color: burntRed, fontWeight: '700', fontSize: 16}}>Get Directions</Text></Button>
             {controls}
           </View>
         </ScrollView>
