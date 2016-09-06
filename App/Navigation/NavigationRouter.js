@@ -67,7 +67,7 @@ class JobIcon extends React.Component {
     return (
       <Container>
         <Content>
-          <Icon name='ios-globe' style={{ color: this.props.selected ? 'white' : '#9b2915', marginLeft: 30, marginRight: 30, marginTop: 2 }} />
+          <Icon name='ios-globe' style={{ color: this.props.selected ? 'white' : '#9b2915', marginLeft: 45, marginRight: 30, marginTop: 2 }} />
           <Text style={{color: this.props.selected ? 'white' : '#9b2915', fontWeight: this.props.selected ? '800' : '600', marginLeft: 25, marginRight: 25 }}>{this.props.title}</Text>
         </Content>
       </Container>
@@ -105,7 +105,7 @@ class NavigationRouter extends Component {
           <Scene key='loginScreen' initial panHandlers={null} component={LoginScreen} hideBackImage title='Login' navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
           <Scene key='register' component={RegisterScreen} title='Register' navigationBarStyle={{ backgroundColor: '#e9b44c' }} titleStyle={{ color: '#9b2915', fontWeight: 'bold' }} />
           <Scene key='jobDetails' component={JobDetailsView} title='Job' navigationBarStyle={{backgroundColor: '#e9b44c'}} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} />
-          <Scene key='settings' component={Settings} />
+          <Scene key='settings' component={Settings} titleStyle={{color: '#9b2915', fontWeight: 'bold'}} navigationBarStyle={{backgroundColor: '#e9b44c'}} title='Settings'/>
           <Scene tabs key='tabbar' type='reset' tabBarIconContainerStyle={styles.container} tabBarStyle={styles.tabbar} animated direction='vertical' duration={300} >
             <Scene key='dashboard'
               onRight={this.onRight}

@@ -47,11 +47,11 @@ class DashboardScreen extends React.Component {
         this.props.getLocation(position)
       },
       (error) => Alert.alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      {enableHighAccuracy: false, timeout: 20000, maximumAge: 20000}
     )
     this.watchID = navigator.geolocation.watchPosition(position => {
       this.props.getLocation(position)
-    }, error => Alert.alert(error.message), {enableHighAccuracy: true, timeout: 200000, maximumAge: 20000})
+    }, error => Alert.alert(error.message), {enableHighAccuracy: false, timeout: 200000, maximumAge: 20000})
   }
 
   componentWillUnmount () {
