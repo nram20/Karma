@@ -1,11 +1,12 @@
 import {take, call, put} from 'redux-saga/effects'
+import { takeEvery } from 'redux-saga'
 import Types from '../Actions/Types'
 import Actions from '../Actions/Creators'
 import { db } from '../Config/FirebaseConfig.js'
 
 export default () => {
-  function * worker (workingJobs) {
-    workingJobs = workingJobs || {}
+  function * worker (action) {
+    let workingJobs = action.workingJobs || {}
     let workingJobIdArray = Object.keys(workingJobs)
 
     let workingPromiseArray = workingJobIdArray.map(el => {
@@ -33,9 +34,7 @@ export default () => {
 
   function * watcher () {
     while (true) {
-      const action = yield take(Types.WORKING_JOBS_RECEIVE)
-      const { workingJobs } = action
-      yield call(worker, workingJobs)
+      yield* takeEvery(Types.WORKING_JOBS_RECEIVE, worker)
     }
   }
 

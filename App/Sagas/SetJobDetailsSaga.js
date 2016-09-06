@@ -1,11 +1,13 @@
 import {take, call, put} from 'redux-saga/effects'
+import { takeEvery } from 'redux-saga'
 import Types from '../Actions/Types'
 import Actions from '../Actions/Creators'
 import { db } from '../Config/FirebaseConfig'
 // geoFire
 
-export default () => {
-  function * worker (postedJobs) {
+export default (action) => {
+  function * worker (action) {
+    let postedJobs = action.postedJobs || {}
     let postedJobIdArray = Object.keys(postedJobs)
     let postedPromiseArray = postedJobIdArray.map(el => {
       let ref = db.ref(`jobs/${el}`)
@@ -31,9 +33,7 @@ export default () => {
 
   function * watcher () {
     while (true) {
-      const action = yield take(Types.POSTED_JOBS_RECEIVE)
-      const { postedJobs } = action
-      yield call(worker, postedJobs)
+      yield* takeEvery(Types.POSTED_JOBS_RECEIVE, worker)
     }
   }
 
