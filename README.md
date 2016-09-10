@@ -15,29 +15,12 @@
 ## :arrow_forward: How to Run App
 
 1. cd to the repo
-2. Run Build for either OS
-  * for iOS
-    * run `react-native run-ios`
-  * for Android
-    * Run Genymotion
-    * run `react-native run-android`
-
-## :no_entry_sign: Standard Compliant
-
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
-This project adheres to Standard.  Our CI enforces this, so we suggest you enable linting to keep your project compliant during development.
-
-**To Lint on Commit**
-
-This is implemented using [ghooks](https://github.com/gtramontina/ghooks). There is no additional setup needed.
-
-**Bypass Lint**
-
-If you have to bypass lint for a special commit that you will come back and clean (pushing something to a branch etc.) then you can bypass git hooks with adding `--no-verify` to your commit command.
-
-**Understanding Linting Errors**
-
-The linting rules are from JS Standard and React-Standard.  [Regular JS errors can be found with descriptions here](http://eslint.org/docs/rules/), while [React errors and descriptions can be found here](https://github.com/yannickcr/eslint-plugin-react).
-
-## :open_file_folder: Related Articles
-Ignite Documentation - [Ignite Wiki https://github.com/infinitered/ignite/wiki](https://github.com/infinitered/ignite/wiki)
+2. Run Build for  iOS
+  * run `react-native run-ios`
+  
+Preview: 
+[Login](https://cloud.githubusercontent.com/assets/11192126/18377757/be86e57c-761d-11e6-8061-45817830ce3d.png)
+[Dashboard](https://cloud.githubusercontent.com/assets/11192126/18377753/be785e30-761d-11e6-9989-beb0c9919864.png)
+[Job map view](https://cloud.githubusercontent.com/assets/11192126/18377754/be7926d0-761d-11e6-981a-d50461865158.png)
+[Job list view](https://cloud.githubusercontent.com/assets/11192126/18377750/be74df9e-761d-11e6-90ef-54501adeadee.png)
+[Direction view](https://cloud.githubusercontent.com/assets/11192126/18377756/be85ac98-761d-11e6-8968-11039857bd5a.png)
