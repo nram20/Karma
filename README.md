@@ -18,9 +18,9 @@
 2. Run Build for  iOS
   * run `react-native run-ios`
   
-Preview: 
-[Login](https://cloud.githubusercontent.com/assets/11192126/18377757/be86e57c-761d-11e6-8061-45817830ce3d.png)
-[Dashboard](https://cloud.githubusercontent.com/assets/11192126/18377753/be785e30-761d-11e6-9989-beb0c9919864.png)
-[Job map view](https://cloud.githubusercontent.com/assets/11192126/18377754/be7926d0-761d-11e6-981a-d50461865158.png)
-[Job list view](https://cloud.githubusercontent.com/assets/11192126/18377750/be74df9e-761d-11e6-90ef-54501adeadee.png)
-[Direction view](https://cloud.githubusercontent.com/assets/11192126/18377756/be85ac98-761d-11e6-8968-11039857bd5a.png)
+# Preview: 
+![Login](https://cloud.githubusercontent.com/assets/13949747/18413459/805ec710-775d-11e6-947d-fd23cbab41fa.png)
+![Dashboard](https://cloud.githubusercontent.com/assets/11192126/18377753/be785e30-761d-11e6-9989-beb0c9919864.png)
+![Job map view](https://cloud.githubusercontent.com/assets/11192126/18377754/be7926d0-761d-11e6-981a-d50461865158.png)
+![Job list view](https://cloud.githubusercontent.com/assets/11192126/18377750/be74df9e-761d-11e6-90ef-54501adeadee.png)
+![Direction view](https://cloud.githubusercontent.com/assets/11192126/18377756/be85ac98-761d-11e6-8968-11039857bd5a.png)
